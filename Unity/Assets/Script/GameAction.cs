@@ -27,39 +27,18 @@ public class GameAction
         _source = source;
         int layer = GameNavigation.GetTileAtPosition(_position, out _target);
         // Empty
-        if (!_target)
+        if (_source.GetComponent<Creature>().ItemHas("item_feather") || distance == 1f)
         {
             // ? inventory check
-            if (distance == 1f) _type = ActionType.WALK;
-            else _type = ActionType.NULL;
-        }
-        // Breakable
-        else if (layer == 5)
-        {
-            // ? inventory check
-            if (distance == 1f) _type = ActionType.ATTACK;
-            else _type = ActionType.NULL;
-        }
-        // Interact
-        else if (layer == 6)
-        {
-            // ? inventory check
-            if (distance == 1f) _type = ActionType.INTERACT;
-            else _type = ActionType.NULL;
-        }
-        // Creature
-        else if (layer == 7)
-        {
-            // ? inventory check
-            if (distance == 1f) _type = ActionType.ATTACK;
-            else _type = ActionType.NULL;
-        }
-        // Item
-        else if (layer == 8)
-        {
-            // ? inventory check
-            if (distance == 1f) _type = ActionType.PICKUP;
-            else _type = ActionType.NULL;
+            if (!_target) _type = ActionType.WALK;
+            // Breakable
+            else if (layer == 5) _type = ActionType.ATTACK;
+            // Interact
+            else if (layer == 6) _type = ActionType.INTERACT;
+            // Creature
+            else if (layer == 7) _type = ActionType.ATTACK;
+            // Item
+            else if (layer == 8) _type = ActionType.PICKUP;
         }
         else _type = ActionType.NULL;
     }
@@ -75,13 +54,23 @@ public class GameAction
                 _target.GetComponent<Breakable>().HealthModify(-1);
                 break;
             case ActionType.INTERACT:
+                _target.GetComponent<Interact>().TryAction(_source.GetComponent<Creature>());
                 break;
             case ActionType.PICKUP:
+                _source.GetComponent<Creature>().ItemAdd(_target.GetComponent<Item>());
                 break;
         }
     }
     public GameObject Source
     {
         get { return _source; }
+    }
+    public bool IsValid
+    {
+        get { return _type != ActionType.NULL; }
+    }
+    public Vector2 Position
+    {
+        get { return _position; }
     }
 }

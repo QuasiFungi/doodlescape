@@ -18,6 +18,7 @@ public class GameMaster : MonoBehaviour
         GameAction flag = null;
         foreach (GameAction temp in actions)
         {
+            // check if an action by same entity already exists
             if (temp.Source == action.Source)
             {
                 flag = temp;

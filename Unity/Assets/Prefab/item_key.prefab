@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 787024457302430952}
   - component: {fileID: 2897800472156400351}
   m_Layer: 9
-  m_Name: item_flask
+  m_Name: item_key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9960970e165e84264b3ad422b4a18ad1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9e37495f62d50ec68bb3d8e35152f211, type: 3}
   m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,7 +122,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -143,4 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ef938ac9e03827ca1fd63876683269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: item_flask
+  _id: item_key

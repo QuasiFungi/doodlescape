@@ -6,9 +6,12 @@ public class GameClock : MonoBehaviour
     public static event OnTick onTickLate;
     private float tickDuration = 1f;
     private float tickTimer;
-    void Awake()
+    void Start()
     {
         tickTimer = tickDuration;
+        // // * testing ? things move forward one tick immediately
+        // onTick?.Invoke();
+        // onTickLate?.Invoke();
     }
     void Update()
     {
@@ -20,6 +23,7 @@ public class GameClock : MonoBehaviour
             // ui clock
             onTick?.Invoke();
             // ui action
+            // ui inventory
             onTickLate?.Invoke();
         }
     }
