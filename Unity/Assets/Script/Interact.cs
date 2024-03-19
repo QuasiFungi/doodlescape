@@ -1,45 +1,64 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System.Collections;
 // destructible unlock toggle oneWay
 // door
 public class Interact : Entity
 {
     // protected int _state;
-    // public bool _testDisable;
     [Tooltip("Item that unlocks")] [SerializeField] protected string _valid;
     [SerializeField] protected bool _locked = false;
-    [Tooltip("Lock to state change")] [SerializeField] protected bool _oneWay = false;
+    // [Tooltip("Lock to state change")] [SerializeField] protected bool _oneWay = false;
     [Tooltip("Initial state")] [SerializeField] protected bool _default = false;
-    protected bool _active;
+    [Tooltip("Fade out on state change")] [SerializeField] protected bool _disableOnChange = false;
+    protected bool _state;
     protected SpriteRenderer _sprite;
-    [Tooltip("Sprite pool")] [SerializeField] protected List<Sprite> _sprites = new List<Sprite>();
+    protected Sprite _spriteDefault;
+    [Tooltip("Sprite for when state changes")] [SerializeField] protected Sprite _spriteChanged = null;
+    // ? also used by creatures, though some have multiple
+    protected Collider2D _collider;
     void Awake()
     {
         _sprite = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
+        // ? copy vs reference
+        _spriteDefault = _sprite.sprite;
     }
-    void Start()
+    // 
+    protected virtual void Start()
     {
-        // ?
-        _active = _default;
+        // ? save file info
+        _state = _default;
         gameObject.SetActive(true);
-        if (_sprite) _sprite.enabled = true;
+        // if (_sprite) _sprite.enabled = true; // ? chunk/fog
         SetSprite();
     }
-    // void Update()
-    // {
-    //     if (_testDisable && _active)
-    //         gameObject.SetActive(false);
-    //     // * testing
-    //     // _sprite.enabled = Vector3.Distance(transform.position, controller_player.Instance.Motor.Position) <= game_variables.Instance.RadiusSprite;
-    //     // _sprite.enabled =  game_camera.Instance.InView(transform.position);
-    //     SetSprite();
-    // }
     protected void SetSprite()
     {
-        if (_sprites.Count < 2)
+        // fade out entity if required
+        if (_disableOnChange && _state != _default)
+        {
+            StartCoroutine(FadeOut());
             return;
-        _sprite.sprite = _sprites[_active ? 1 : 0];
+        }
+        // change sprite based on active state if possible
+        if (_spriteChanged) _sprite.sprite = _state == _default ? _spriteDefault : _spriteChanged;
+    }
+    // door specific ? not reused
+    IEnumerator FadeOut()
+    {
+        // allow move action over occupied tiles in next tick
+        _collider.enabled = false;
+        // fade alpha over tick duration ? account for dynamic tick size
+        Color color = _sprite.color;
+        for(float a = 1f - Time.deltaTime; a > 0f; a -= Time.deltaTime)
+        {
+            color.a = a;
+            _sprite.color = color;
+            yield return null;
+        }
+        // hide entity
+        Hide();
     }
     // 0 - fail | 1 - succeed | 2 - succeed with item
     public virtual void TryAction(Creature target)
@@ -51,6 +70,7 @@ public class Interact : Entity
             _locked = false;
             // check++;
             target.ItemRemove(_valid);
+            // ? unlock vfx particle
         }
         // {
         //     feedback_popup.Instance.RegisterMessage(transform, "unlocked", game_variables.Instance.ColorInteract);
@@ -58,7 +78,8 @@ public class Interact : Entity
         // }
         if (!_locked)
         {
-            _active = _oneWay ? true : !_active;
+            // _state = _oneWay ? !_default : !_state;
+            _state = !_state;
             // check++;
             // if (_oneWay && _active)
             //     feedback_popup.Instance.RegisterMessage(transform, _valid ? "opened" : "on", game_variables.Instance.ColorInteract);

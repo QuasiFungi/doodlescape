@@ -5,6 +5,11 @@ public class Item : Entity
 {
     // protected int _type;
     public string _id;
+    // ? used by drop type interact only
+    public void Reveal()
+    {
+        gameObject.SetActive(true);
+    }
     public string ID
     {
         get { return _id; }

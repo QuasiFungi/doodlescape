@@ -27,4 +27,8 @@ public class GameClock : MonoBehaviour
             onTickLate?.Invoke();
         }
     }
+    // IEnumerator Tick()
+    // {
+    //     // 
+    // }
 }
