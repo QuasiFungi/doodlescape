@@ -2,25 +2,40 @@ using UnityEngine;
 // switch lever ?button ?pulley
 public class InteractReact : Interact
 {
-    [Tooltip("Reference to react entity")] [SerializeField] protected React _target = null;
+    // [Tooltip("Reference to react entity")] [SerializeField] protected React _target = null;
     [Tooltip("Target signal")] [SerializeField] protected int _id = 0;
+    public delegate void OnPing(int id, bool value);
+    public event OnPing onPing;
     public override void TryAction(Creature source)
     {
+        // reject action if one way and already active
+        if (_oneWay && IsActivated) return;
+        // process action
         base.TryAction(source);
-        // state changed
+        // state changed, notify reacts if exist
         // if (_state != _default) _target?.Ping(_id, _active, this);
-        if (_state != _default)
-        {
-            // notify react
-            if (_target) _target.Ping(_id, _state);
-            // throw warning of unassigned react
-            else Debug.Log(gameObject.name + "\t<color=red>No assigned react target</color>", this);
-        }
+        // if (_state != _default) onPing?.Invoke(_id, _state);
+        // notify reacts of action attempt
+        onPing?.Invoke(_id, _state);
     }
-    // * testing switch sequence
-    public void Clear()
-    {
-        _state = _default;
-        // feedback_popup.Instance.RegisterMessage(transform, _valid ? "closed" : "off", game_variables.Instance.ColorInteract);
-    }
+    // // * testing switch sequence
+    // public void Initialize()
+    // {
+    //     _state = _default;
+    //     // feedback_popup.Instance.RegisterMessage(transform, _valid ? "closed" : "off", game_variables.Instance.ColorInteract);
+    // }
+    // // * testing
+    // void OnDrawGizmosSelected()
+    // {
+    //     if (_target)
+    //     {
+    //         // Draws a blue line from this transform to the target
+    //         Gizmos.color = Color.yellow;
+    //         Gizmos.DrawLine(transform.position, _target.transform.position);
+    //     }
+    // }
+    // public void Reactivate()
+    // {
+    //     // 
+    // }
 }

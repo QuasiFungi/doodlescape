@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Item : Entity
 {

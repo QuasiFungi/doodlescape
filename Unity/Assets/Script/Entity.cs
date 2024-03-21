@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 public class Entity : MonoBehaviour
 {
     protected Vector2 _position;

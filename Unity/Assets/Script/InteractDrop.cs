@@ -1,5 +1,6 @@
 using UnityEngine;
 // chest
+// ? rename to InteractItem
 public class InteractDrop : Interact
 {
     // [Tooltip("Reference to item dropped on active")] [SerializeField] protected Item _drop = null;
@@ -31,12 +32,10 @@ public class InteractDrop : Interact
         // try opening chest
         base.TryAction(source);
         // if open success
-        if (_state != _default)
+        if (IsActivated)
         {
             // allow pickup action on dropped item
-            _collider.enabled = false;
-            // appear like decal
-            _sprite.color = new Color(.25f, .25f, .25f, 1f);
+            Deactivate();
             // show item if exists
             _drop?.Reveal();
         }

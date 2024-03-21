@@ -8,6 +8,8 @@ public class GameAction
         INTERACT,
         ATTACK,
         PICKUP
+        // , DROP
+        // , USE
     }
     private ActionType _type;
     private Vector2 _position;
