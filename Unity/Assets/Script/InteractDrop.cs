@@ -10,7 +10,7 @@ public class InteractDrop : Interact
     {
         base.Start();
         // get item on top
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, .1f, LayerMask.GetMask("item"));
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, .1f, GameVariables.ScanLayerItem);
         // item detected ? multiple over same tile
         if (hit)
         {

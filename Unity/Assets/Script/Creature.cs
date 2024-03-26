@@ -42,5 +42,12 @@ public class Creature : Breakable
                 break;
             }
     }
+    // // used by crate ? filter based on type
+    // public string[] GetItemIDs()
+    // {
+    //     string[] items = new string[5];
+    //     for (int i = 0; i < 5; i++) if (_inventory[i]) items[i] = _inventory[i].ID;
+    //     return items;
+    // }
     // item drop
 }

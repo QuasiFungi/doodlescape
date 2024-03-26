@@ -9,10 +9,21 @@ public class Breakable : Entity
     // {
     //     _healthInst = _health;
     // }
-    public void HealthModify(int value)
+    protected virtual void Start()
+    {
+        // ? save load
+        _healthInst = _health;
+    }
+    // 
+    public virtual void HealthModify(int value, Creature source)
     {
         _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // * testing
         if (_healthInst == 0) Discard();
+        // if (_healthInst == 0) Hide();
+    }
+    public float HealthInst
+    {
+        get { return _healthInst; }
     }
 }

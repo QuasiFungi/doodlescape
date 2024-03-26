@@ -19,15 +19,15 @@ public class UIAction : MonoBehaviour
     }
     void OnEnable()
     {
-        GameClock.onTickLate += SpriteUpdate;
         Player.onAction += MarkerUpdate;
         GameClock.onTick += MarkerClear;
+        GameClock.onTickLate += SpriteUpdate;
     }
     void OnDisable()
     {
-        GameClock.onTickLate -= SpriteUpdate;
         Player.onAction -= MarkerUpdate;
         GameClock.onTick -= MarkerClear;
+        GameClock.onTickLate -= SpriteUpdate;
     }
     // private float colorA;
     // void Update()
@@ -45,6 +45,7 @@ public class UIAction : MonoBehaviour
     // ? use tick to update sprites
     private void SpriteUpdate()
     {
+        // print("updating");
         GameObject temp;
         int layer;
         flagExtended = source.ItemHas("item_feather");
@@ -71,11 +72,14 @@ public class UIAction : MonoBehaviour
     }
     private void MarkerUpdate(GameAction action)
     {
+        // position
         marker.transform.position = new Vector3(action.Position.x, action.Position.y, marker.transform.position.z);
+        // visibility
         marker.SetActive(true);
     }
     private void MarkerClear()
     {
+        // visibility
         marker.SetActive(false);
     }
 }

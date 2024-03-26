@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8799814577201137010}
   - component: {fileID: 7649634922351186432}
   - component: {fileID: 3707384301725507112}
+  - component: {fileID: 3403551636248968731}
   m_Layer: 6
   m_Name: breakable_fortress_crate
   m_TagString: Untagged
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3403551636248968731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320454545169625546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49db292f6dedb77c2b24fee67a9bf7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 2

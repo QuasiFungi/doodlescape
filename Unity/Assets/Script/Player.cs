@@ -3,8 +3,10 @@ public class Player : Creature
 {
     public delegate void OnAction(GameAction action);
     public static event OnAction onAction;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+        // 
         InventoryInitialize();
     }
     void OnEnable()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 public class Entity : MonoBehaviour
 {
     protected Vector2 _position;
@@ -12,8 +13,11 @@ public class Entity : MonoBehaviour
         // Destroy(gameObject);
         gameObject.SetActive(false);
     }
-    public void Discard()
+    public virtual void Discard()
     {
-        Destroy(gameObject);
+        // unsubscribe from all events
+        gameObject.SetActive(false);
+        // 
+        Destroy(gameObject, 1f);
     }
 }

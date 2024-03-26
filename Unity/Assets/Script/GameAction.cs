@@ -1,6 +1,7 @@
 using UnityEngine;
 public class GameAction
 {
+    // ? assign number to typecast from layer directly
     public enum ActionType
     {
         NULL,
@@ -53,7 +54,8 @@ public class GameAction
                 break;
             case ActionType.ATTACK:
                 // * testing
-                _target.GetComponent<Breakable>().HealthModify(-1);
+                // ? source position not necessarily adjacent to target for damage direction calculation
+                _target.GetComponent<Breakable>().HealthModify(-1, _source.GetComponent<Creature>());
                 break;
             case ActionType.INTERACT:
                 _target.GetComponent<Interact>().TryAction(_source.GetComponent<Creature>());
