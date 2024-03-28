@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 public class Entity : MonoBehaviour
 {
-    protected Vector2 _position;
-    // protected int _id;
+    // protected Vector2 _position;
+    [Tooltip("unique identifier for this entity")] [SerializeField] protected string _id;
     // protected Sprite[] _sprites;
     // protected string[] _sfxIDs;
     // protected string[] _vfxIDs;
@@ -19,5 +19,9 @@ public class Entity : MonoBehaviour
         gameObject.SetActive(false);
         // 
         Destroy(gameObject, 1f);
+    }
+    public string ID
+    {
+        get { return _id; }
     }
 }

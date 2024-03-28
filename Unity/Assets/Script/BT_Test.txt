@@ -1,2 +1,2 @@
-tree "Root"
-    Testing "abc"
+tree "Alive"
+    Wait 1

@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0befe577f7ba76de3848a6f495d07d87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: breakable_fortress_rubble
+  _health: 1

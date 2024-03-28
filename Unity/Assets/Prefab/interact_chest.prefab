@@ -143,8 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1441c5f762e4ed058ef8aff34540d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _valid: item_key
+  _id: interact_chest
   _locked: 1
+  _valid: item_key
   _oneWay: 1
   _default: 0
   _disableOnChange: 0

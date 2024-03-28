@@ -6,8 +6,8 @@ public class GameNavigation
     {
         // 
         Collider2D hit = Physics2D.OverlapCircle(position, .1f);
-        // allow actions over sensor tiles
-        if (hit != null && hit.gameObject.layer != GameVariables.LayerSensor)
+        // allow actions over sensor and damage tiles
+        if (hit != null && hit.gameObject.layer != GameVariables.LayerSensor && hit.gameObject.layer != GameVariables.LayerDamage)
         {
             tile = hit.gameObject;
             return tile.gameObject.layer - 1;

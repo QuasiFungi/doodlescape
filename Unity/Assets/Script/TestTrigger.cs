@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-[RequireComponent(typeof(Rigidbody2D))]
-public class TestTrigger : MonoBehaviour
+// [RequireComponent(typeof(Rigidbody2D))]
+public class TestTrigger : Entity
 {
     protected List<Transform> _targets;
     protected SpriteRenderer _sprite;
@@ -10,7 +10,7 @@ public class TestTrigger : MonoBehaviour
         _targets = new List<Transform>();
         _sprite = GetComponent<SpriteRenderer>();
         GetComponent<Collider2D>().isTrigger = true;
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        // GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
     }
     // void Update()
     // {
@@ -27,8 +27,8 @@ public class TestTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // print(other.gameObject.name);
-        if (_targets.Contains(other.transform) || (other.gameObject.layer != GameVariables.LayerCreature) || other.isTrigger)
-            return;
+        // ignore repeat, non creature/breakable, trigger colliders
+        if (_targets.Contains(other.transform) || (other.gameObject.layer != GameVariables.LayerCreature && other.gameObject.layer != GameVariables.LayerBreakable) || other.isTrigger) return;
         // exclude dead new
         if (other.gameObject.layer == GameVariables.LayerCreature)
         {
@@ -38,6 +38,7 @@ public class TestTrigger : MonoBehaviour
             if (other.GetComponent<Creature>().HealthInst > 0)
                 _targets.Add(other.transform);
         }
+        else _targets.Add(other.transform);
     }
     private void OnTriggerExit2D(Collider2D other) {
         if (_targets.Contains(other.transform))

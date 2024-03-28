@@ -9,6 +9,14 @@ public class GameVariables
     // {
     //     get { return new Color(1f, 1f, 0f, 1f); }
     // }
+    public static int LayerBreakable
+    {
+        get { return LayerMask.NameToLayer("breakable"); }
+    }
+    public static int LayerDamage
+    {
+        get { return LayerMask.NameToLayer("damage"); }
+    }
     public static int LayerSensor
     {
         get { return LayerMask.NameToLayer("sensor"); }

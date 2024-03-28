@@ -143,8 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1132280abe1994eaa36e8d32809ad02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _valid: 
+  _id: interact_door
   _locked: 0
+  _valid: 
   _oneWay: 1
   _default: 0
   _disableOnChange: 1

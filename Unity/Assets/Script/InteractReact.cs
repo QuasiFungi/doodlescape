@@ -3,8 +3,8 @@ using UnityEngine;
 public class InteractReact : Interact
 {
     // [Tooltip("Reference to react entity")] [SerializeField] protected React _target = null;
-    [Tooltip("Target signal")] [SerializeField] protected int _id = 0;
-    public delegate void OnPing(int id, bool value);
+    [Tooltip("Signal that will be pinged")] [SerializeField] protected int _index = 0;
+    public delegate void OnPing(int index, bool value);
     public event OnPing onPing;
     public override void TryAction(Creature source)
     {
@@ -16,7 +16,7 @@ public class InteractReact : Interact
         // if (_state != _default) _target?.Ping(_id, _active, this);
         // if (_state != _default) onPing?.Invoke(_id, _state);
         // notify reacts of action attempt
-        onPing?.Invoke(_id, _state);
+        onPing?.Invoke(_index, _state);
     }
     // // * testing switch sequence
     // public void Initialize()
