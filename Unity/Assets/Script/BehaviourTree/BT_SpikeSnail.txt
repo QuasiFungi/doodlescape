@@ -1,0 +1,32 @@
+tree "Alive"
+    fallback
+        tree "Wander"
+        tree "Hide"
+
+tree "Wander"
+    sequence
+        EntityToMove
+        not SensorAny
+        IsBored
+        SetVisions 1
+        SetSprite 0
+        EntitySpeed 0.5
+        mute
+            sequence
+                fallback
+                    IsMoveWaypoint
+                    MoveToWaypoint
+                EntityAtMove 1.0
+                MoveToWaypoint
+
+tree "Hide"
+    mute
+        sequence
+            SetVisions 0
+            SetSprite 1
+            EntitySpeed 0.0
+            MoveToTrigger
+            IsMoveCreature
+            SetAttack 0 1
+            Wait 1
+            SetAttack 0 0

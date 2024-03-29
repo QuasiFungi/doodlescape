@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using Panda;
 public class Mob : Creature
@@ -20,6 +21,8 @@ public class Mob : Creature
         UpdateState();
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
+        // * testing movement
+        transform.position = _move;
     }
     protected bool _isAlert;
     protected bool _isAware;
@@ -78,8 +81,6 @@ public class Mob : Creature
     // * testing
     protected List<Vector2> _test = new List<Vector2>();
     [Tooltip("highlight tiles being searched for sensor triggers")] [SerializeField] private bool _showSearch = false;
-    // for asyncronous movement
-    protected float _timerPath;
     // ? use string ids
     [Tooltip("ids of entities that will be attacked")] [SerializeField] protected List<string> _hostiles;
     // ? taken from anim or entity
@@ -89,12 +90,12 @@ public class Mob : Creature
     // 
     protected Color[] _colors;
     protected float _rotation;
-    protected float _speed = 30f;
+    protected float _speedRotate = 0f;
     void Awake()
     {
         _ai = GetComponent<PandaBehaviour>();
         // 
-        _anchor = new EventPoint(transform.position, gameObject.layer, 0f);
+        _anchor = new EventPoint(Position, gameObject.layer, 0f);
         // _BT = GetComponent<PandaBehaviour>();
         // _isBT = false;
         _isAlert = false;
@@ -109,7 +110,7 @@ public class Mob : Creature
         _timers = new float[_countTimers];
         _flags = new bool[_countFlags];
         // _sleep = true;
-        _timerPath = 0f;
+        // _timerPath = 0f;
         // _flagStatus = -1;
         // _hostiles = new List<Transform>();
         // 
@@ -120,8 +121,8 @@ public class Mob : Creature
                     for (float y = .5f-_bounds.y / 2f; y <= -.5f+_bounds.y / 2f; y++)
                     {
                         // * testing detection align with grid
-                        if (_showSearch) _test.Add((Vector2)transform.position + new Vector2(x, y) + _offset);
-                        TestTrigger temp = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(x, y) + _offset, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<TestTrigger>();
+                        if (_showSearch) _test.Add((Vector2)Position + new Vector2(x, y) + _offset);
+                        TestTrigger temp = Physics2D.OverlapCircle((Vector2)Position + new Vector2(x, y) + _offset, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<TestTrigger>();
                         if (temp?.transform.GetComponent<Entity>().ID == _trigger && !_sensorsTrigger.Contains(temp)) _sensorsTrigger.Add(temp);
                     }
                 break;
@@ -137,7 +138,7 @@ public class Mob : Creature
                 // - iterate n
                 // - if n less than listSearch size, repeat from step 3
                 List<Vector2> listSearch = new List<Vector2>();
-                Vector2 position = (Vector2)transform.position;
+                Vector2 position = (Vector2)Position;
                 LoadAdjacentTiles(position, ref listSearch);
                 int count = 0;
                 while (count < listSearch.Count)
@@ -168,6 +169,11 @@ public class Mob : Creature
         _colors[0] = new Color(0f, 1f, 0f, 1f);
         _colors[1] = new Color(.25f, .25f, .25f, 1f);
         _rotation = transform.eulerAngles.z;
+        // 
+        // - MOTOR
+        // 
+        _move = Position;
+        _spawn = Position;
     }
     private void LoadAdjacentTiles(Vector2 position, ref List<Vector2> list)
     {
@@ -210,8 +216,8 @@ public class Mob : Creature
         if (_timerPath > 0) _timerPath -= Time.deltaTime;
         // 
         // * testing ? high speed jitter ? handle overshoot
-        if (Mathf.Abs(_rotation) > _speed * Time.deltaTime)
-            transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speed * Time.deltaTime;
+        if (Mathf.Abs(_rotation) > _speedRotate * Time.deltaTime)
+            transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedRotate * Time.deltaTime;
         
     }
     private void UpdateState()
@@ -244,9 +250,9 @@ public class Mob : Creature
             {
                 if (!_hostiles.Contains(target.GetComponent<Entity>().ID)) continue;
                 // ? closest [memory waste ?]
-                if (Vector3.Distance(transform.position, target.position) < distance)
+                if (Vector3.Distance(Position, target.position) < distance)
                 {
-                    distance = Vector3.Distance(transform.position, target.position);
+                    distance = Vector3.Distance(Position, target.position);
                     _positionVision = new EventPoint(target.position, target.gameObject.layer, Time.time);
                 }
             }
@@ -283,9 +289,9 @@ public class Mob : Creature
                     if (target.GetComponent<Creature>().HealthInst <= 0)
                         continue;
                 // ? closest [memory waste ?]
-                if (Vector3.Distance(transform.position, target.position) < distance)
+                if (Vector3.Distance(Position, target.position) < distance)
                 {
-                    distance = Vector3.Distance(transform.position, target.position);
+                    distance = Vector3.Distance(Position, target.position);
                     _positionTrigger = new EventPoint(target.position, target.gameObject.layer, Time.time);
                 }
             }
@@ -306,7 +312,7 @@ public class Mob : Creature
     // * testing snap
     private void SetTarget(Vector3 target)
     {
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction = (target - Position).normalized;
         float from = transform.eulerAngles.z % 360f;
         from = from < 0 ? from + 360f : from;
         float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
@@ -316,7 +322,7 @@ public class Mob : Creature
     }
     private bool CheckDirection(Vector3 target, float value)
     {
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction = (target - Position).normalized;
         float angle = (270f + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
         if (angle > transform.eulerAngles.z)
             return angle - transform.eulerAngles.z <= value;
@@ -329,7 +335,7 @@ public class Mob : Creature
         {
             Gizmos.color = Color.red;
             // Gizmos.DrawWireCube(_motor.Position + (Vector3)_offset, new Vector3(_bounds.x, _bounds.y));
-            Gizmos.DrawWireCube(transform.position + (Vector3)_offset, new Vector3(_bounds.x - .1f, _bounds.y - .1f));
+            Gizmos.DrawWireCube(Position + (Vector3)_offset, new Vector3(_bounds.x - .1f, _bounds.y - .1f));
         }
         if (_searchType != TriggerSearchType.NULL)
         {
@@ -351,9 +357,90 @@ public class Mob : Creature
         {
             Gizmos.color = new Color(1f, 1f, 1f, .5f);
             Gizmos.DrawSphere(_anchor.Position, .5f);
-            Gizmos.DrawLine(transform.position, _anchor.Position);
+            Gizmos.DrawLine(Position, _anchor.Position);
+        }
+        // path
+        if (_showPath && _path != null)
+        {
+            Gizmos.color = new Color(1f, 1f, 1f, .5f);
+            Vector3 current = Position;
+            foreach (Vector3 step in _path)
+            {
+                Gizmos.DrawLine(current, step);
+                current = step;
+            }
         }
     }
+    #region Navigation
+    [SerializeField] private bool _showPath = false;
+    protected Vector3[] _path = null;
+    protected int _targetIndex = 0;
+    protected Vector3 _move;
+    [SerializeField] protected float _timePath = 1f;
+    // for asyncronous movement
+    protected float _timerPath = 0;
+    protected float _speedMove = 0;
+    protected Vector3 _spawn;
+    [Tooltip("Initial state ? root (optional?)")] [SerializeField] protected Waypoint _waypoint;
+    // * testing
+    public void NavigateCancel()
+    {
+        StopCoroutine("PathFollow");
+        _path = null;
+        _targetIndex = 0;
+    }
+    public void NavigateTo(Vector3 target)
+    {
+        if (GameGrid.Instance.WorldToIndex(target) != GameGrid.Instance.WorldToIndex(Position))
+            GameNavigation.Instance.PathCalculate(new PathData(Position, target, OnPathFound));
+    }
+    public void OnPathFound(Vector3[] path, bool success)
+    {
+        if (success)
+        {
+            // print(_path.Length);
+            _path = path;
+            _targetIndex = 0;
+            StopCoroutine("PathFollow");
+            if (gameObject.activeSelf) StartCoroutine("PathFollow");
+        }
+    }
+    IEnumerator PathFollow()
+    {
+        if (_path.Length > 0)
+            _move = _path[0];
+        while (true)
+        {
+            if (Vector3.Distance(Position, _move) < 0.1f)
+            {
+                _targetIndex++;
+                if (_path == null)
+                {
+                    _targetIndex = 0;
+                    yield break;
+                }
+                else if (_targetIndex >= _path.Length)
+                {
+                    _targetIndex = 0;
+                    _path = null;
+                    yield break;
+                }
+                _move = _path[_targetIndex];
+            }
+            yield return null;
+        }
+    }
+    // waypoint, else current position
+    protected Vector3 GetWaypoint()
+    {
+        if (_waypoint)
+        {
+            _waypoint = _waypoint.GetNext();
+            return _waypoint ? _waypoint.Position : _spawn;
+        }
+        return _spawn;
+    }
+    #endregion
     #region Behaviour Tree
     // [Task]
     // void Testing(string value)
@@ -365,8 +452,8 @@ public class Mob : Creature
     void DoAttack(int indexPrefab, int indexSpawn, int parent)
     {
         // // * testing [? safety]
-        // _motor.NavigateCancel();
         // _anim.SetTarget(_anchor.Position);
+        NavigateCancel();
         // 
         GameObject temp = Instantiate(_prefabs[indexPrefab], _spawns[indexSpawn].position, _spawns[indexSpawn].rotation);
         // 
@@ -379,11 +466,30 @@ public class Mob : Creature
         ThisTask.Succeed();
     }
     [Task]
+    void EntityAtMove(float value)
+    {
+        float distance = Vector3.Distance(Position, _anchor.Position);
+        ThisTask.debugInfo = distance.ToString();
+        ThisTask.Complete(distance <= value);
+    }
+    [Task]
     void EntitySpeed(float value)
     {
-        // _motor.Speed = value;
-        // if (value == 0 && _motor.Speed != 0)
-        //     _motor.NavigateCancel();
+        _speedMove = value;
+        if (value == 0 && _speedMove != 0) NavigateCancel();
+        ThisTask.Succeed();
+    }
+    [Task]
+    void EntityToMove()
+    {
+        ThisTask.debugInfo = _anchor.Position.ToString();
+        // if (_timerPath <= 0 && _speedMove != 0)
+        // {
+        //     // * testing asynchronous
+        //     _timerPath = _timePath + Random.Range(-.2f, .2f);
+        //     NavigateTo(_anchor.Position);
+        // }
+        NavigateTo(_anchor.Position);
         ThisTask.Succeed();
     }
     [Task]
@@ -404,6 +510,18 @@ public class Mob : Creature
         ThisTask.Complete(_sensorTimer == _attentionTime);
     }
     [Task]
+    void IsMoveCreature()
+    {
+        ThisTask.debugInfo = _anchor.Position.ToString();
+        Collider2D hit = Physics2D.OverlapCircle(_anchor.Position, .1f, GameVariables.ScanLayerCreature);
+        ThisTask.Complete(hit && _hostiles.Contains(hit.transform.GetComponent<Entity>().ID));
+    }
+    [Task]
+    void IsMoveWaypoint()
+    {
+        ThisTask.Complete(_waypoint ? _waypoint.IsWaypoint(_anchor.Position) : true);
+    }
+    [Task]
     void IsTimer(int index)
     {
         if (index > -1 && index < _countTimers)
@@ -418,7 +536,7 @@ public class Mob : Creature
     void IsDirection(float value)
     {
         // * testing [? safety]
-        // _motor.NavigateCancel();
+        NavigateCancel();
         SetTarget(_anchor.Position);
         ThisTask.Complete(CheckDirection(_anchor.Position, value));
     }
@@ -429,12 +547,16 @@ public class Mob : Creature
         else
         {
             ThisTask.debugInfo = _positionTrigger.Position.ToString();
-            // * testing [? chase bounds/limit]
-            // _anchor.position = _positionTrigger.Position;
             _anchor = _positionTrigger;
             _positionTrigger = null;
             ThisTask.Succeed();
         }
+    }
+    [Task]
+    void MoveToWaypoint()
+    {
+        _anchor = new EventPoint(GetWaypoint(), _anchor.Layer, _anchor.Time);
+        ThisTask.Succeed();
     }
     [Task]
     void SensorAny()
@@ -454,6 +576,16 @@ public class Mob : Creature
         else ThisTask.Fail();
     }
     [Task]
+    void SetAttack(int index, int value)
+    {
+        if (_prefabs[index].activeSelf != (value == 1))
+        {
+            _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable);
+            _prefabs[index].SetActive(value == 1);
+        }
+        ThisTask.Succeed();
+    }
+    [Task]
     void SetColliders(int value)
     {
         // * testing
@@ -465,7 +597,7 @@ public class Mob : Creature
     [Task]
     void SetSpeedRotation(float value)
     {
-        _speed = value;
+        _speedRotate = value;
         ThisTask.Succeed();
     }
     [Task]
@@ -491,10 +623,20 @@ public class Mob : Creature
         else ThisTask.Fail();
     }
     [Task]
+    void SetVisions(int value)
+    {
+        _isVision = value == 1;
+        ThisTask.Succeed();
+    }
+    [Task]
     void UnsetAlert()
     {
         _isAlert = false;
         ThisTask.Succeed();
     }
     #endregion
+    private Vector3 Position
+    {
+        get { return transform.position; }
+    }
 }
