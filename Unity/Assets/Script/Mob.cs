@@ -17,12 +17,12 @@ public class Mob : Creature
     [Tooltip("ai tick tied to clock (vs frame)")] [SerializeField] private bool _isAI = true;
     private void BehaviourTick()
     {
+        // * testing movement
+        transform.position = _move;
         // get latest info
         UpdateState();
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
-        // * testing movement
-        transform.position = _move;
     }
     protected bool _isAlert;
     protected bool _isAware;
@@ -264,9 +264,8 @@ public class Mob : Creature
             // EnableWaypoints();
             _isAlert = true;
             _sensorTimer = 0;
-            // *testing instant aware
-            if (_isAware)
-                _awareTimer = _attentionTime;
+            // refresh awareness if already aware
+            if (_isAware) _awareTimer = _attentionTime;
             return true;
         }
         return false;
@@ -357,7 +356,7 @@ public class Mob : Creature
         {
             Gizmos.color = new Color(1f, 1f, 1f, .5f);
             Gizmos.DrawSphere(_anchor.Position, .5f);
-            Gizmos.DrawLine(Position, _anchor.Position);
+            if (!_showPath) Gizmos.DrawLine(Position, _anchor.Position);
         }
         // path
         if (_showPath && _path != null)
@@ -381,6 +380,7 @@ public class Mob : Creature
     protected float _timerPath = 0;
     protected float _speedMove = 0;
     protected Vector3 _spawn;
+    [Tooltip("Can mob move diagonally")] [SerializeField] protected bool _isDiagonal = false;
     [Tooltip("Initial state ? root (optional?)")] [SerializeField] protected Waypoint _waypoint;
     // * testing
     public void NavigateCancel()
@@ -392,7 +392,7 @@ public class Mob : Creature
     public void NavigateTo(Vector3 target)
     {
         if (GameGrid.Instance.WorldToIndex(target) != GameGrid.Instance.WorldToIndex(Position))
-            GameNavigation.Instance.PathCalculate(new PathData(Position, target, OnPathFound));
+            GameNavigation.Instance.PathCalculate(new PathData(Position, target, _isDiagonal, OnPathFound));
     }
     public void OnPathFound(Vector3[] path, bool success)
     {
@@ -475,8 +475,8 @@ public class Mob : Creature
     [Task]
     void EntitySpeed(float value)
     {
-        _speedMove = value;
         if (value == 0 && _speedMove != 0) NavigateCancel();
+        _speedMove = value;
         ThisTask.Succeed();
     }
     [Task]
@@ -489,7 +489,7 @@ public class Mob : Creature
         //     _timerPath = _timePath + Random.Range(-.2f, .2f);
         //     NavigateTo(_anchor.Position);
         // }
-        NavigateTo(_anchor.Position);
+        if (_speedMove > 0) NavigateTo(_anchor.Position);
         ThisTask.Succeed();
     }
     [Task]
@@ -621,6 +621,12 @@ public class Mob : Creature
             ThisTask.Succeed();
         }
         else ThisTask.Fail();
+    }
+    [Task]
+    void SetTriggers(int value)
+    {
+        _isTrigger = value == 1;
+        ThisTask.Succeed();
     }
     [Task]
     void SetVisions(int value)

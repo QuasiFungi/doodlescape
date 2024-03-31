@@ -19,5 +19,7 @@ public class GameInput : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.Alpha3)) 
         // if (Input.GetKeyDown(KeyCode.Alpha4)) 
         // if (Input.GetKeyDown(KeyCode.Alpha5)) 
+        // - tick
+        if (Input.GetKeyDown(KeyCode.Space)) onTap?.Invoke(direction);
     }
 }

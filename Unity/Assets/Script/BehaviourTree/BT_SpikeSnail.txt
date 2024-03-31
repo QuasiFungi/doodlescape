@@ -8,6 +8,7 @@ tree "Wander"
         EntityToMove
         not SensorAny
         IsBored
+        SetTriggers 0
         SetVisions 1
         SetSprite 0
         EntitySpeed 0.5
@@ -22,6 +23,7 @@ tree "Wander"
 tree "Hide"
     mute
         sequence
+            SetTriggers 1
             SetVisions 0
             SetSprite 1
             EntitySpeed 0.0

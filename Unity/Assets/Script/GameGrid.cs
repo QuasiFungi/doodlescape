@@ -10,13 +10,14 @@ public class GameGrid : MonoBehaviour
         if (!showGrid)
             return;
         // Gizmos.DrawWireCube(transform.position + _offset, new Vector3(_sizeGrid.x, _sizeGrid.y));
+        Gizmos.color = Color.black;
         for (int x = 0; x < _sizeGrid_Int.x; x++)
         {
            for (int y = 0; y < _sizeGrid_Int.y; y++)
            {
                 // Gizmos.color = _grid[x, y].IsWalkable ? Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(_weightBounds.x, _weightBounds.y, _grid[x, y].Weight)) : Color.red;
-                Gizmos.color = _grid[x, y].IsWalkable ? Color.black : Color.red;
-                Gizmos.DrawWireCube(IndexToWorld(x, y), Vector3.one * .45f);
+                // Gizmos.color = _grid[x, y].IsWalkable ? Color.black : Color.red;
+                if (_grid[x, y].IsWalkable) Gizmos.DrawWireCube(IndexToWorld(x, y), Vector3.one * .45f);
            }
         }
     }
@@ -84,21 +85,37 @@ public class GameGrid : MonoBehaviour
         _grid = new GridData[_sizeGrid_Int.x, _sizeGrid_Int.y];
         // UpdateGrid(null);
     }
-    // * testing [? dev control variable]
-    [SerializeField] private float _time = 1f;
-    private float _timer = .5f;
-    void Update()
+    // // * testing [? dev control variable]
+    // [Tooltip("delay between grid state updates")] [SerializeField] private float _time = 1f;
+    // private float _timer = .5f;
+    // void Update()
+    // {
+    //     if (_timer > 0)
+    //         _timer -= Time.deltaTime;
+    //     else
+    //     {
+    //         _timer = _time;
+    //         List<Vector2Int[]> chunks = ManagerChunk.Instance.GetActive();
+    //         if (chunks.Count == 0) return;
+    //         UpdateGridDynamic(chunks);
+    //         UpdateGrid(chunks);
+    //     }
+    // }
+    void OnEnable()
     {
-        if (_timer > 0)
-            _timer -= Time.deltaTime;
-        else
-        {
-            _timer = _time;
-            List<Vector2Int[]> chunks = ManagerChunk.Instance.GetActive();
-            if (chunks.Count == 0) return;
-            UpdateGridDynamic(chunks);
-            UpdateGrid(chunks);
-        }
+        // ? tick early
+        GameClock.onTickEarly += TickGrid;
+    }
+    void OnDisable()
+    {
+        GameClock.onTickEarly += TickGrid;
+    }
+    private void TickGrid()
+    {
+        List<Vector2Int[]> chunks = ManagerChunk.Instance.GetActive();
+        if (chunks.Count == 0) return;
+        UpdateGridDynamic(chunks);
+        UpdateGrid(chunks);
     }
     private void UpdateGridDynamic(List<Vector2Int[]> chunks)
     {

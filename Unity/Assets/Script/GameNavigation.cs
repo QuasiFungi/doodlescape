@@ -64,10 +64,13 @@ public class GameNavigation : MonoBehaviour
             path = path,
             pathNodeArray = pathNodeArray,
             size = new int2(GameGrid.Instance.SizeX, GameGrid.Instance.SizeY),
+            isDiagonal = request.isDiagonal,
         };
         JobHandle jobHandle = pathCalculateJob.Schedule();
         jobHandle.Complete();
         Vector3[] waypoints = NativeToVector3(pathCalculateJob.path);
+        // // * testing
+        // print(waypoints.Length);
         path.Dispose();
         pathNodeArray.Dispose();
         results.Enqueue(new PathResult(waypoints, waypoints.Length > 0, request.callback));
@@ -110,12 +113,12 @@ public class GameNavigation : MonoBehaviour
         Vector2 directionOld = Vector2.zero;
         for (int i = 1; i < path.Count; i++)
         {
-            Vector2 directionNew = new Vector2(path[i - 1].x - path[i].x, path[i - 1].y - path[i].y);
-            if (directionNew != directionOld)
-            {
+            // Vector2 directionNew = new Vector2(path[i - 1].x - path[i].x, path[i - 1].y - path[i].y);
+            // if (directionNew != directionOld)
+            // {
                 waypoints.Add(path[i - 1]);
-            }
-            directionOld = directionNew;
+            // }
+            // directionOld = directionNew;
         }
         Vector3[] temp = waypoints.ToArray();
         Array.Reverse(temp);
@@ -140,18 +143,31 @@ public class GameNavigation : MonoBehaviour
         public NativeList<int2> path;
         public NativeArray<PathNode> pathNodeArray;
         public int2 size;
+        public bool isDiagonal;
         public void Execute()
         {
             // burst compatible
-            NativeArray<int2> neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
-            neighbourOffsetArray[0] = new int2(-1, 0);  // L
-            neighbourOffsetArray[1] = new int2(+1, 0);  // R
-            neighbourOffsetArray[2] = new int2(0, -1);  // D
-            neighbourOffsetArray[3] = new int2(0, +1);  // U
-            neighbourOffsetArray[4] = new int2(-1, -1); // LD
-            neighbourOffsetArray[5] = new int2(-1, +1); // LU
-            neighbourOffsetArray[6] = new int2(+1, -1); // RD
-            neighbourOffsetArray[7] = new int2(+1, +1); // DU
+            NativeArray<int2> neighbourOffsetArray;
+            if (isDiagonal)
+            {
+                neighbourOffsetArray = new NativeArray<int2>(8, Allocator.Temp);
+                neighbourOffsetArray[0] = new int2(-1, 0);  // L
+                neighbourOffsetArray[1] = new int2(+1, 0);  // R
+                neighbourOffsetArray[2] = new int2(0, -1);  // D
+                neighbourOffsetArray[3] = new int2(0, +1);  // U
+                neighbourOffsetArray[4] = new int2(-1, -1); // LD
+                neighbourOffsetArray[5] = new int2(-1, +1); // LU
+                neighbourOffsetArray[6] = new int2(+1, -1); // RD
+                neighbourOffsetArray[7] = new int2(+1, +1); // DU
+            }
+            else
+            {
+                neighbourOffsetArray = new NativeArray<int2>(4, Allocator.Temp);
+                neighbourOffsetArray[0] = new int2(-1, 0);  // L
+                neighbourOffsetArray[1] = new int2(+1, 0);  // R
+                neighbourOffsetArray[2] = new int2(0, -1);  // D
+                neighbourOffsetArray[3] = new int2(0, +1);  // U
+            }
             int endNodeIndex = CalculateIndex(endPosition.x, endPosition.y, size.x);
             PathNode startNode = pathNodeArray[CalculateIndex(startPosition.x, startPosition.y, size.x)];
             startNode.costG = 0;
@@ -309,11 +325,13 @@ public struct PathData
 {
     public Vector2Int source;
     public Vector2Int target;
+    public bool isDiagonal;
     public Action<Vector3[], bool> callback;
-    public PathData(Vector3 source, Vector3 target, Action<Vector3[], bool> callback)
+    public PathData(Vector3 source, Vector3 target, bool isDiagonal, Action<Vector3[], bool> callback)
     {
         this.source = GameGrid.Instance.WorldToIndex(source);
         this.target = GameGrid.Instance.WorldToIndex(target);
+        this.isDiagonal = isDiagonal;
         this.callback = callback;
     }
 }
