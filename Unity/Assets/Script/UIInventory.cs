@@ -7,12 +7,12 @@ public class UIInventory : MonoBehaviour
     void OnEnable()
     {
         // Player.onAction += RegisterAction;
-        GameClock.onTickLate += IconsUpdate;
+        GameClock.onTick += IconsUpdate;
     }
     void OnDisable()
     {
         // Player.onAction -= RegisterAction;
-        GameClock.onTickLate -= IconsUpdate;
+        GameClock.onTick -= IconsUpdate;
     }
     private Image[] slots;
     void Awake()

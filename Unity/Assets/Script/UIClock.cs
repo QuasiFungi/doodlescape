@@ -12,11 +12,11 @@ public class UIClock : MonoBehaviour
     }
     void OnEnable()
     {
-        GameClock.onTick += SpriteReset;
+        GameClock.onTickEarly += SpriteReset;
     }
     void OnDisable()
     {
-        GameClock.onTick -= SpriteReset;
+        GameClock.onTickEarly -= SpriteReset;
     }
     private void SpriteReset()
     {

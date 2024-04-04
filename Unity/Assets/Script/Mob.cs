@@ -7,37 +7,46 @@ public class Mob : Creature
     void OnEnable()
     {
         // ? after player has moved
-        GameClock.onTick += BehaviourTick;
+        // GameClock.onTick += BehaviourTick;
+        GameClock.onTickLate += BehaviourTick;
     }
     void OnDisable()
     {
-        GameClock.onTick -= BehaviourTick;
+        // GameClock.onTick -= BehaviourTick;
+        GameClock.onTickLate -= BehaviourTick;
     }
     private PandaBehaviour _ai;
     [Tooltip("ai tick tied to clock (vs frame)")] [SerializeField] private bool _isAI = true;
     private void BehaviourTick()
     {
-        // * testing movement
-        transform.position = _move;
         // get latest info
         UpdateState();
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
+        // // * testing movement
+        // if(_speedMove > 0f) transform.position = _move;
+        // // * testing animation
+        // if (_path != null)
+        // {
+        //     // print(_path[1] + "\t" + Position);
+        //     // SetRotation(_path[Mathf.Clamp(0, _path.Length, _targetIndex + 1)]);
+        //     if (_path.Length > 1) SetTarget(_path[1]);
+        // }
     }
     protected bool _isAlert;
     protected bool _isAware;
-    protected float _awareTimer;
+    protected int _awareTimer;
     // time since sensor event
-    protected float _sensorTimer;
+    protected int _sensorTimer;
     // ignore/forget older sounds ? events
-    [Tooltip("ignore/forget older sensor events")] [SerializeField] protected float _attentionTime;
+    [Tooltip("ignore/forget older sensor events")] [SerializeField] protected int _attentionTime;
     // ? feels ugly to use, enums maybe
     [Tooltip("enable/disable all sensors")] [SerializeField] protected bool _isSensors;
     [Tooltip("enable/disable trigger sensors only")] [SerializeField] protected bool _isTrigger;
     [Tooltip("enable/disable vision sensors only")] [SerializeField] protected bool _isVision;
     // * testing ? get automatically from children
-    [SerializeField] protected TestVision[] _sensorsVision;
-    [SerializeField] protected List<TestTrigger> _sensorsTrigger;
+    [SerializeField] protected SensorVision[] _sensorsVision;
+    [SerializeField] protected List<SensorTrigger> _sensorsTrigger;
     protected class EventPoint
     {
         public Vector3 Position;
@@ -61,7 +70,7 @@ public class Mob : Creature
     // protected List<Transform> _hostiles;
     // [Tooltip("colors this entity can take")] [SerializeField] protected Color[] _colors;
     [Tooltip("Number of internal timers")] [SerializeField] protected int _countTimers;
-    protected float[] _timers;
+    protected int[] _timers;
     [Tooltip("Number of internal flags")] [SerializeField] protected int _countFlags;
     protected bool[] _flags;
     // * testing [attack ? effect]
@@ -90,7 +99,7 @@ public class Mob : Creature
     // 
     protected Color[] _colors;
     protected float _rotation;
-    protected float _speedRotate = 0f;
+    protected float _speedTurn = 0f;
     void Awake()
     {
         _ai = GetComponent<PandaBehaviour>();
@@ -102,12 +111,13 @@ public class Mob : Creature
         _isAware = false;
         _awareTimer = 0;
         _sensorTimer = _attentionTime;
-        _isVision = true;
-        _isTrigger = true;
-        _isSensors = true;
+        // _isVision = true;
+        // _isTrigger = true;
+        // _isSensors = true;
+        if ((!_isTrigger && !_isVision) || !_isSensors) Debug.LogWarning(gameObject.name + ":\tMob has no active sensors");
         _positionVision = null;
         _positionTrigger = null;
-        _timers = new float[_countTimers];
+        _timers = new int[_countTimers];
         _flags = new bool[_countFlags];
         // _sleep = true;
         // _timerPath = 0f;
@@ -122,7 +132,7 @@ public class Mob : Creature
                     {
                         // * testing detection align with grid
                         if (_showSearch) _test.Add((Vector2)Position + new Vector2(x, y) + _offset);
-                        TestTrigger temp = Physics2D.OverlapCircle((Vector2)Position + new Vector2(x, y) + _offset, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<TestTrigger>();
+                        SensorTrigger temp = Physics2D.OverlapCircle((Vector2)Position + new Vector2(x, y) + _offset, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<SensorTrigger>();
                         if (temp?.transform.GetComponent<Entity>().ID == _trigger && !_sensorsTrigger.Contains(temp)) _sensorsTrigger.Add(temp);
                     }
                 break;
@@ -146,7 +156,7 @@ public class Mob : Creature
                     position = listSearch[count];
                     // * testing positions being searched
                     if (_showSearch) _test.Add(position);
-                    TestTrigger temp = Physics2D.OverlapCircle(position, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<TestTrigger>();
+                    SensorTrigger temp = Physics2D.OverlapCircle(position, .1f, GameVariables.ScanLayerSensor)?.transform.GetComponent<SensorTrigger>();
                     if ((temp?.transform.GetComponent<Entity>().ID == _trigger && !_sensorsTrigger.Contains(temp)))
                     {
                         _sensorsTrigger.Add(temp);
@@ -156,7 +166,7 @@ public class Mob : Creature
                 }
                 break;
         }
-        foreach (TestTrigger sensor in _sensorsTrigger)
+        foreach (SensorTrigger sensor in _sensorsTrigger)
             sensor.SetActive(true);
         // ? move to anim
         _sprite = GetComponent<SpriteRenderer>();
@@ -172,8 +182,10 @@ public class Mob : Creature
         // 
         // - MOTOR
         // 
-        _move = Position;
+        // _move = Position;
         _spawn = Position;
+        _directionCheck = 0f;
+        _directionTarget = Position;
     }
     private void LoadAdjacentTiles(Vector2 position, ref List<Vector2> list)
     {
@@ -202,49 +214,66 @@ public class Mob : Creature
         position += Vector2.up;
         if (!list.Contains(position)) list.Add(position);
     }
-    void Update()
-    {
-        // ? memory waste, assume time passed is 1 second since last updatestate, use int timer for ticks
-        if (ProcessVision() || ProcessTrigger()) _awareTimer += _attentionTime * Time.deltaTime;
-        // 
-        else if (_awareTimer > 0) _awareTimer -= Time.deltaTime;
-        // ? check if not already max
-        _sensorTimer = Mathf.Clamp(_sensorTimer + Time.deltaTime, 0, _attentionTime);
-        // 
-        for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i] -= Time.deltaTime;
-        // 
-        if (_timerPath > 0) _timerPath -= Time.deltaTime;
-        // 
-        // * testing ? high speed jitter ? handle overshoot
-        if (Mathf.Abs(_rotation) > _speedRotate * Time.deltaTime)
-            transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedRotate * Time.deltaTime;
+    // void Update()
+    // {
+    //     // ? memory waste, assume time passed is 1 second since last updatestate, use int timer for ticks
+    //     // if (CheckVision() || CheckTrigger()) _awareTimer += _attentionTime * Time.deltaTime;
+    //     if (CheckVision() || CheckTrigger()) _awareTimer++;
+    //     // 
+    //     // else if (_awareTimer > 0) _awareTimer -= Time.deltaTime;
+    //     else if (_awareTimer > 0) _awareTimer--;
+    //     // ? check if not already max
+    //     // _sensorTimer = Mathf.Clamp(_sensorTimer + Time.deltaTime, 0, _attentionTime);
+    //     _sensorTimer = Mathf.Clamp(_sensorTimer + 1, 0, _attentionTime);
+    //     // 
+    //     // for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i] -= Time.deltaTime;
+    //     for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i]--;
+    //     // 
+    //     // if (_timerPath > 0) _timerPath -= Time.deltaTime;
+    //     if (_timerPath > 0) _timerPath--;
+    //     // 
+    //     // if (!CheckDirection())
+    //     // {
+    //     //     // * testing ? high speed jitter ? handle overshoot
+    //     //     if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
+    //     //         transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
+    //     // }
         
-    }
+    // }
     private void UpdateState()
     {
-        // 
-        if (_awareTimer > _attentionTime)
+        // get latest sensor info
+        ProcessTrigger();
+        ProcessVision();
+        // recall sensor information [priority]
+        if (CheckTrigger() || CheckVision())
         {
-            _awareTimer = _attentionTime;
-            _isAware = true;
+            // prevent overshoot since trigger can set aware
+            if (_awareTimer < _attentionTime) _awareTimer++;
         }
+        else if (_awareTimer > 0) _awareTimer--;
         // 
-        else if (_awareTimer < 0)
-        {
-            _awareTimer = 0;
-            _isAware = false;
-        }
+        if (_awareTimer == _attentionTime) _isAware = true;
+        else if (_awareTimer == 0) _isAware = false;
+        // ? check if not already max
+        _sensorTimer = Mathf.Clamp(_sensorTimer + 1, 0, _attentionTime);
         // 
-        if (_positionTrigger != null && Time.time - _positionTrigger.Time > _attentionTime) _positionTrigger = null;
-        if (_positionVision != null && Time.time - _positionVision.Time > _attentionTime) _positionVision = null;
+        if (_positionTrigger != null && Time.time - _positionTrigger.Time > (float)_attentionTime) _positionTrigger = null;
+        if (_positionVision != null && Time.time - _positionVision.Time > (float)_attentionTime) _positionVision = null;
+        // 
+        for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i]--;
+        // 
+        if (_timerPath > 0) _timerPath--;
     }
     // ? executed twice first in behaviour tree then update tick
-    protected bool ProcessVision()
+    protected void ProcessVision()
     {
-        if (!_isVision || !_isSensors)
-            return false;
+        // if (!_isVision || !_isSensors)
+        //     return false;
+        // is vision allowed
+        if (!_isVision || !_isSensors) return;
         float distance = float.MaxValue;
-        foreach (TestVision sensor in _sensorsVision)
+        foreach (SensorVision sensor in _sensorsVision)
         {
             foreach (Transform target in sensor.Targets)
             {
@@ -258,6 +287,22 @@ public class Mob : Creature
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
         }
+        // if (_positionVision != null)
+        // {
+        //     // // enable waypoints ? borked ?
+        //     // EnableWaypoints();
+        //     _isAlert = true;
+        //     _sensorTimer = 0;
+        //     // refresh awareness if already aware
+        //     if (_isAware) _awareTimer = _attentionTime;
+        //     return true;
+        // }
+        // return false;
+    }
+    private bool CheckVision()
+    {
+        // is vision allowed
+        if (!_isVision || !_isSensors) return false;
         if (_positionVision != null)
         {
             // // enable waypoints ? borked ?
@@ -271,12 +316,13 @@ public class Mob : Creature
         return false;
     }
     // ? executed twice first in behaviour tree then update tick
-    protected bool ProcessTrigger()
+    protected void ProcessTrigger()
     {
-        if (!_isTrigger || !_isSensors)
-            return false;
+        // if (!_isTrigger || !_isSensors)
+        //     return false;
+        if (!_isTrigger || !_isSensors) return;
         float distance = float.MaxValue;
-        foreach (TestTrigger sensor in _sensorsTrigger)
+        foreach (SensorTrigger sensor in _sensorsTrigger)
         {
             foreach (Transform target in sensor.Targets)
             {
@@ -296,6 +342,22 @@ public class Mob : Creature
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
         }
+        // if (_positionTrigger != null)
+        // {
+        //     // // enable waypoints ? borked ?
+        //     // EnableWaypoints();
+        //     _isAlert = true;
+        //     _sensorTimer = 0;
+        //     // *testing instant aware
+        //     _awareTimer = _attentionTime;
+        //     return true;
+        // }
+        // return false;
+    }
+    private bool CheckTrigger()
+    {
+        // is trigger allowed
+        if (!_isTrigger || !_isSensors) return false;
         if (_positionTrigger != null)
         {
             // // enable waypoints ? borked ?
@@ -311,21 +373,27 @@ public class Mob : Creature
     // * testing snap
     private void SetTarget(Vector3 target)
     {
-        Vector3 direction = (target - Position).normalized;
+        _directionTarget = target;
+        Vector3 direction = (_directionTarget - Position).normalized;
         float from = transform.eulerAngles.z % 360f;
         from = from < 0 ? from + 360f : from;
         float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
         to = to < 0 ? to + 360f : to;
         _rotation = to - from;
         _rotation = Mathf.Abs(_rotation) > 180 ? -_rotation % 180 : _rotation;
+        // * testing
+        transform.eulerAngles = new Vector3(0f, 0f, _rotation);
     }
-    private bool CheckDirection(Vector3 target, float value)
+    private float _directionCheck;
+    private Vector3 _directionTarget;
+    // private bool CheckDirection(Vector3 target, float value)
+    private bool CheckDirection()
     {
-        Vector3 direction = (target - Position).normalized;
+        Vector3 direction = (_directionTarget - Position).normalized;
         float angle = (270f + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
         if (angle > transform.eulerAngles.z)
-            return angle - transform.eulerAngles.z <= value;
-        return transform.eulerAngles.z - angle <= value;
+            return angle - transform.eulerAngles.z <= _directionCheck;
+        return transform.eulerAngles.z - angle <= _directionCheck;
     }
     // * testing move
     void OnDrawGizmos()
@@ -339,7 +407,7 @@ public class Mob : Creature
         if (_searchType != TriggerSearchType.NULL)
         {
             // detected trigger sensors
-            foreach (TestTrigger sensor in _sensorsTrigger)
+            foreach (SensorTrigger sensor in _sensorsTrigger)
             {
                 Gizmos.color = new Color(1f, 0f, 0f, .5f);
                 Gizmos.DrawCube(sensor.transform.position, Vector3.one * .9f);
@@ -357,27 +425,30 @@ public class Mob : Creature
             Gizmos.color = new Color(1f, 1f, 1f, .5f);
             Gizmos.DrawSphere(_anchor.Position, .5f);
             if (!_showPath) Gizmos.DrawLine(Position, _anchor.Position);
-        }
-        // path
-        if (_showPath && _path != null)
-        {
-            Gizmos.color = new Color(1f, 1f, 1f, .5f);
-            Vector3 current = Position;
-            foreach (Vector3 step in _path)
+            // path
+            else if (_path != null)
             {
-                Gizmos.DrawLine(current, step);
-                current = step;
+                Gizmos.color = new Color(1f, 1f, 1f, .5f);
+                // Vector3 current = Position;
+                // foreach (Vector3 step in _path)
+                // {
+                //     Gizmos.DrawLine(current, step);
+                //     current = step;
+                // }
+                // for (int i = _path.Length - 1; i > 0; i--)
+                //     Gizmos.DrawLine(_path[i], _path[i-1]);
+                Gizmos.DrawLine(Position, _anchor.Position);
             }
         }
     }
     #region Navigation
     [SerializeField] private bool _showPath = false;
     protected Vector3[] _path = null;
-    protected int _targetIndex = 0;
-    protected Vector3 _move;
-    [SerializeField] protected float _timePath = 1f;
+    // protected int _targetIndex = 0;
+    // protected Vector3 _move;
+    [SerializeField] protected int _timePath = 1;
     // for asyncronous movement
-    protected float _timerPath = 0;
+    protected int _timerPath = 0;
     protected float _speedMove = 0;
     protected Vector3 _spawn;
     [Tooltip("Can mob move diagonally")] [SerializeField] protected bool _isDiagonal = false;
@@ -387,7 +458,8 @@ public class Mob : Creature
     {
         StopCoroutine("PathFollow");
         _path = null;
-        _targetIndex = 0;
+        // _targetIndex = 0;
+        // _move = Position;
     }
     public void NavigateTo(Vector3 target)
     {
@@ -400,46 +472,85 @@ public class Mob : Creature
         {
             // print(_path.Length);
             _path = path;
-            _targetIndex = 0;
+            // _targetIndex = 0;
             StopCoroutine("PathFollow");
             if (gameObject.activeSelf) StartCoroutine("PathFollow");
+            // if (gameObject.activeSelf) PathFollow();
+            // if (gameObject.activeSelf)
+            // {
+            //     // * testing
+            //     // look in direction to move
+            //     transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(path[0].y - Position.y, path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
+            //     // move forwards
+            //     transform.position = path[0];
+            //     // if (path.Length > 1) SetTarget(path[1]);
+            //     // if (path.Length > 1) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(path[1].y - Position.y, path[1].x - Position.x) * Mathf.Rad2Deg - 90f);
+            // }
         }
     }
     IEnumerator PathFollow()
+    // private void PathFollow()
     {
-        if (_path.Length > 0)
-            _move = _path[0];
-        while (true)
-        {
-            if (Vector3.Distance(Position, _move) < 0.1f)
-            {
-                _targetIndex++;
-                if (_path == null)
-                {
-                    _targetIndex = 0;
-                    yield break;
-                }
-                else if (_targetIndex >= _path.Length)
-                {
-                    _targetIndex = 0;
-                    _path = null;
-                    yield break;
-                }
-                _move = _path[_targetIndex];
-            }
-            yield return null;
-        }
+        // * testing
+        // look in direction to move
+        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
+        // move forwards
+        transform.position = _path[0];
+        yield return null;
+        // 
+        // if (_path.Length > 0)
+        // {
+        //     // _move = _path[0];
+        //     // * testing
+        //     // transform.position = _move;
+        //     transform.position = _path[0];
+        // }
+        // while (true)
+        // {
+        //     if (Vector3.Distance(Position, _move) < 0.1f)
+        //     {
+        //         _targetIndex++;
+        //         if (_path == null)
+        //         {
+        //             _targetIndex = 0;
+        //             yield break;
+        //         }
+        //         else if (_targetIndex >= _path.Length)
+        //         {
+        //             _targetIndex = 0;
+        //             _path = null;
+        //             yield break;
+        //         }
+        //         _move = _path[_targetIndex];
+        //     }
+        //     yield return null;
+        // }
     }
+    // // waypoint, else current position
+    // protected Vector3 GetWaypoint()
+    // {
+    //     return _waypoint ? _waypoint.Position : _spawn;
+    // }
     // waypoint, else current position
-    protected Vector3 GetWaypoint()
+    protected Vector3 GetWaypoint(bool next = false)
     {
-        if (_waypoint)
-        {
-            _waypoint = _waypoint.GetNext();
-            return _waypoint ? _waypoint.Position : _spawn;
-        }
-        return _spawn;
+        // if (_waypoint)
+        // {
+        //     _waypoint = _waypoint.GetNext();
+        //     return _waypoint ? _waypoint.Position : _spawn;
+        // }
+        // return _spawn;
+        // 
+        if (next) _waypoint = _waypoint.GetNext();
+        return _waypoint ? _waypoint.Position : _spawn;
     }
+    // private void SetRotation(Vector3 target)
+    // {
+    //     // * testing
+    //     // transform.eulerAngles.z = Mathf.ATan2((position.y - Position.y) / (position.x / Position.x)) * Mathf.Rad2Deg;
+    //     // Vector3 direction = (target - _motor.Position).normalized;
+    //     transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
+    // }
     #endregion
     #region Behaviour Tree
     // [Task]
@@ -466,21 +577,22 @@ public class Mob : Creature
         ThisTask.Succeed();
     }
     [Task]
-    void EntityAtMove(float value)
+    void EntityAtAnchor(float value)
     {
         float distance = Vector3.Distance(Position, _anchor.Position);
         ThisTask.debugInfo = distance.ToString();
         ThisTask.Complete(distance <= value);
     }
+    // ? rename to set speed move for consistency
     [Task]
-    void EntitySpeed(float value)
+    void SetSpeedMove(float value)
     {
         if (value == 0 && _speedMove != 0) NavigateCancel();
         _speedMove = value;
         ThisTask.Succeed();
     }
     [Task]
-    void EntityToMove()
+    void EntityToAnchor()
     {
         ThisTask.debugInfo = _anchor.Position.ToString();
         // if (_timerPath <= 0 && _speedMove != 0)
@@ -489,6 +601,7 @@ public class Mob : Creature
         //     _timerPath = _timePath + Random.Range(-.2f, .2f);
         //     NavigateTo(_anchor.Position);
         // }
+        // ? change to bool isMove
         if (_speedMove > 0) NavigateTo(_anchor.Position);
         ThisTask.Succeed();
     }
@@ -504,22 +617,39 @@ public class Mob : Creature
         ThisTask.Complete(HealthInst > 0);
     }
     [Task]
+    void IsAware()
+    {
+        // Task.current.debugInfo = (_awareTimer / _attentionTime) + " : 0";
+        Task.current.debugInfo = _awareTimer + " : " + _attentionTime;
+        Task.current.Complete(_isAware);
+    }
+    [Task]
     void IsBored()
     {
         ThisTask.debugInfo = _sensorTimer + " : " + _attentionTime;
         ThisTask.Complete(_sensorTimer == _attentionTime);
     }
     [Task]
-    void IsMoveCreature()
+    void IsDirection(float value)
+    {
+        // * testing [? safety]
+        NavigateCancel();
+        // SetTarget(_anchor.Position);
+        // // * testing
+        // _directionCheck = value;
+        ThisTask.Complete(CheckDirection());
+    }
+    [Task]
+    void IsAnchorCreature()
     {
         ThisTask.debugInfo = _anchor.Position.ToString();
         Collider2D hit = Physics2D.OverlapCircle(_anchor.Position, .1f, GameVariables.ScanLayerCreature);
         ThisTask.Complete(hit && _hostiles.Contains(hit.transform.GetComponent<Entity>().ID));
     }
     [Task]
-    void IsMoveWaypoint()
+    void IsAnchorWaypoint()
     {
-        ThisTask.Complete(_waypoint ? _waypoint.IsWaypoint(_anchor.Position) : true);
+        ThisTask.Complete(_waypoint ? _waypoint.IsWaypoint(_anchor.Position) : false);
     }
     [Task]
     void IsTimer(int index)
@@ -527,21 +657,13 @@ public class Mob : Creature
         if (index > -1 && index < _countTimers)
         {
             ThisTask.debugInfo = _timers[index].ToString();
-            ThisTask.Complete(_timers[index] > 0f);
+            ThisTask.Complete(_timers[index] > 0);
         }
         else
             ThisTask.Succeed();
     }
     [Task]
-    void IsDirection(float value)
-    {
-        // * testing [? safety]
-        NavigateCancel();
-        SetTarget(_anchor.Position);
-        ThisTask.Complete(CheckDirection(_anchor.Position, value));
-    }
-    [Task]
-    void MoveToTrigger()
+    void AnchorToTrigger()
     {
         if (_positionTrigger == null) ThisTask.Fail();
         else
@@ -553,9 +675,10 @@ public class Mob : Creature
         }
     }
     [Task]
-    void MoveToWaypoint()
+    void AnchorToWaypoint(int value)
     {
-        _anchor = new EventPoint(GetWaypoint(), _anchor.Layer, _anchor.Time);
+        // 0 - current waypoint | 1 - next waypoint
+        _anchor = new EventPoint(GetWaypoint(value == 1), _anchor.Layer, _anchor.Time);
         ThisTask.Succeed();
     }
     [Task]
@@ -563,7 +686,7 @@ public class Mob : Creature
     {
         ThisTask.debugInfo = "S:" + _isSensors + " V:" + _isVision + " T:" + _isTrigger;
         // check sensors [priority]
-        ThisTask.Complete(ProcessTrigger() || ProcessVision());
+        ThisTask.Complete(CheckTrigger() || CheckVision());
     }
     [Task]
     void SetColor(int index)
@@ -595,9 +718,16 @@ public class Mob : Creature
     }
     // * testing
     [Task]
-    void SetSpeedRotation(float value)
+    void SetDirectionCheck(float value)
     {
-        _speedRotate = value;
+        _directionCheck = value;
+        ThisTask.Succeed();
+    }
+    // * testing
+    [Task]
+    void SetSpeedTurn(float value)
+    {
+        _speedTurn = value;
         ThisTask.Succeed();
     }
     [Task]
@@ -613,7 +743,7 @@ public class Mob : Creature
         else ThisTask.Fail();
     }
     [Task]
-    void SetTimer(int index, float value)
+    void SetTimer(int index, int value)
     {
         if (index > -1 && index < _countTimers)
         {

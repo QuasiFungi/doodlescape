@@ -20,5 +20,5 @@ tree "Attack"
         SetSprite 0
         SetColor 1
         SetColliders 0
-        SetTimer 0 0.5
+        SetTimer 0 1
         UnsetAlert

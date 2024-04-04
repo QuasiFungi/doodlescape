@@ -6,7 +6,8 @@ tree "Root"
 tree "Dead"
     sequence
         not IsAlive
-        EntitySpeed 0.0
+        SetSpeedMove 0.0
+        SetSpeedTurn 0.0
         Wait 1
         SetSprite 0
         SetColliders 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4457339299340837495}
   - component: {fileID: 6987777296592525880}
   - component: {fileID: 3467092138173145734}
-  - component: {fileID: -3235560013972000781}
+  - component: {fileID: 910792453268612507}
   m_Layer: 10
   m_Name: sensor_fortress_roots
   m_TagString: Untagged
@@ -121,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
---- !u!114 &-3235560013972000781
+--- !u!114 &910792453268612507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6262076562584911572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2770236b465f687fd903b7fcf1456916, type: 3}
+  m_Script: {fileID: 11500000, guid: 15aeb7d8fc07de75a8d003573931680c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _id: sensor_fortress_roots

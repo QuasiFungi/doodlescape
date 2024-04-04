@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections;
 public class GameClock : MonoBehaviour
 {
     public delegate void OnTick();
+    public static event OnTick onTickEarly;
     public static event OnTick onTick;
     public static event OnTick onTickLate;
-    public static event OnTick onTickEarly;
+    public static event OnTick onTickUI;
     private float tickDuration = 1f;
     private float tickTimer;
     [Tooltip("tick on keypress")] [SerializeField] private bool _devManualTick = false;
@@ -20,7 +22,8 @@ public class GameClock : MonoBehaviour
     {
         if (position.sqrMagnitude > 0f) return;
         // 
-        if (_devManualTick) Tick();
+        // if (_devManualTick) Tick();
+        if (_devManualTick) StartCoroutine("Tick");
     }
     void Start()
     {
@@ -39,23 +42,34 @@ public class GameClock : MonoBehaviour
         else
         {
             tickTimer += tickDuration;
-            Tick();
+            // Tick();
+            StartCoroutine("Tick");
         }
     }
     // IEnumerator Tick()
     // {
     //     // 
     // }
-    private void Tick()
+    // private void Tick()
+    IEnumerator Tick()
     {
-        // * testing
-        // game grid
+        // // * testing
+        // // game grid
+        // onTickEarly?.Invoke();
+        // // creature actions
+        // // ui clock
+        // onTick?.Invoke();
+        // // ui action
+        // // ui inventory
+        // onTickLate?.Invoke();
+        // 
+        // ? possible crash if tick less than 4 frames
         onTickEarly?.Invoke();
-        // creature actions
-        // ui clock
+        yield return null;
         onTick?.Invoke();
-        // ui action
-        // ui inventory
+        yield return null;
         onTickLate?.Invoke();
+        yield return null;
+        onTickUI?.Invoke();
     }
 }

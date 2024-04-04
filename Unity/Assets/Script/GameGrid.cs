@@ -104,11 +104,13 @@ public class GameGrid : MonoBehaviour
     void OnEnable()
     {
         // ? tick early
-        GameClock.onTickEarly += TickGrid;
+        // GameClock.onTickEarly += TickGrid;
+        GameClock.onTick += TickGrid;
     }
     void OnDisable()
     {
-        GameClock.onTickEarly += TickGrid;
+        // GameClock.onTickEarly += TickGrid;
+        GameClock.onTick += TickGrid;
     }
     private void TickGrid()
     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2003406534472648813}
   - component: {fileID: 1021332823145377499}
   - component: {fileID: 841768992596625239}
-  - component: {fileID: 4903295881464309253}
+  - component: {fileID: 4067292088042285188}
   m_Layer: 10
   m_Name: sensor_fortress_mycelium
   m_TagString: Untagged
@@ -121,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
---- !u!114 &4903295881464309253
+--- !u!114 &4067292088042285188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 260299161636303510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2770236b465f687fd903b7fcf1456916, type: 3}
+  m_Script: {fileID: 11500000, guid: 15aeb7d8fc07de75a8d003573931680c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _id: sensor_fortress_mycelium

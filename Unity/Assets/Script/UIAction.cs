@@ -20,14 +20,14 @@ public class UIAction : MonoBehaviour
     void OnEnable()
     {
         Player.onAction += MarkerUpdate;
-        GameClock.onTick += MarkerClear;
-        GameClock.onTickLate += SpriteUpdate;
+        GameClock.onTickEarly += MarkerClear;
+        GameClock.onTickUI += SpriteUpdate;
     }
     void OnDisable()
     {
         Player.onAction -= MarkerUpdate;
-        GameClock.onTick -= MarkerClear;
-        GameClock.onTickLate -= SpriteUpdate;
+        GameClock.onTickEarly -= MarkerClear;
+        GameClock.onTickUI -= SpriteUpdate;
     }
     // private float colorA;
     // void Update()

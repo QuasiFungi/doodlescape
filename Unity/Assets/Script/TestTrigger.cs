@@ -29,6 +29,8 @@ public class TestTrigger : Entity
         // print(other.gameObject.name);
         // ignore repeat, non creature/breakable, trigger colliders
         if (_targets.Contains(other.transform) || (other.gameObject.layer != GameVariables.LayerCreature && other.gameObject.layer != GameVariables.LayerBreakable) || other.isTrigger) return;
+        // target visible
+        if (Physics2D.Raycast(transform.position, (other.transform.position - transform.position).normalized, Vector3.Distance(transform.position, other.transform.position), GameVariables.ScanLayerObstruction)) return;
         // exclude dead new
         if (other.gameObject.layer == GameVariables.LayerCreature)
         {

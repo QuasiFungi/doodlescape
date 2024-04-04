@@ -1,34 +1,57 @@
 tree "Alive"
     fallback
-        tree "Wander"
         tree "Hide"
-
-tree "Wander"
-    sequence
-        EntityToMove
-        not SensorAny
-        IsBored
-        SetTriggers 0
-        SetVisions 1
-        SetSprite 0
-        EntitySpeed 0.5
-        mute
-            sequence
-                fallback
-                    IsMoveWaypoint
-                    MoveToWaypoint
-                EntityAtMove 1.0
-                MoveToWaypoint
+        tree "Peek"
+        tree "Wander"
 
 tree "Hide"
-    mute
+    sequence
+        mute
+            sequence
+                SensorAny
+                SetSpeedMove 0.0
+                SetSpeedTurn 0.0
+                IsAware
+                SetTimer 0 2
+                SetTriggers 1
+                SetVisions 0
+                SetSprite 2
+        IsTimer 0
+        mute
+            tree "Attack"
+
+tree "Attack"
+    sequence
+        AnchorToTrigger
+        IsAnchorCreature
+        SetAttack 0 1
+        Wait 1
+        SetAttack 0 0
+
+tree "Peek"
+    sequence
+        not IsBored
+        SetTriggers 1
+        SetVisions 1
+        SetSprite 1
+
+tree "Wander"
+    fallback
         sequence
-            SetTriggers 1
-            SetVisions 0
-            SetSprite 1
-            EntitySpeed 0.0
-            MoveToTrigger
-            IsMoveCreature
-            SetAttack 0 1
-            Wait 1
-            SetAttack 0 0
+            IsAlert
+            UnsetAlert
+            SetTriggers 0
+            SetVisions 1
+            SetSprite 0
+        sequence
+            SetSpeedMove 1.0
+            // SetDirectionCheck 5.0
+            // SetSpeedTurn 90.0
+            EntityToAnchor
+            mute
+                sequence
+                    fallback
+                        IsAnchorWaypoint
+                        AnchorToWaypoint 0
+                    EntityAtAnchor 1.0
+                    AnchorToWaypoint 1

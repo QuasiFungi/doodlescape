@@ -5,12 +5,12 @@ public class GameMaster : MonoBehaviour
     void OnEnable()
     {
         Player.onAction += RegisterAction;
-        GameClock.onTick += ExecuteActions;
+        GameClock.onTickEarly += ExecuteActions;
     }
     void OnDisable()
     {
         Player.onAction -= RegisterAction;
-        GameClock.onTick -= ExecuteActions;
+        GameClock.onTickEarly -= ExecuteActions;
     }
     private List<GameAction> actions = new List<GameAction>();
     private void RegisterAction(GameAction action)

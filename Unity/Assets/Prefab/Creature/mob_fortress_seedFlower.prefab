@@ -200,7 +200,7 @@ MonoBehaviour:
   _attentionTime: 0
   _isSensors: 1
   _isTrigger: 1
-  _isVision: 1
+  _isVision: 0
   _sensorsVision: []
   _sensorsTrigger: []
   _countTimers: 0
@@ -218,6 +218,10 @@ MonoBehaviour:
   - player
   _sprites:
   - {fileID: 21300000, guid: a4c6bf06c556bb5bfbd03d944b307d7c, type: 3}
+  _showPath: 0
+  _timePath: 1
+  _isDiagonal: 0
+  _waypoint: {fileID: 0}
 --- !u!114 &925331824271823570
 MonoBehaviour:
   m_ObjectHideFlags: 0
