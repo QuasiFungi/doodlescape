@@ -1,24 +1,22 @@
 tree "Alive"
     fallback
-        while
-            not SensorAny
-            sequence
-                SetSprite 0
-                SetColor 1
-                SetColliders 0
         tree "Attack"
+        tree "Hide"
 
 tree "Attack"
     sequence
         IsAlert
         not IsTimer 0
-        DoAttack 0 0 1
+        Wait 1
         SetSprite 1
         SetColor 0
         SetColliders 1
-        Wait 2
+        DoAttack 0 0 1
+        SetTimer 0 2
+        UnsetAlert
+
+tree "Hide"
+    sequence
         SetSprite 0
         SetColor 1
         SetColliders 0
-        SetTimer 0 1
-        UnsetAlert

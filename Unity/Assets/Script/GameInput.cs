@@ -60,7 +60,9 @@ public class GameInput : MonoBehaviour, IPointerDownHandler
         // 
         Vector2Int index = GameGrid.Instance.WorldToIndex(_camera.ScreenToWorldPoint(eventData.pressPosition));
         Vector3 direction = GameGrid.Instance.IndexToWorld(index.x, index.y) - _player.position;
+        // player actions
         if (direction.magnitude < 2f) onTap?.Invoke(direction);
+        // ? inventory
     }
     // public void OnPointerUp(PointerEventData eventData)
     // {

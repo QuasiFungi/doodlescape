@@ -50,6 +50,10 @@ public class GameAction
         switch (_type)
         {
             case ActionType.WALK:
+                // * testing
+                // look in direction to move
+                _source.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - _source.transform.position.y, _position.x - _source.transform.position.x) * Mathf.Rad2Deg - 90f);
+                // ? lerp to position over time, diagonal movement feels jarring
                 _source.transform.position = _position;
                 break;
             case ActionType.ATTACK:

@@ -65,7 +65,6 @@ public class Mob : Creature
     protected EventPoint _anchor;
     protected EventPoint _positionVision;
     protected EventPoint _positionTrigger;
-    // [SerializeField] protected List<Waypoint> _waypoints;
     // // * testing
     // protected List<Transform> _hostiles;
     // [Tooltip("colors this entity can take")] [SerializeField] protected Color[] _colors;
@@ -187,6 +186,18 @@ public class Mob : Creature
         _directionCheck = 0f;
         _directionTarget = Position;
     }
+    protected override void Start()
+    {
+        base.Start();
+        // 
+        if (_isNavigate)
+        {
+            // ? position change can result in following wrong waypoint group
+            _waypoint = ManagerWaypoint.Instance.GetWaypointNearest(Position);
+            // just in case
+            if (_waypoint == null) Debug.LogWarning(gameObject.name + ":\tRequires waypoint but failed to find one");
+        }
+    }
     private void LoadAdjacentTiles(Vector2 position, ref List<Vector2> list)
     {
         // up
@@ -214,32 +225,18 @@ public class Mob : Creature
         position += Vector2.up;
         if (!list.Contains(position)) list.Add(position);
     }
-    // void Update()
-    // {
-    //     // ? memory waste, assume time passed is 1 second since last updatestate, use int timer for ticks
-    //     // if (CheckVision() || CheckTrigger()) _awareTimer += _attentionTime * Time.deltaTime;
-    //     if (CheckVision() || CheckTrigger()) _awareTimer++;
-    //     // 
-    //     // else if (_awareTimer > 0) _awareTimer -= Time.deltaTime;
-    //     else if (_awareTimer > 0) _awareTimer--;
-    //     // ? check if not already max
-    //     // _sensorTimer = Mathf.Clamp(_sensorTimer + Time.deltaTime, 0, _attentionTime);
-    //     _sensorTimer = Mathf.Clamp(_sensorTimer + 1, 0, _attentionTime);
-    //     // 
-    //     // for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i] -= Time.deltaTime;
-    //     for (int i = 0; i < _countTimers; i++) if (_timers[i] > 0f) _timers[i]--;
-    //     // 
-    //     // if (_timerPath > 0) _timerPath -= Time.deltaTime;
-    //     if (_timerPath > 0) _timerPath--;
-    //     // 
-    //     // if (!CheckDirection())
-    //     // {
-    //     //     // * testing ? high speed jitter ? handle overshoot
-    //     //     if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
-    //     //         transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
-    //     // }
-        
-    // }
+    void Update()
+    {
+        // print(CheckDirection());
+        // 
+        if (_testRotate && !CheckDirection())
+        {
+            // print("rotate?");
+            // * testing ? high speed jitter ? handle overshoot
+            if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
+                transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
+        }
+    }
     private void UpdateState()
     {
         // get latest sensor info
@@ -287,17 +284,6 @@ public class Mob : Creature
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
         }
-        // if (_positionVision != null)
-        // {
-        //     // // enable waypoints ? borked ?
-        //     // EnableWaypoints();
-        //     _isAlert = true;
-        //     _sensorTimer = 0;
-        //     // refresh awareness if already aware
-        //     if (_isAware) _awareTimer = _attentionTime;
-        //     return true;
-        // }
-        // return false;
     }
     private bool CheckVision()
     {
@@ -342,17 +328,6 @@ public class Mob : Creature
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
         }
-        // if (_positionTrigger != null)
-        // {
-        //     // // enable waypoints ? borked ?
-        //     // EnableWaypoints();
-        //     _isAlert = true;
-        //     _sensorTimer = 0;
-        //     // *testing instant aware
-        //     _awareTimer = _attentionTime;
-        //     return true;
-        // }
-        // return false;
     }
     private bool CheckTrigger()
     {
@@ -381,8 +356,9 @@ public class Mob : Creature
         to = to < 0 ? to + 360f : to;
         _rotation = to - from;
         _rotation = Mathf.Abs(_rotation) > 180 ? -_rotation % 180 : _rotation;
-        // * testing
-        transform.eulerAngles = new Vector3(0f, 0f, _rotation);
+        // // * testing
+        // transform.eulerAngles = new Vector3(0f, 0f, _rotation);
+        // transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
     }
     private float _directionCheck;
     private Vector3 _directionTarget;
@@ -452,7 +428,10 @@ public class Mob : Creature
     protected float _speedMove = 0;
     protected Vector3 _spawn;
     [Tooltip("Can mob move diagonally")] [SerializeField] protected bool _isDiagonal = false;
-    [Tooltip("Initial state ? root (optional?)")] [SerializeField] protected Waypoint _waypoint;
+    // [Tooltip("Initial state ? root (optional?)")] [SerializeField] protected Waypoint _waypoint;
+    [Tooltip("Uses waypoint navigation")] [SerializeField] private bool _isNavigate = false;
+    private Waypoint _waypoint;
+    public bool _testRotate = false;
     // * testing
     public void NavigateCancel()
     {
@@ -493,7 +472,7 @@ public class Mob : Creature
     {
         // * testing
         // look in direction to move
-        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
+        if (!_testRotate) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
         // move forwards
         transform.position = _path[0];
         yield return null;
@@ -541,12 +520,16 @@ public class Mob : Creature
         // }
         // return _spawn;
         // 
-        if (next) _waypoint = _waypoint.GetNext();
+        if (next)
+        {
+            if (_waypoint) _waypoint = _waypoint.GetNext();
+            else Debug.LogWarning(gameObject.name + ":\tAttempting to use waypoint without having one assigned first (check if isNavigate is enabled)");
+        }
         return _waypoint ? _waypoint.Position : _spawn;
     }
+    // // * testing
     // private void SetRotation(Vector3 target)
     // {
-    //     // * testing
     //     // transform.eulerAngles.z = Mathf.ATan2((position.y - Position.y) / (position.x / Position.x)) * Mathf.Rad2Deg;
     //     // Vector3 direction = (target - _motor.Position).normalized;
     //     transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
@@ -559,6 +542,26 @@ public class Mob : Creature
     //     print(value);
     //     ThisTask.Succeed();
     // }
+    [Task]
+    void AnchorToTrigger()
+    {
+        if (_positionTrigger == null) ThisTask.Fail();
+        else
+        {
+            ThisTask.debugInfo = _positionTrigger.Position.ToString();
+            _anchor = _positionTrigger;
+            // ..? why did do this
+            // _positionTrigger = null;
+            ThisTask.Succeed();
+        }
+    }
+    [Task]
+    void AnchorToWaypoint(int value)
+    {
+        // 0 - current waypoint | 1 - next waypoint
+        _anchor = new EventPoint(GetWaypoint(value == 1), _anchor.Layer, _anchor.Time);
+        ThisTask.Succeed();
+    }
     [Task]
     void DoAttack(int indexPrefab, int indexSpawn, int parent)
     {
@@ -582,14 +585,6 @@ public class Mob : Creature
         float distance = Vector3.Distance(Position, _anchor.Position);
         ThisTask.debugInfo = distance.ToString();
         ThisTask.Complete(distance <= value);
-    }
-    // ? rename to set speed move for consistency
-    [Task]
-    void SetSpeedMove(float value)
-    {
-        if (value == 0 && _speedMove != 0) NavigateCancel();
-        _speedMove = value;
-        ThisTask.Succeed();
     }
     [Task]
     void EntityToAnchor()
@@ -631,12 +626,14 @@ public class Mob : Creature
     }
     [Task]
     void IsDirection(float value)
+    // void IsDirection()
     {
         // * testing [? safety]
         NavigateCancel();
-        // SetTarget(_anchor.Position);
-        // // * testing
-        // _directionCheck = value;
+        SetTarget(_anchor.Position);
+        // SetRotation(_anchor.Position);
+        // * testing
+        _directionCheck = value;
         ThisTask.Complete(CheckDirection());
     }
     [Task]
@@ -662,25 +659,7 @@ public class Mob : Creature
         else
             ThisTask.Succeed();
     }
-    [Task]
-    void AnchorToTrigger()
-    {
-        if (_positionTrigger == null) ThisTask.Fail();
-        else
-        {
-            ThisTask.debugInfo = _positionTrigger.Position.ToString();
-            _anchor = _positionTrigger;
-            _positionTrigger = null;
-            ThisTask.Succeed();
-        }
-    }
-    [Task]
-    void AnchorToWaypoint(int value)
-    {
-        // 0 - current waypoint | 1 - next waypoint
-        _anchor = new EventPoint(GetWaypoint(value == 1), _anchor.Layer, _anchor.Time);
-        ThisTask.Succeed();
-    }
+    // ? redundant, isAlert holds result of same operation, but needs manual reset?
     [Task]
     void SensorAny()
     {
@@ -721,6 +700,14 @@ public class Mob : Creature
     void SetDirectionCheck(float value)
     {
         _directionCheck = value;
+        ThisTask.Succeed();
+    }
+    // ? rename to set speed move for consistency
+    [Task]
+    void SetSpeedMove(float value)
+    {
+        if (value == 0 && _speedMove != 0) NavigateCancel();
+        _speedMove = value;
         ThisTask.Succeed();
     }
     // * testing

@@ -10,7 +10,7 @@ tree "Hide"
             sequence
                 SensorAny
                 SetSpeedMove 0.0
-                SetSpeedTurn 0.0
+                // SetSpeedTurn 0.0
                 IsAware
                 SetTimer 0 2
                 SetTriggers 1
