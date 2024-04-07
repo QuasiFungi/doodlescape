@@ -32,6 +32,7 @@ public class GameInput : MonoBehaviour, IPointerDownHandler
     //     GameClock.onTickUI -= GetInput;
     // }
     // private bool isInput = false;
+    // * testing
     public Camera _camera;
     public Transform _player;
     // void Awake()
@@ -58,8 +59,11 @@ public class GameInput : MonoBehaviour, IPointerDownHandler
         // if (_pointerTap != Vector2.zero) return;
         // _pointerTap = eventData.pressPosition;
         // 
-        Vector2Int index = GameGrid.Instance.WorldToIndex(_camera.ScreenToWorldPoint(eventData.pressPosition));
-        Vector3 direction = GameGrid.Instance.IndexToWorld(index.x, index.y) - _player.position;
+        // Vector2Int index = GameGrid.Instance.WorldToIndex(_camera.ScreenToWorldPoint(eventData.pressPosition));
+        // Vector3 direction = GameGrid.Instance.IndexToWorld(index.x, index.y) - _player.position;
+        Vector3 direction = GameGrid.Instance.WorldToGrid(_camera.ScreenToWorldPoint(eventData.pressPosition)) - _player.position;
+        // undo grid z offset
+        direction = new Vector3(direction.x, direction.y, 0f);
         // player actions
         if (direction.magnitude < 2f) onTap?.Invoke(direction);
         // ? inventory

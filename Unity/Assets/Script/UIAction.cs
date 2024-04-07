@@ -51,6 +51,9 @@ public class UIAction : MonoBehaviour
         flagExtended = source.ItemHas("item_feather");
         for (int i = 0; i < 8; i++)
         {
+            // // * testing brighten icons
+            // if (actions[i]) actions[i].color = new Color(1f, 1f, 1f, 1f);
+            // 
             if (!flagExtended && i > 3) actions[i].sprite = null;
             else
             {
@@ -72,14 +75,19 @@ public class UIAction : MonoBehaviour
     }
     private void MarkerUpdate(GameAction action)
     {
-        // position
+        // // snap position to grid
+        // Vector3 position = GameGrid.Instance.WorldToGrid((Vector3)action.Position);
+        // update marker position
+        // marker.transform.position = new Vector3(position.x, position.y, marker.transform.position.z);
         marker.transform.position = new Vector3(action.Position.x, action.Position.y, marker.transform.position.z);
-        // visibility
+        // show marker
         marker.SetActive(true);
     }
     private void MarkerClear()
     {
-        // visibility
+        // hide marker
         marker.SetActive(false);
+        // // * testing darken icons
+        // for (int i = 0; i < 8; i++) if (actions[i]) actions[i].color = new Color(.25f, .25f, .25f, 1f);
     }
 }

@@ -7,7 +7,7 @@ public class GameClock : MonoBehaviour
     public static event OnTick onTick;
     public static event OnTick onTickLate;
     public static event OnTick onTickUI;
-    private float tickDuration = 1f;
+    private float tickDuration = .5f;
     private float tickTimer;
     [Tooltip("tick on keypress")] [SerializeField] private bool _devManualTick = false;
     void OnEnable()
@@ -22,7 +22,6 @@ public class GameClock : MonoBehaviour
     {
         if (position.sqrMagnitude > 0f) return;
         // 
-        // if (_devManualTick) Tick();
         if (_devManualTick) StartCoroutine("Tick");
     }
     void Start()
@@ -39,37 +38,37 @@ public class GameClock : MonoBehaviour
         if (_devManualTick) return;
         // 
         if (tickTimer > 0f) tickTimer -= Time.deltaTime;
-        else
+        else if (!_isBusy)
         {
-            tickTimer += tickDuration;
-            // Tick();
             StartCoroutine("Tick");
         }
     }
-    // IEnumerator Tick()
-    // {
-    //     // 
-    // }
-    // private void Tick()
+    private bool _isBusy = false;
     IEnumerator Tick()
     {
-        // // * testing
-        // // game grid
-        // onTickEarly?.Invoke();
-        // // creature actions
-        // // ui clock
-        // onTick?.Invoke();
-        // // ui action
-        // // ui inventory
-        // onTickLate?.Invoke();
-        // 
-        // ? possible crash if tick less than 4 frames
+        // * testing ? possible crash if tick less than 4 frames
+        // disallow further ticks
+        _isBusy = true;
+        // - game master, execute actions
+        // - ui action, marker clear
+        // - ui clock, sprite reset
         onTickEarly?.Invoke();
         yield return null;
+        // - game grid, tick grid
+        // - ui inventory, icons update
         onTick?.Invoke();
         yield return null;
+        // - mob, behaviour tick
         onTickLate?.Invoke();
-        yield return null;
+        // yield return null;
+        // pause for animations to play out
+        yield return new WaitForSeconds(.5f);
+        // - ui action, sprite update
         onTickUI?.Invoke();
+        // 
+        // allow next tick
+        _isBusy = false;
+        // countdown to next tick
+        tickTimer += tickDuration;
     }
 }

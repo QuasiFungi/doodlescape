@@ -167,8 +167,8 @@ public class Mob : Creature
         }
         foreach (SensorTrigger sensor in _sensorsTrigger)
             sensor.SetActive(true);
-        // ? move to anim
-        _sprite = GetComponent<SpriteRenderer>();
+        // * testing walk animation ? move to anim
+        _sprite = _body.GetComponent<SpriteRenderer>();
         // * testing ? move to motor
         _colliders = new List<Collider2D>();
         _colliders.Add(GetComponent<Collider2D>());
@@ -474,7 +474,9 @@ public class Mob : Creature
         // look in direction to move
         if (!_testRotate) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
         // move forwards
-        transform.position = _path[0];
+        // transform.position = _path[0];
+        // * testing mob walk "animation"
+        Move(_path[0]);
         yield return null;
         // 
         // if (_path.Length > 0)

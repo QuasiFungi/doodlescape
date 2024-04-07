@@ -19,7 +19,7 @@ public class Player : Creature
     }
     private void ActionConstruct(Vector2 position)
     {
-        GameAction playerAction = new GameAction((Vector2)transform.position + position, gameObject);
+        GameAction playerAction = new GameAction(GameGrid.Instance.WorldToGrid(transform.position + (Vector3)position), gameObject);
         // only carry event if action is valid
         if (playerAction.IsValid) onAction?.Invoke(playerAction);
     }
