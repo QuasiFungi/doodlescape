@@ -6,6 +6,7 @@ tree "Alive"
 tree "Attack"
     sequence
         AnchorToTrigger
+        SetSprite 0
         SetSpeedTurn 90.0
         IsDirection 5.0
         SetSpeedTurn 0.0
@@ -15,4 +16,5 @@ tree "Attack"
 tree "Idle"
     sequence
         IsBored
+        SetSprite 1
         SetSpeedTurn 0.0

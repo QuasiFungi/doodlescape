@@ -46,7 +46,10 @@ tree "Wander"
         sequence
             SetSpeedMove 1.0
             // SetDirectionCheck 5.0
-            // SetSpeedTurn 90.0
+            // SetSpeedTurn 45.0
+            // sequence
+                // IsDirection 2.0
+                // SetSpeedTurn 0.0
             EntityToAnchor
             mute
                 sequence

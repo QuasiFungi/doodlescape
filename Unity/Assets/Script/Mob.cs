@@ -52,10 +52,10 @@ public class Mob : Creature
         public Vector3 Position;
         public LayerMask Layer;
         public float Time;
-        // public EventPoint()
-        // {
-        //     // * testing
-        // }
+        public EventPoint()
+        {
+            // * testing
+        }
         public EventPoint(Vector3 position, LayerMask layer, float time)
         {
             Position = position;
@@ -185,6 +185,55 @@ public class Mob : Creature
         _spawn = Position;
         _directionCheck = 0f;
         _directionTarget = Position;
+        // 
+        // - ANIM
+        // 
+        _lerp = new AnimationCurve();
+        _lerp.AddKey(0f, 0f);
+        _lerp.AddKey(.25f, 1f);
+        _lerp.AddKey(.75f, -1f);
+        _lerp.AddKey(1f, 0f);
+        // 
+        // _lerp.SmoothTangents(0, -1f);
+        // _lerp.SmoothTangents(1, -1f);
+        // _lerp.SmoothTangents(2, -1f);
+        // _lerp.SmoothTangents(3, -1f);
+        // 
+        // _lerp = AnimationCurve.Linear(0f, 0f, .25f, 1f);
+        // _lerp += AnimationCurve.Linear(.25f, 1f, .75f, -1f);
+        // _lerp.Linear(.75f, -1f, 1f, 0f);
+        // 
+        List<Keyframe> keyframes = new List<Keyframe>();
+        for (int i = 0; i < _lerp.length; i++)
+        {
+            Keyframe frame = _lerp[i];
+            if (i > 0&& i != _lerp.length - 1)
+            {
+                var nextFrame=_lerp[i+1];
+                var prefFrame=_lerp[i-1];
+                float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
+                float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
+                frame.inTangent = inTangent;
+                frame.outTangent = outTangent;
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    var nextFrame=_lerp[i+1];
+                    float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
+                    frame.outTangent = outTangent;
+                }
+                else if (i == _lerp.length - 1)
+                {
+                    var prefFrame=_lerp[i-1];
+                    float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
+                    frame.inTangent = inTangent;
+                }
+            }
+            keyframes.Add(frame);
+        }
+        _lerp.keys = keyframes.ToArray();
     }
     protected override void Start()
     {
@@ -234,8 +283,14 @@ public class Mob : Creature
             // print("rotate?");
             // * testing ? high speed jitter ? handle overshoot
             if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
+            {
                 transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
+                // _body.eulerAngles = transform.eulerAngles;
+            }
         }
+        // * testing scan vision
+        // if (_scanTimer > 0f) _scanTimer -= Time.deltaTime;
+        // if (_scanTimer > 0) _scanTimer--;
     }
     private void UpdateState()
     {
@@ -473,7 +528,7 @@ public class Mob : Creature
         // * testing
         // look in direction to move
         if (!_testRotate) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
-        // move forwards
+        // // move forwards
         // transform.position = _path[0];
         // * testing mob walk "animation"
         Move(_path[0]);
@@ -536,6 +591,20 @@ public class Mob : Creature
     //     // Vector3 direction = (target - _motor.Position).normalized;
     //     transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
     // }
+    private void SetRotation(float value)
+    {
+        // _rotation = value;
+        // transform.eulerAngles = Vector3.forward * value;
+        // 
+        transform.eulerAngles = new Vector3(0f, 0f, -90f + value);
+        // _target = transform.position;
+        // _rotationTo = -90f + value;
+        // _rotation = -90f + value;
+        // _target.position = _motor.Position;
+        // _timer = _time;
+        // _rotation = transform.eulerAngles.z;
+        _rotation = 0f;
+    }
     #endregion
     #region Behaviour Tree
     // [Task]
@@ -544,6 +613,43 @@ public class Mob : Creature
     //     print(value);
     //     ThisTask.Succeed();
     // }
+    [Task]
+    void AnchorToOffsetRadius(float value)
+    {
+        // * testing [? retry attempts on invalid, chase bounds/limit]
+        // _anchor.position += transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
+        // Vector3 direction = transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f);
+        // RaycastHit2D hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+        // RaycastHit2D hit = Physics2D.Raycast(_motor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+        Vector2 offset = (transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f)).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(Position, offset, value, GameVariables.ScanLayerObstruction);
+        EventPoint temp = new EventPoint();
+        // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .3f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+        // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .5f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+        // if (Physics2D.OverlapCircle(temp.Position, .9f, game_variables.Instance.ScanLayerObstruction) != null)
+        //     temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
+        // temp.Position = hit ? grid_map.Instance.WorldToGrid(_motor.Position) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+        temp.Position = hit ? GameGrid.Instance.WorldToGrid(hit.point + hit.normal * .5f) : GameGrid.Instance.WorldToGrid(Position);
+        // safety ?
+        if (Physics2D.OverlapCircle(temp.Position, .9f, GameVariables.ScanLayerObstruction) != null)
+            // temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
+            temp.Position = GetWaypoint();
+        temp.Layer = _anchor.Layer;
+        temp.Time = _anchor.Time;
+        _anchor = temp;
+        // else
+        //     // temp.Position = _anchor.Position + direction;
+        //     // temp.Position = _motor.Position + direction.normalized * value;
+        //     temp.Position = _anchor.Position;
+        // // ? locking
+        // while (hit)
+        // {
+        //     direction = transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
+        //     hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+        // }
+        // temp.Position = _anchor.Position + direction;
+        Task.current.Succeed();
+    }
     [Task]
     void AnchorToTrigger()
     {
@@ -661,6 +767,54 @@ public class Mob : Creature
         else
             ThisTask.Succeed();
     }
+    // * testing [? use entity timer]
+    protected int _scanTimer = 0;
+    // protected float[] _scanOffset;
+    protected float _scanOffset;
+    // * testing ? game variables or utility
+    private AnimationCurve _lerp;
+    // * testing [? sensor interrupt, animation rotation offset]
+    // step []
+    // duration - time taken to complete one full scan
+    // steps - number of scans
+    // angle - deviation from forward to rotate in
+    [Task]
+    void ScanVision(float angle, int duration, int steps)
+    {
+        // * testing
+        NavigateCancel();
+        Task.current.debugInfo = _scanTimer.ToString();
+        // if (_scanTimer >= 0f)
+        if (_scanTimer >= 0)
+        {
+            // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % step) / step) * Mathf.PI * 2f));
+            // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % duration) / (float)duration) * Mathf.PI * 2f));
+            SetRotation(_scanOffset + angle * _lerp.Evaluate((_scanTimer % duration) / (float)duration));
+            // print(Mathf.Sin(((_scanTimer % duration) / duration) * Mathf.PI * 2f));
+            // print(_scanTimer + "\t" + (1f - ((_scanTimer % step) / step)).ToString());
+            // print((int)_scanTimer % duration);
+            // print(Mathf.Lerp(-angle, angle, (_scanTimer % duration) / (float)duration));
+            // _scanTimer -= Time.deltaTime;
+            _scanTimer--;
+            // // * testing ? approximate
+            // _scanTimer -= 1f;
+            // if (_scanTimer < 0f)
+            if (_scanTimer < 0)
+            {
+                SetRotation(_scanOffset);
+                Task.current.Succeed();
+                return;
+            }
+        }
+        else
+        {
+            // * testing [? memory waste]
+            // _scanTimer = duration;
+            _scanTimer = duration * steps;
+            _scanOffset = 90f + _rotation;
+        }
+        Task.current.Fail();
+    }
     // ? redundant, isAlert holds result of same operation, but needs manual reset?
     [Task]
     void SensorAny()
@@ -704,6 +858,11 @@ public class Mob : Creature
         _directionCheck = value;
         ThisTask.Succeed();
     }
+    // [Task]
+    // void SetRotationOffset(float value)
+    // {
+    //     _rotation = transform.eulerAngles.z + value;
+    // }
     // ? rename to set speed move for consistency
     [Task]
     void SetSpeedMove(float value)

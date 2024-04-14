@@ -295,7 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 
   Radius: 3
-  Angle: 92
+  Angle: 182
+  _resolution: 1
 --- !u!1 &8225463149860418272
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 249fc26c42d30f221b50a5a1d4bdce54, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture:
         m_Texture: {fileID: 2800000, guid: 249fc26c42d30f221b50a5a1d4bdce54, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -41,10 +45,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
+    - _Dither: 0.4
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Scale: 1
     m_Colors:
     - _Color: {r: 1, g: 0, b: 1, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1355296526432466115
 MonoBehaviour:

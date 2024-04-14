@@ -1,0 +1,55 @@
+tree "Alive"
+    fallback
+        tree "Wander"
+        tree "Investigate"
+        tree "Attack"
+        tree "Search"
+
+tree "Wander"
+    sequence
+        EntityToAnchor
+        SetSpeedMove 1.0
+        not SensorAny
+        IsBored
+        mute
+            sequence
+                fallback
+                    IsAnchorWaypoint
+                    AnchorToWaypoint 0
+                EntityAtAnchor 2.0
+                tree "Hold"
+
+tree "Hold"
+    sequence
+        SetSpeedMove 0.0
+        ScanVision 45.0 4 1
+        AnchorToWaypoint 1
+
+tree "Investigate"
+    sequence
+        mute
+            SensorAny
+        not IsAware
+        tree "Search"
+
+tree "Search"
+    mute
+        sequence
+            EntityAtAnchor 1.0
+            ScanVision 30.0 2 1
+            AnchorToOffsetRadius 5.0
+
+tree "Attack"
+    sequence
+        IsAlert
+        IsAnchorCreature
+        mute
+            sequence
+                EntityAtAnchor 5.0
+                SetSpeedMove 0.0
+                not IsTimer 0
+                IsDirection 15.0
+                DoAttack 0 0 0
+                Wait 1.0
+                SetTimer 0 5
+                UnsetAlert
