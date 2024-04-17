@@ -10,7 +10,6 @@ tree "Hide"
             sequence
                 SensorAny
                 SetSpeedMove 0.0
-                // SetSpeedTurn 0.0
                 IsAware
                 SetTimer 0 2
                 SetTriggers 1
@@ -45,11 +44,6 @@ tree "Wander"
             SetSprite 0
         sequence
             SetSpeedMove 1.0
-            // SetDirectionCheck 5.0
-            // SetSpeedTurn 45.0
-            // sequence
-                // IsDirection 2.0
-                // SetSpeedTurn 0.0
             EntityToAnchor
             mute
                 sequence

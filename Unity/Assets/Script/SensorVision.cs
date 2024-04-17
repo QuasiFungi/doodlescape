@@ -42,7 +42,7 @@ public class SensorVision : Entity
     {
         Vector3 direction = DirectionFromAngle(angleGlobal, true);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Radius, GameVariables.ScanLayerObstruction);
-        if (hit) return new ViewCastInfo(true, hit.point, hit.distance, angleGlobal);
+        if (hit) return new ViewCastInfo(true, new Vector3(hit.point.x, hit.point.y, transform.position.z), hit.distance, angleGlobal);
         return new ViewCastInfo(false, transform.position + direction * Radius, Radius, angleGlobal);
     }
     void DrawFOV()
@@ -83,13 +83,20 @@ public class SensorVision : Entity
     // 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.magenta;
         Gizmos.DrawLine(transform.position, transform.position + transform.up * Radius);
         // ! borked
         // Gizmos.color = Color.magenta;
         // Gizmos.DrawLine(transform.position, transform.position + new Vector3(Radius * Mathf.Cos(Angle / 2), Radius * Mathf.Sin(Angle / 2), 0f));
         // Gizmos.DrawLine(transform.position, transform.position + new Vector3(-Radius * Mathf.Cos(-Angle / 2), -Radius * Mathf.Sin(-Angle / 2), 0f));
         // Gizmos.DrawWireSphere(transform.position, Radius);
+        // 
+        // if (_testing)
+        // {
+        //     Gizmos.color = Color.red;
+        //     foreach (Transform target in _testTargets) Gizmos.DrawLine(transform.position, target.position);
+        //     foreach (Transform target in _targets) Gizmos.DrawSphere(target.position, .1f);
+        // }
     }
     // called on parent active toggle ?
     void OnEnable()
@@ -113,9 +120,12 @@ public class SensorVision : Entity
             FindTargets();
         }
     }
+    // public bool _testing = false;
+    // private List<Transform> _testTargets = new List<Transform>();
     void FindTargets()
     {
         _targets.Clear();
+        // _testTargets.Clear();
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, Radius, GameVariables.ScanLayerTarget);
         for (int i = 0; i < targets.Length; i++)
         {
@@ -128,21 +138,28 @@ public class SensorVision : Entity
             // // * testing invisible
             // if (target.gameObject.layer == game_variables.Instance.LayerPlayer && target.GetComponent<data_player>().ModeInvisible)
             //     continue;
+            // 
+            // _testTargets.Add(target);
+            // 
             // exclude dead
             if (target.gameObject.layer == GameVariables.LayerCreature)
                 if (target.GetComponent<Creature>().HealthInst == 0)
                     continue;
+            // ? use vector2 here
             Vector3 direction = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.up, direction) <= Angle / 2f)
             {
-                float distance = Vector3.Distance(transform.position, target.position);
-                // RaycastHit2D hit;
-                if (!Physics2D.Raycast(transform.position, direction, distance, GameVariables.ScanLayerObstruction))
-                    // player mob interact item
+                float distance = Vector2.Distance(transform.position, target.position);
+                // center left right ? memory overhead
+                if (!Physics2D.Raycast(transform.position, direction, distance, GameVariables.ScanLayerObstruction)
+                    || !Physics2D.Raycast(transform.position + Vector3.Cross(direction, Vector3.forward) * .1f, direction, distance, GameVariables.ScanLayerObstruction)
+                    || !Physics2D.Raycast(transform.position + Vector3.Cross(Vector3.forward, direction) * .1f, direction, distance, GameVariables.ScanLayerObstruction))
+                    // player mob item
                     _targets.Add(target);
+                // else if(_testing) print(target.name + ": failed raycast check");
             }
+            // else if(_testing) print(target.name + ": failed angle check");
         }
-        // print(targets?.Length);
     }
     public Vector3 Position
     {

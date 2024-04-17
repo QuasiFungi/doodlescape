@@ -1,0 +1,46 @@
+240417
+- vision sensor does three raycasts with offsets for better corner detection
+- fixed vision sensor detection failing due to wrong target distance calculation
+- mob vision sensors hide visually when disabled
+- vision sensor render correctly in 3D
+- seedFlower new sprite for attack cooldown
+- seedFlower slight behaviour tweak
+- slab move animation
+
+240414
+- added animated barrier tile
+- seedFlower new sprite
+- vision sensor visualization
+- spikeSnail sprites simplified
+
+240407
+- added basic player and creature walk animation
+- camera smoothing for anti nausea walking
+
+240405
+- player sprite now turns in walk direction
+- added waypoint manager for automatic waypoint assigning
+- mob smooth rotation fixed
+- reworked seedFlower and flyTrap behaviour
+
+240404
+- trigger sensor now needs line of sight
+- spikeSnail behaviour tree reworked
+- mob waypoint pathfinding improved
+- partial touch input support
+- switched platform to android
+
+240403
+- tick dependent script execution order rearranged
+- spikeSnail behaviour reworked and new sprite added
+- mob timers now tick based
+
+240331
+- partially fixed pathfinding
+- added manual time tick override
+
+240329
+- waypoint navigation
+- chunk based loading
+- burst compiler
+- a star pathfinding

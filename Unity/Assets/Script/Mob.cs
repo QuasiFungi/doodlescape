@@ -165,8 +165,10 @@ public class Mob : Creature
                 }
                 break;
         }
-        foreach (SensorTrigger sensor in _sensorsTrigger)
-            sensor.SetActive(true);
+        // // ? why do this
+        // foreach (SensorTrigger sensor in _sensorsTrigger)
+        //     sensor.SetActive(true);
+        // 
         // * testing walk animation ? move to anim
         _sprite = _body.GetComponent<SpriteRenderer>();
         // * testing ? move to motor
@@ -177,10 +179,12 @@ public class Mob : Creature
         _colors = new Color[2];
         _colors[0] = new Color(0f, 1f, 0f, 1f);
         _colors[1] = new Color(.25f, .25f, .25f, 1f);
-        _rotation = transform.eulerAngles.z;
+        // _rotation = transform.eulerAngles.z;
+        _rotation = 0f;
         // 
         // - MOTOR
         // 
+        _path = Position;
         // _move = Position;
         _spawn = Position;
         _directionCheck = 0f;
@@ -279,15 +283,20 @@ public class Mob : Creature
         // print(CheckDirection());
         // 
         if (_testRotate && !CheckDirection())
+        // if (_testRotate && !_directionCheck)
         {
+            // 
+            GetRotation();
+            // print(_rotation);
             // print("rotate?");
             // * testing ? high speed jitter ? handle overshoot
             if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
-            {
                 transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
-                // _body.eulerAngles = transform.eulerAngles;
-            }
+            else
+                transform.eulerAngles += Vector3.forward * _rotation * Time.deltaTime;
+            _body.eulerAngles = transform.eulerAngles;
         }
+        // 
         // * testing scan vision
         // if (_scanTimer > 0f) _scanTimer -= Time.deltaTime;
         // if (_scanTimer > 0) _scanTimer--;
@@ -400,28 +409,35 @@ public class Mob : Creature
         }
         return false;
     }
-    // * testing snap
-    private void SetTarget(Vector3 target)
-    {
-        _directionTarget = target;
-        Vector3 direction = (_directionTarget - Position).normalized;
-        float from = transform.eulerAngles.z % 360f;
-        from = from < 0 ? from + 360f : from;
-        float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
-        to = to < 0 ? to + 360f : to;
-        _rotation = to - from;
-        _rotation = Mathf.Abs(_rotation) > 180 ? -_rotation % 180 : _rotation;
-        // // * testing
-        // transform.eulerAngles = new Vector3(0f, 0f, _rotation);
-        // transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
-    }
+    // // * testing snap
+    // private void SetDirection(Vector3 target)
+    // {
+    //     _directionTarget = target;
+    //     // 
+    //     // Vector3 direction = (_directionTarget - Position).normalized;
+    //     // float from = transform.eulerAngles.z % 360f;
+    //     // from = from < 0 ? from + 360f : from;
+    //     // float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
+    //     // to = to < 0 ? to + 360f : to;
+    //     // _rotation = to - from;
+    //     // _rotation = Mathf.Abs(_rotation) > 180 ? -_rotation % 180 : _rotation;
+    //     // 
+    //     // // * testing
+    //     // transform.eulerAngles = new Vector3(0f, 0f, _rotation);
+    //     // transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
+    // }
     private float _directionCheck;
     private Vector3 _directionTarget;
     // private bool CheckDirection(Vector3 target, float value)
     private bool CheckDirection()
     {
         Vector3 direction = (_directionTarget - Position).normalized;
-        float angle = (270f + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
+        // float angle = (270f + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // * testing initial angle should be zero
+        if (direction.sqrMagnitude > 0f) angle -= 90f;
+        angle = angle < 0 ? angle + 360f : angle;
+        // print(angle + " : " + transform.eulerAngles.z);
         if (angle > transform.eulerAngles.z)
             return angle - transform.eulerAngles.z <= _directionCheck;
         return transform.eulerAngles.z - angle <= _directionCheck;
@@ -455,26 +471,31 @@ public class Mob : Creature
         {
             Gizmos.color = new Color(1f, 1f, 1f, .5f);
             Gizmos.DrawSphere(_anchor.Position, .5f);
-            if (!_showPath) Gizmos.DrawLine(Position, _anchor.Position);
+            // if (!_showPath) Gizmos.DrawLine(Position, _anchor.Position);
             // path
-            else if (_path != null)
+            // else if (_path != null)
+            // {
+            //     Gizmos.color = new Color(1f, 1f, 1f, .5f);
+            //     // Vector3 current = Position;
+            //     // foreach (Vector3 step in _path)
+            //     // {
+            //     //     Gizmos.DrawLine(current, step);
+            //     //     current = step;
+            //     // }
+            //     // for (int i = _path.Length - 1; i > 0; i--)
+            //     //     Gizmos.DrawLine(_path[i], _path[i-1]);
+            //     Gizmos.DrawLine(Position, _anchor.Position);
+            // }
+            if (_showPath)
             {
-                Gizmos.color = new Color(1f, 1f, 1f, .5f);
-                // Vector3 current = Position;
-                // foreach (Vector3 step in _path)
-                // {
-                //     Gizmos.DrawLine(current, step);
-                //     current = step;
-                // }
-                // for (int i = _path.Length - 1; i > 0; i--)
-                //     Gizmos.DrawLine(_path[i], _path[i-1]);
-                Gizmos.DrawLine(Position, _anchor.Position);
+                Gizmos.color = new Color(0f, 1f, 0f, .5f);
+                Gizmos.DrawSphere(_path, .5f);
             }
         }
     }
     #region Navigation
     [SerializeField] private bool _showPath = false;
-    protected Vector3[] _path = null;
+    // protected Vector3[] _path = null;
     // protected int _targetIndex = 0;
     // protected Vector3 _move;
     [SerializeField] protected int _timePath = 1;
@@ -486,16 +507,21 @@ public class Mob : Creature
     // [Tooltip("Initial state ? root (optional?)")] [SerializeField] protected Waypoint _waypoint;
     [Tooltip("Uses waypoint navigation")] [SerializeField] private bool _isNavigate = false;
     private Waypoint _waypoint;
+    // ? rename to lookRotation moveRotation ? use instead bool check if turnSpeed zero for true
     public bool _testRotate = false;
-    // * testing
+    // * testing ? rename to...
     public void NavigateCancel()
     {
-        StopCoroutine("PathFollow");
-        _path = null;
+        // StopCoroutine("PathFollow");
+        // _path = null;
         // _targetIndex = 0;
         // _move = Position;
+        // 
+        _path = Position;
     }
+    // ? rename to get path
     public void NavigateTo(Vector3 target)
+    // public void GetPathTo(Vector3 target)
     {
         if (GameGrid.Instance.WorldToIndex(target) != GameGrid.Instance.WorldToIndex(Position))
             GameNavigation.Instance.PathCalculate(new PathData(Position, target, _isDiagonal, OnPathFound));
@@ -504,11 +530,18 @@ public class Mob : Creature
     {
         if (success)
         {
+            _path = path[0];
+            // 
+            // * testing mob walk "animation"
+            Move(_path);
+            // 
+            // SetDirection();
+            // 
             // print(_path.Length);
-            _path = path;
+            // _path = path;
             // _targetIndex = 0;
-            StopCoroutine("PathFollow");
-            if (gameObject.activeSelf) StartCoroutine("PathFollow");
+            // StopCoroutine("PathFollow");
+            // if (gameObject.activeSelf) StartCoroutine("PathFollow");
             // if (gameObject.activeSelf) PathFollow();
             // if (gameObject.activeSelf)
             // {
@@ -522,46 +555,49 @@ public class Mob : Creature
             // }
         }
     }
-    IEnumerator PathFollow()
-    // private void PathFollow()
-    {
-        // * testing
-        // look in direction to move
-        if (!_testRotate) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
-        // // move forwards
-        // transform.position = _path[0];
-        // * testing mob walk "animation"
-        Move(_path[0]);
-        yield return null;
-        // 
-        // if (_path.Length > 0)
-        // {
-        //     // _move = _path[0];
-        //     // * testing
-        //     // transform.position = _move;
-        //     transform.position = _path[0];
-        // }
-        // while (true)
-        // {
-        //     if (Vector3.Distance(Position, _move) < 0.1f)
-        //     {
-        //         _targetIndex++;
-        //         if (_path == null)
-        //         {
-        //             _targetIndex = 0;
-        //             yield break;
-        //         }
-        //         else if (_targetIndex >= _path.Length)
-        //         {
-        //             _targetIndex = 0;
-        //             _path = null;
-        //             yield break;
-        //         }
-        //         _move = _path[_targetIndex];
-        //     }
-        //     yield return null;
-        // }
-    }
+    private Vector3 _path;
+    // IEnumerator PathFollow()
+    // // private void PathFollow()
+    // {
+    //     // // * testing
+    //     // // look in direction to move
+    //     // if (!_testRotate) transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_path[0].y - Position.y, _path[0].x - Position.x) * Mathf.Rad2Deg - 90f);
+    //     // // move forwards
+    //     // transform.position = _path[0];
+    //     // 
+    //     _move = _path[0];
+    //     // * testing mob walk "animation"
+    //     Move(_path[0]);
+    //     yield return null;
+    //     // 
+    //     // if (_path.Length > 0)
+    //     // {
+    //     //     // _move = _path[0];
+    //     //     // * testing
+    //     //     // transform.position = _move;
+    //     //     transform.position = _path[0];
+    //     // }
+    //     // while (true)
+    //     // {
+    //     //     if (Vector3.Distance(Position, _move) < 0.1f)
+    //     //     {
+    //     //         _targetIndex++;
+    //     //         if (_path == null)
+    //     //         {
+    //     //             _targetIndex = 0;
+    //     //             yield break;
+    //     //         }
+    //     //         else if (_targetIndex >= _path.Length)
+    //     //         {
+    //     //             _targetIndex = 0;
+    //     //             _path = null;
+    //     //             yield break;
+    //     //         }
+    //     //         _move = _path[_targetIndex];
+    //     //     }
+    //     //     yield return null;
+    //     // }
+    // }
     // // waypoint, else current position
     // protected Vector3 GetWaypoint()
     // {
@@ -597,6 +633,7 @@ public class Mob : Creature
         // transform.eulerAngles = Vector3.forward * value;
         // 
         transform.eulerAngles = new Vector3(0f, 0f, -90f + value);
+        // transform.eulerAngles = new Vector3(0f, 0f, value);
         // _target = transform.position;
         // _rotationTo = -90f + value;
         // _rotation = -90f + value;
@@ -604,6 +641,19 @@ public class Mob : Creature
         // _timer = _time;
         // _rotation = transform.eulerAngles.z;
         _rotation = 0f;
+    }
+    // 
+    private void GetRotation()
+    {
+        Vector3 direction = (_directionTarget - Position).normalized;
+        float from = transform.eulerAngles.z % 360f;
+        from = from < 0 ? from + 360f : from;
+        float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
+        // float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
+        // float to = (270f + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
+        to = to < 0 ? to + 360f : to;
+        _rotation = to - from;
+        _rotation = Mathf.Abs(_rotation) > 180 ? -_rotation % 180 : _rotation;
     }
     #endregion
     #region Behaviour Tree
@@ -706,8 +756,29 @@ public class Mob : Creature
         // }
         // ? change to bool isMove
         if (_speedMove > 0) NavigateTo(_anchor.Position);
+        // if (_speedMove > 0) GetPathTo(_anchor.Position);
+        // 
+        // Move(_anchor.Position);
+        // 
         ThisTask.Succeed();
     }
+    // [Task]
+    // void EntityToPath()
+    // {
+    //     ThisTask.debugInfo = (_path - Position).ToString();
+    //     // 
+    //     Move(_path);
+    //     // 
+    //     ThisTask.Succeed();
+    // }
+    // [Task]
+    // void FindPathToAnchor()
+    // {
+    //     // ? warning on speed check fail
+    //     if (_speedMove > 0) GetPathTo(_anchor.Position);
+    //     ThisTask.debugInfo = _path.ToString();
+    //     ThisTask.Succeed();
+    // }
     [Task]
     bool IsAlert
     {
@@ -723,8 +794,8 @@ public class Mob : Creature
     void IsAware()
     {
         // Task.current.debugInfo = (_awareTimer / _attentionTime) + " : 0";
-        Task.current.debugInfo = _awareTimer + " : " + _attentionTime;
-        Task.current.Complete(_isAware);
+        ThisTask.debugInfo = _awareTimer + " : " + _attentionTime;
+        ThisTask.Complete(_isAware);
     }
     [Task]
     void IsBored()
@@ -736,12 +807,15 @@ public class Mob : Creature
     void IsDirection(float value)
     // void IsDirection()
     {
-        // * testing [? safety]
-        NavigateCancel();
-        SetTarget(_anchor.Position);
+        // // * testing [? safety]
+        // NavigateCancel();
+        // SetTarget(_anchor.Position);
         // SetRotation(_anchor.Position);
+        // GetRotation();
+        ThisTask.debugInfo = _rotation.ToString();
         // * testing
         _directionCheck = value;
+        _directionTarget = _anchor.Position;
         ThisTask.Complete(CheckDirection());
     }
     [Task]
@@ -812,6 +886,7 @@ public class Mob : Creature
             // _scanTimer = duration;
             _scanTimer = duration * steps;
             _scanOffset = 90f + _rotation;
+            // _scanOffset = _rotation;
         }
         Task.current.Fail();
     }
@@ -851,13 +926,13 @@ public class Mob : Creature
         // _motor.CollidersToggle(value == 1);
         ThisTask.Succeed();
     }
-    // * testing
-    [Task]
-    void SetDirectionCheck(float value)
-    {
-        _directionCheck = value;
-        ThisTask.Succeed();
-    }
+    // // * testing
+    // [Task]
+    // void SetDirectionCheck(float value)
+    // {
+    //     _directionCheck = value;
+    //     ThisTask.Succeed();
+    // }
     // [Task]
     // void SetRotationOffset(float value)
     // {
@@ -890,6 +965,17 @@ public class Mob : Creature
         }
         else ThisTask.Fail();
     }
+    // // look target
+    // // 0 - anchor [sensor detection implicit]
+    // // 1 - path
+    // [Task]
+    // void SetTarget(int value)
+    // {
+    //     // SetDirection(value == 0 ? _anchor.Position : _path);
+    //     _directionTarget = value == 0 ? _anchor.Position : _path;
+    //     // ThisTask.debugInfo = _directionTarget.ToString();
+    //     ThisTask.Succeed();
+    // }
     [Task]
     void SetTimer(int index, int value)
     {
@@ -903,13 +989,29 @@ public class Mob : Creature
     [Task]
     void SetTriggers(int value)
     {
-        _isTrigger = value == 1;
+        bool status = value == 1;
+        // not already active/inactive
+        if (_isTrigger != status)
+        {
+            // disable/enable all trigger sensors
+            foreach(SensorTrigger sensor in _sensorsTrigger) sensor.gameObject.SetActive(status);
+            // ? only bool check disable works fine since sensor not shown visually, can use for example hiding roots when seedFlower dies? doesnt work for shroomPrisoner, saves extra calculation
+            _isTrigger = status;
+        }
         ThisTask.Succeed();
     }
     [Task]
     void SetVisions(int value)
     {
-        _isVision = value == 1;
+        bool status = value == 1;
+        // not already active/inactive
+        if (_isVision != status)
+        {
+            // disable/enable all vision sensors
+            foreach(SensorVision sensor in _sensorsVision) sensor.gameObject.SetActive(status);
+            // 
+            _isVision = status;
+        }
         ThisTask.Succeed();
     }
     [Task]

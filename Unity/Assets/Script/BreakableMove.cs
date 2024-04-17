@@ -14,11 +14,19 @@ public class BreakableMove : Breakable
         // print(transform.position + "\t" + source.transform.position);
         // ? destroy before push
         // ? flies further the further its hit from
+        // ? case for diagonal
         // direction + position
         Vector3 position = (transform.position - source.transform.position) + transform.position;
         // move to tile if clear
-        if (!GameNavigation.IsTileAtPosition(position)) transform.position = new Vector3(position.x, position.y, transform.position.z);
+        // if (!GameNavigation.IsTileAtPosition(position)) transform.position = new Vector3(position.x, position.y, transform.position.z);
+        if (!GameNavigation.IsTileAtPosition(position)) Move(new Vector3(position.x, position.y, transform.position.z));
         // 
         base.HealthModify(value, source);
+    }
+    public override void Discard()
+    {
+        _body.gameObject.SetActive(false);
+        // 
+        base.Discard();
     }
 }

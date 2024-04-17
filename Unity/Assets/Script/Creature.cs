@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 public class Creature : Breakable
 {
     protected Item[] _inventory;
@@ -51,41 +50,4 @@ public class Creature : Breakable
     //     return items;
     // }
     // item drop
-    // 
-    private Vector3 _position;
-    // * testing separate collider and sprite
-    public Transform _body;
-    public void Move(Vector3 target)
-    {
-        // 
-        StopCoroutine("LerpPosition");
-        // * testing ? remove in awake, lots of unparented bodies..? collider as child?
-        if (_body.parent) _body.SetParent(null);
-        // 
-        _position = target;
-        // 
-        StartCoroutine("LerpPosition");
-    }
-    IEnumerator LerpPosition()
-    {
-        // * testing
-        // look in direction to move
-        _body.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - transform.position.y, _position.x - transform.position.x) * Mathf.Rad2Deg - 90f);
-        // record start position
-        Vector3 start = transform.position;
-        // move collider to target position
-        transform.position = _position;
-        // lerp counter
-        float lerp = 0f;
-        // not at target position
-        while (Vector3.Distance(start, _position) > 0f)
-        {
-            // advance lerp timer
-            lerp += Time.deltaTime * 2f;
-            // update position offset for this frame
-            _body.position = Vector3.Lerp(start, _position, lerp);
-            // wait till next frame
-            yield return null;
-        }
-    }
 }

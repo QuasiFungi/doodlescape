@@ -7,7 +7,7 @@ tree "Alive"
 
 tree "Wander"
     sequence
-        EntityToAnchor
+        // EntityToAnchor
         SetSpeedMove 1.0
         not SensorAny
         IsBored

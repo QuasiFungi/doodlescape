@@ -5,13 +5,14 @@ tree "Alive"
 
 tree "Attack"
     sequence
-        AnchorToTrigger
         SetSprite 0
+        AnchorToTrigger
         SetSpeedTurn 90.0
         IsDirection 5.0
         SetSpeedTurn 0.0
         DoAttack 0 0 0
-        Wait 2
+        SetSprite 2
+        Wait 1
 
 tree "Idle"
     sequence
