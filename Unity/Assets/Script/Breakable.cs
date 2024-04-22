@@ -10,18 +10,59 @@ public class Breakable : Entity
     // {
     //     _healthInst = _health;
     // }
+    // ? taken from anim or entity
+    protected SpriteRenderer _sprite;
+    private Color _colorFlash;
     protected virtual void Start()
     {
         // ? save load
         _healthInst = _health;
+        // * testing walk animation ? move to anim
+        _sprite = _body.GetComponent<SpriteRenderer>();
+        // color to take when hurt
+        _colorFlash = new Color(1f, 0f, 0f, 1f);
     }
     // 
     public virtual void HealthModify(int value, Creature source)
     {
+        // 
         _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
+        // * testing ? coroutine being called after dead... unknown behaviour with mob
+        StopCoroutine("Flash");
+        if (IsDead) Discard();
+        else StartCoroutine("Flash");
         // * testing
-        if (_healthInst == 0) Discard();
+        // if (_healthInst == 0) Discard();
         // if (_healthInst == 0) Hide();
+    }
+    public override void Discard()
+    {
+        // * testing ? delete or pool
+        _body.gameObject.SetActive(false);
+        // 
+        base.Discard();
+    }
+    IEnumerator Flash()
+    {
+        // fade alpha over tick duration ? account for dynamic tick size
+        // ? conflict with BT color assign, wait few frames for BT execution
+        // remember current color
+        Color color = _sprite.color;
+        // // * testing fade out on dead
+        // if (IsDead) color.a = 0f;
+        // flash to white then slowly back to original color
+        for(float t = 0f; t < 1f; t += Time.deltaTime)
+        {
+            _sprite.color = Color.Lerp(_colorFlash, color, t);
+            yield return null;
+        }
+        _sprite.color = color;
+        // // * testing
+        // if (IsDead) Discard();
+    }
+    private bool IsDead
+    {
+        get { return _healthInst == 0; }
     }
     public float HealthInst
     {
@@ -49,11 +90,11 @@ public class Breakable : Entity
         // * testing
         // look in direction to move always
         // if (_testRotation)
-        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - transform.position.y, _position.x - transform.position.x) * Mathf.Rad2Deg - 90f);
+        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - Position.y, _position.x - Position.x) * Mathf.Rad2Deg - 90f);
         _body.eulerAngles = transform.eulerAngles;
         // _body.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - transform.position.y, _position.x - transform.position.x) * Mathf.Rad2Deg);
         // record start position
-        Vector3 start = transform.position;
+        Vector3 start = Position;
         // move collider to target position
         transform.position = _position;
         // lerp counter
@@ -68,5 +109,9 @@ public class Breakable : Entity
             // wait till next frame
             yield return null;
         }
+    }
+    protected Vector3 Position
+    {
+        get { return transform.position; }
     }
 }

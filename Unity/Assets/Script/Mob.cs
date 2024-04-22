@@ -91,8 +91,6 @@ public class Mob : Creature
     [Tooltip("highlight tiles being searched for sensor triggers")] [SerializeField] private bool _showSearch = false;
     // ? use string ids
     [Tooltip("ids of entities that will be attacked")] [SerializeField] protected List<string> _hostiles;
-    // ? taken from anim or entity
-    protected SpriteRenderer _sprite;
     [Tooltip("Mob sprite variants (0 is default)")] [SerializeField] protected Sprite[] _sprites;
     protected List<Collider2D> _colliders;
     // 
@@ -169,8 +167,6 @@ public class Mob : Creature
         // foreach (SensorTrigger sensor in _sensorsTrigger)
         //     sensor.SetActive(true);
         // 
-        // * testing walk animation ? move to anim
-        _sprite = _body.GetComponent<SpriteRenderer>();
         // * testing ? move to motor
         _colliders = new List<Collider2D>();
         _colliders.Add(GetComponent<Collider2D>());
@@ -1021,8 +1017,4 @@ public class Mob : Creature
         ThisTask.Succeed();
     }
     #endregion
-    private Vector3 Position
-    {
-        get { return transform.position; }
-    }
 }

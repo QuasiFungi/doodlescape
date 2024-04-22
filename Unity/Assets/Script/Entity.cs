@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
     {
         // unsubscribe from all events
         gameObject.SetActive(false);
-        // 
+        // ? scale with tick duration
         Destroy(gameObject, 1f);
     }
     public string ID

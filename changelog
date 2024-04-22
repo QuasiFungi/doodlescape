@@ -1,3 +1,9 @@
+240422
+- breakables flash red on receiving damage
+
+240418
+- testing low res display
+
 240417
 - vision sensor does three raycasts with offsets for better corner detection
 - fixed vision sensor detection failing due to wrong target distance calculation
