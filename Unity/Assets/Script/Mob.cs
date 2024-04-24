@@ -92,7 +92,6 @@ public class Mob : Creature
     // ? use string ids
     [Tooltip("ids of entities that will be attacked")] [SerializeField] protected List<string> _hostiles;
     [Tooltip("Mob sprite variants (0 is default)")] [SerializeField] protected Sprite[] _sprites;
-    protected List<Collider2D> _colliders;
     // 
     protected Color[] _colors;
     protected float _rotation;
@@ -167,9 +166,6 @@ public class Mob : Creature
         // foreach (SensorTrigger sensor in _sensorsTrigger)
         //     sensor.SetActive(true);
         // 
-        // * testing ? move to motor
-        _colliders = new List<Collider2D>();
-        _colliders.Add(GetComponent<Collider2D>());
         // 
         // preset
         _colors = new Color[2];
@@ -917,8 +913,7 @@ public class Mob : Creature
     [Task]
     void SetColliders(int value)
     {
-        // * testing
-        foreach (Collider2D collider in _colliders) collider.enabled = value == 1;
+        SetColliders(value == 1);
         // _motor.CollidersToggle(value == 1);
         ThisTask.Succeed();
     }

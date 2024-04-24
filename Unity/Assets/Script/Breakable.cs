@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 // rubble
 public class Breakable : Entity
 {
@@ -13,6 +14,7 @@ public class Breakable : Entity
     // ? taken from anim or entity
     protected SpriteRenderer _sprite;
     private Color _colorFlash;
+    protected List<Collider2D> _colliders;
     protected virtual void Start()
     {
         // ? save load
@@ -21,6 +23,9 @@ public class Breakable : Entity
         _sprite = _body.GetComponent<SpriteRenderer>();
         // color to take when hurt
         _colorFlash = new Color(1f, 0f, 0f, 1f);
+        // * testing ? move to motor
+        _colliders = new List<Collider2D>();
+        _colliders.Add(GetComponent<Collider2D>());
     }
     // 
     public virtual void HealthModify(int value, Creature source)
@@ -29,8 +34,9 @@ public class Breakable : Entity
         _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // * testing ? coroutine being called after dead... unknown behaviour with mob
         StopCoroutine("Flash");
-        if (IsDead) Discard();
-        else StartCoroutine("Flash");
+        StartCoroutine("Flash");
+        // if (IsDead) Discard();
+        // else StartCoroutine("Flash");
         // * testing
         // if (_healthInst == 0) Discard();
         // if (_healthInst == 0) Hide();
@@ -48,8 +54,14 @@ public class Breakable : Entity
         // ? conflict with BT color assign, wait few frames for BT execution
         // remember current color
         Color color = _sprite.color;
-        // // * testing fade out on dead
-        // if (IsDead) color.a = 0f;
+        // * testing
+        if (IsDead)
+        {
+            // fade out on dead
+            color.a = 0f;
+            // disable colliders
+            SetColliders(false);
+        }
         // flash to white then slowly back to original color
         for(float t = 0f; t < 1f; t += Time.deltaTime)
         {
@@ -59,6 +71,11 @@ public class Breakable : Entity
         _sprite.color = color;
         // // * testing
         // if (IsDead) Discard();
+    }
+    protected void SetColliders(bool value)
+    {
+        // * testing
+        foreach (Collider2D collider in _colliders) collider.enabled = value;
     }
     private bool IsDead
     {

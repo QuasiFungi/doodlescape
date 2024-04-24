@@ -3,6 +3,7 @@ public class BaseHitbox : MonoBehaviour
 {
     // reference to entity that spawned this
     protected Breakable _source;
+    // ? not all hitboxes have/need sprite, move to hitboxDamage
     protected SpriteRenderer _renderer;
     protected virtual void Awake()
     {
@@ -14,6 +15,9 @@ public class BaseHitbox : MonoBehaviour
     }
     protected void Discard()
     {
-        Destroy(gameObject);
+        // * testing
+        gameObject.SetActive(false);
+        // allow unsubscribe from tick events
+        Destroy(gameObject, 1f);
     }
 }

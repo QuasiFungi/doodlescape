@@ -60,7 +60,9 @@ public class HitboxDamage : BaseHitbox
         if (target == _source) return;
         // apply damage ? why ignore zero, what case when zero used
         // if (_damage != 0) target.HealthModify(-_damage, other.gameObject.layer == GameVariables.LayerCreature ? _source as Creature : null);
-        if (_damage != 0) target.HealthModify(-_damage, _source as Creature);
+        // if (_damage != 0) target.HealthModify(-_damage, _source as Creature);
+        // * testing damage flash
+        target.HealthModify(-_damage, _source as Creature);
         // ? for bore type damage
         if (_impactSensitive) Discard();
     }
