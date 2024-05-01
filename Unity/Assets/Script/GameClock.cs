@@ -7,7 +7,7 @@ public class GameClock : MonoBehaviour
     public static event OnTick onTick;
     public static event OnTick onTickLate;
     public static event OnTick onTickUI;
-    private float tickDuration = .5f;
+    private float tickDuration = 1f;
     private float tickTimer;
     [Tooltip("tick on keypress")] [SerializeField] private bool _devManualTick = false;
     void OnEnable()
@@ -26,7 +26,7 @@ public class GameClock : MonoBehaviour
     }
     void Start()
     {
-        tickTimer = tickDuration;
+        tickTimer = 0f;
         // // * testing ? things move forward one tick immediately
         // onTick?.Invoke();
         // onTickLate?.Invoke();
@@ -61,8 +61,8 @@ public class GameClock : MonoBehaviour
         // - mob, behaviour tick
         onTickLate?.Invoke();
         // yield return null;
-        // pause for animations to play out
-        yield return new WaitForSeconds(.5f);
+        // // pause for animations to play out
+        // yield return new WaitForSeconds(.5f);
         // - ui action, sprite update
         onTickUI?.Invoke();
         // 

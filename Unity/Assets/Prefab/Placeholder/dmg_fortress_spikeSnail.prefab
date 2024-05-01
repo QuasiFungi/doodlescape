@@ -195,4 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 0
   _impactSensitive: 0
-  _timer: -1
+  _timer: 1

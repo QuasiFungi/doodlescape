@@ -5,13 +5,15 @@ public class BaseHitbox : MonoBehaviour
     protected Breakable _source;
     // ? not all hitboxes have/need sprite, move to hitboxDamage
     protected SpriteRenderer _renderer;
+    protected Vector3 _target;
     protected virtual void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
     }
-    public void Initialize(Breakable source)
+    public void Initialize(Breakable source, Vector3 target)
     {
         _source = source;
+        _target = target;
     }
     protected void Discard()
     {

@@ -45,7 +45,7 @@ public class BaseChunk : MonoBehaviour
     //     // if (_state != 0)
     //     //     SetState(game_variables.Instance.Depth - 1);
     // }
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (!_showChunk) return;
         // player

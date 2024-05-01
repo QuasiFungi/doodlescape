@@ -1,62 +1,94 @@
+Legend
++ new
+- removed
+~ modifiied
+* untested
+
 ToDo
 - readme github guide for development
 - mob BT edge case testing
 
+240501
+* added mob shroomPrisoner
+* mobs can now pathfind over creatures
+~ some gizmos now show only on object selection
+
+240428
+~ attack pattern now rotation aware
+- game clock animation pause
+
+240427
++ damage hitbox sprites for seedFlower cursedChanter shroomPrisoner flyTrap
+~ hitboxes for player and seedFlower damage
+~ attack pattern script
+~ tweaked flyTrap behaviour
+- toggle type attack
+
+240426
+* testing new attack type that follows path to target
+
+240425
+~ attack pattern use textbox instead of csv file
++ attack pattern with rotation
++ sprite for spikeSnail damage hitbox
+
 240424
-- new attack type that uses sequence of patterns
++ attack type that uses sequence of patterns
 
 240423
-- breakable flash and fade out on dead
++ breakable flash and fade out on dead
 
 240422
-- breakables flash red on receiving damage
++ breakables flash red on receiving damage
 
 240418
-- testing low res display
+* testing low res display
 
 240417
-- vision sensor does three raycasts with offsets for better corner detection
-- fixed vision sensor detection failing due to wrong target distance calculation
-- mob vision sensors hide visually when disabled
-- vision sensor render correctly in 3D
-- seedFlower new sprite for attack cooldown
-- seedFlower slight behaviour tweak
-- slab move animation
++ vision sensor does three raycasts with offsets for better corner detection
+~ fixed vision sensor detection failing due to wrong target distance calculation
+~ mob vision sensors hide visually when disabled
+~ vision sensor render correctly in 3D
++ seedFlower sprite for attack cooldown
+~ seedFlower behaviour
++ slab move animation
 
 240414
-- added animated barrier tile
-- seedFlower new sprite
-- vision sensor visualization
-- spikeSnail sprites simplified
++ animated barrier tile
++ seedFlower new sprite
++ vision sensor visualization
+~ spikeSnail sprites simplified
 
 240407
-- added basic player and creature walk animation
-- camera smoothing for anti nausea walking
++ basic player and creature walk animation
++ camera smoothing for anti nausea walking
 
 240405
-- player sprite now turns in walk direction
-- added waypoint manager for automatic waypoint assigning
-- mob smooth rotation fixed
-- reworked seedFlower and flyTrap behaviour
++ player sprite now turns in walk direction
++ waypoint manager for automatic waypoint assigning
+~ mob smooth rotation fixed
+~ seedFlower behaviour
+* mob flyTrap
 
 240404
-- trigger sensor now needs line of sight
-- spikeSnail behaviour tree reworked
-- mob waypoint pathfinding improved
-- partial touch input support
-- switched platform to android
+~ trigger sensor now needs line of sight
+~ spikeSnail behaviour tree
+~ mob waypoint pathfinding improved
++ partial touch input support
+~ switched platform to android
 
 240403
-- tick dependent script execution order rearranged
-- spikeSnail behaviour reworked and new sprite added
-- mob timers now tick based
+~ tick dependent script execution order rearranged
+~ spikeSnail behaviour
++ spikeSnail new sprite
+~ mob timers now tick based
 
 240331
-- partially fixed pathfinding
-- added manual time tick override
+~ partially fixed pathfinding
++ manual time tick override
 
 240329
-- waypoint navigation
-- chunk based loading
-- burst compiler
-- a star pathfinding
++ waypoint navigation
++ chunk based loading
++ burst compiler
++ a star pathfinding

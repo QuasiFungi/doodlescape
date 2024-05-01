@@ -14,6 +14,7 @@ public class Breakable : Entity
     // ? taken from anim or entity
     protected SpriteRenderer _sprite;
     private Color _colorFlash;
+    private Color _colorDefault;
     protected List<Collider2D> _colliders;
     protected virtual void Start()
     {
@@ -23,6 +24,9 @@ public class Breakable : Entity
         _sprite = _body.GetComponent<SpriteRenderer>();
         // color to take when hurt
         _colorFlash = new Color(1f, 0f, 0f, 1f);
+        // ? conflict with BT color assign, wait few frames for BT execution
+        // remember current color
+        _colorDefault = _sprite.color;
         // * testing ? move to motor
         _colliders = new List<Collider2D>();
         _colliders.Add(GetComponent<Collider2D>());
@@ -51,9 +55,7 @@ public class Breakable : Entity
     IEnumerator Flash()
     {
         // fade alpha over tick duration ? account for dynamic tick size
-        // ? conflict with BT color assign, wait few frames for BT execution
-        // remember current color
-        Color color = _sprite.color;
+        Color color = _colorDefault;
         // * testing
         if (IsDead)
         {
@@ -63,11 +65,12 @@ public class Breakable : Entity
             SetColliders(false);
         }
         // flash to white then slowly back to original color
-        for(float t = 0f; t < 1f; t += Time.deltaTime)
+        for(float t = 0f; t < 1f; t += Time.deltaTime * 1f)
         {
             _sprite.color = Color.Lerp(_colorFlash, color, t);
             yield return null;
         }
+        // reapply default color
         _sprite.color = color;
         // // * testing
         // if (IsDead) Discard();

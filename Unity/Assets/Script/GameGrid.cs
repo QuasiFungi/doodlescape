@@ -17,6 +17,7 @@ public class GameGrid : MonoBehaviour
            {
                 // Gizmos.color = _grid[x, y].IsWalkable ? Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(_weightBounds.x, _weightBounds.y, _grid[x, y].Weight)) : Color.red;
                 // Gizmos.color = _grid[x, y].IsWalkable ? Color.black : Color.red;
+                // Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(_weightBounds.x, _weightBounds.y, _grid[x, y].Weight));
                 if (_grid[x, y].IsWalkable) Gizmos.DrawWireCube(IndexToWorld(x, y), Vector3.one * .45f);
            }
         }

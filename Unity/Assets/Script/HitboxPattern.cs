@@ -1,56 +1,25 @@
 using UnityEngine;
-// using System.IO;
+// used by spikeSnail
 public class HitboxPattern : BaseHitbox
 {
     // assumes square grid of odd size ? case for rectangle, sparce matrix
-    [Tooltip("Pattern sequence for attack")] [SerializeField]  TextAsset _file;
+    [Tooltip("Pattern sequence for attack")] [TextAreaAttribute] [SerializeField] string _pattern;
     // file format:
     // pattern 1
     // pattern 2
     // ...
     // pattern n
-    private bool[,,] _pattern;
-    // [Tooltip("Rotate hitbox sprites out from center")] [SerializeField] private bool _useRotation;
+    private bool[,,] _sequence;
     [Tooltip("Damage effect to spawn in pattern")] [SerializeField] private GameObject _attack;
+    // [Tooltip("Rotate hitbox sprites out from center")] [SerializeField] private bool _useRotation;
     protected override void Awake()
     {
         base.Awake();
-        // var fileData : String  = System.IO.File.ReadAllText(path);
-        // string fileData = System.IO.File.ReadAllText(path);
-        // string fileData = _file.text;
-        // var lines : String[] = fileData.Split('\n');
-        // string[] lines = fileData.Split('\n');
-        string[] lines = _file.text.Split('\n');
-        // var lineData : String = (lines[0].Trim()).Split(',');
-        // string lineData = (lines[0].Trim()).Split(',');
-        // var x : float;
-        // int x;
-        // 
-        // int.TryParse(lineData[0], x);
-        // foreach (string line in lines)
-        // {
-        //     string[] lineData = (line.Trim()).Split(',');
-        //     // print(line);
-        // }
-        // 
+        string[] lines = _pattern.Split('\n');
         int size = lines[0].Trim().Split(',').Length;
         int step = lines.Length / size;
-        _pattern = new bool[size, size, step];
-        // for (int p = lines.Length - 1; p > -1; p--)
-        // {
-        //     string[] lineData = (lines[p].Trim()).Split(',');
-        // }
-        // for (int z = _pattern.Length(2) - 1; z > -1; z--)
-        //     for (int y = _pattern.Length(1) - 1; z > -1; z--)
-        //         for (int x = _pattern.Length(0) - 1; z > -1; z--)
-        //         {
-        //             // 
-        //         }
+        _sequence = new bool[size, size, step];
         string[] lineData;
-        // for (int z = _pattern.Length(2) - 1; z > -1; z--)
-        // {
-        //     lineData = (lines[z].Trim()).Split(',');
-        // }
         int value;
         for (int line = lines.Length - 1; line > -1; line--)
         {
@@ -58,26 +27,29 @@ public class HitboxPattern : BaseHitbox
             for (int character = lineData.Length - 1; character > -1; character--)
             {
                 int.TryParse(lineData[character], out value);
-                _pattern[character, line % size, line % step] = value == 1;
+                _sequence[character, size - 1 - (line % size), (line / size) % step] = value == 1;
+                // print(character + ",\t" + line % size + ",\t" + (line / size) % step + ":\t" + (value == 1));
             }
+            // print("-\n");
         }
-        // print(_pattern[1,1,0]);
         _index = 0;
-        _offset = (_pattern.GetLength(0) - 1) / 2f;
-        // process one tick immediately
-        Iterate();
+        _offset = (_sequence.GetLength(0) - 1) / 2f;
+        // // process one tick immediately
+        // Iterate();
+        // _testTime = Time.time;
     }
-    // void OnDrawGizmos()
-    // {
-    //     if (_pattern == null) return;
-    //     // 
-    //     Gizmos.color = new Color(1f, 0f, 0f, .1f);
-    //     // for (int z = _pattern.Length(2) - 1; z > -1; z--)
-    //     float offset = (_pattern.GetLength(0) - 1) / 2f;
-    //     for (int y = _pattern.GetLength(1) - 1; y > -1; y--)
-    //         for (int x = _pattern.GetLength(0) - 1; x > -1; x--)
-    //             if (_pattern[x, y, 0]) Gizmos.DrawSphere(transform.position + new Vector3(x - offset, y - offset), .5f);
-    // }
+    // * testing
+    public int _testPattern = -1;
+    void OnDrawGizmosSelected()
+    {
+        if (_sequence == null || _testPattern < 0 || _testPattern >= _sequence.GetLength(2)) return;
+        // 
+        Gizmos.color = new Color(1f, 0f, 0f, .5f);
+        float offset = (_sequence.GetLength(0) - 1) / 2f;
+        for (int y = _sequence.GetLength(1) - 1; y > -1; y--)
+            for (int x = _sequence.GetLength(0) - 1; x > -1; x--)
+                if (_sequence[x, y, _testPattern]) Gizmos.DrawSphere(transform.position + new Vector3(x - offset, y - offset), .5f);
+    }
     void OnEnable()
     {
         GameClock.onTick += Iterate;
@@ -88,22 +60,34 @@ public class HitboxPattern : BaseHitbox
     }
     private int _index;
     private float _offset;
+    // * testing ? use enum instead
+    public bool _testRotation;
+    // private float _testTime;
     private void Iterate()
     {
-        if (_index == _pattern.GetLength(2))
+        // // 
+        // print(Time.time - _testTime);
+        // _testTime = Time.time;
+        // * testing
+        if (_testPattern > -1) return;
+        // 
+        if (_index == _sequence.GetLength(2))
         {
             Discard();
             return;
         }
         // 
         GameObject attack;
-        for (int y = _pattern.GetLength(1) - 1; y > -1; y--)
-            for (int x = _pattern.GetLength(0) - 1; x > -1; x--)
-                if (_pattern[x, y, _index])
+        for (int y = _sequence.GetLength(1) - 1; y > -1; y--)
+            for (int x = _sequence.GetLength(0) - 1; x > -1; x--)
+                if (_sequence[x, y, _index])
                 {
-                    attack = Instantiate(_attack, transform.position + new Vector3(x - _offset, y - _offset), transform.rotation, transform);
+                    Vector3 offset = transform.right * (x - _offset) + transform.up * (y - _offset) + Vector3.forward * -2f;
+                    attack = Instantiate(_attack, transform.position + offset, transform.rotation, transform);
+                    // attack = Instantiate(_attack, transform.position + offset, Quaternion.LookRotation(Vector3.up, offset), transform);
+                    if (_testRotation) attack.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg - 90f);
                     // 
-                    attack.GetComponent<BaseHitbox>().Initialize(_source);
+                    attack.GetComponent<BaseHitbox>().Initialize(_source, _target);
                     // // ? why damage disabled by default, not use toggle type attacks..?
                     // attack.SetActive(true);
                 }

@@ -435,13 +435,14 @@ public class Mob : Creature
         return transform.eulerAngles.z - angle <= _directionCheck;
     }
     // * testing move
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (_searchType == TriggerSearchType.BOUNDS)
         {
             Gizmos.color = Color.red;
             // Gizmos.DrawWireCube(_motor.Position + (Vector3)_offset, new Vector3(_bounds.x, _bounds.y));
-            Gizmos.DrawWireCube(Position + (Vector3)_offset, new Vector3(_bounds.x - .1f, _bounds.y - .1f));
+            // ? center on spawn once its been assigned
+            Gizmos.DrawWireCube((HealthInst > 0 ? _spawn : Position) + (Vector3)_offset, new Vector3(_bounds.x - .1f, _bounds.y - .1f));
         }
         if (_searchType != TriggerSearchType.NULL)
         {
@@ -596,7 +597,7 @@ public class Mob : Creature
     //     return _waypoint ? _waypoint.Position : _spawn;
     // }
     // waypoint, else current position
-    protected Vector3 GetWaypoint(bool next = false)
+    protected Vector3 GetWaypoint(bool next, bool offset = false)
     {
         // if (_waypoint)
         // {
@@ -610,7 +611,7 @@ public class Mob : Creature
             if (_waypoint) _waypoint = _waypoint.GetNext();
             else Debug.LogWarning(gameObject.name + ":\tAttempting to use waypoint without having one assigned first (check if isNavigate is enabled)");
         }
-        return _waypoint ? _waypoint.Position : _spawn;
+        return _waypoint ? (offset ? _waypoint.PositionRandom() : _waypoint.Position) : _spawn;
     }
     // // * testing
     // private void SetRotation(Vector3 target)
@@ -655,46 +656,71 @@ public class Mob : Creature
     //     print(value);
     //     ThisTask.Succeed();
     // }
+    // [Task]
+    // void AnchorToOffsetRadius(float value)
+    // {
+    //     // * testing [? retry attempts on invalid, chase bounds/limit]
+    //     // _anchor.position += transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
+    //     // Vector3 direction = transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f);
+    //     // RaycastHit2D hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+    //     // RaycastHit2D hit = Physics2D.Raycast(_motor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+    //     Vector2 offset = (transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f)).normalized;
+    //     RaycastHit2D hit = Physics2D.Raycast(Position, offset, value, GameVariables.ScanLayerObstruction);
+    //     EventPoint temp = new EventPoint();
+    //     // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .3f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+    //     // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .5f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+    //     // if (Physics2D.OverlapCircle(temp.Position, .9f, game_variables.Instance.ScanLayerObstruction) != null)
+    //     //     temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
+    //     // temp.Position = hit ? grid_map.Instance.WorldToGrid(_motor.Position) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
+    //     temp.Position = hit ? GameGrid.Instance.WorldToGrid(hit.point + hit.normal * .5f) : GameGrid.Instance.WorldToGrid(Position);
+    //     // safety ?
+    //     if (Physics2D.OverlapCircle(temp.Position, .9f, GameVariables.ScanLayerObstruction) != null)
+    //         // temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
+    //         temp.Position = GetWaypoint();
+    //     temp.Layer = _anchor.Layer;
+    //     temp.Time = _anchor.Time;
+    //     _anchor = temp;
+    //     // else
+    //     //     // temp.Position = _anchor.Position + direction;
+    //     //     // temp.Position = _motor.Position + direction.normalized * value;
+    //     //     temp.Position = _anchor.Position;
+    //     // // ? locking
+    //     // while (hit)
+    //     // {
+    //     //     direction = transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
+    //     //     hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
+    //     // }
+    //     // temp.Position = _anchor.Position + direction;
+    //     Task.current.Succeed();
+    // }
     [Task]
-    void AnchorToOffsetRadius(float value)
+    void AnchorToBack(float max, float min)
     {
-        // * testing [? retry attempts on invalid, chase bounds/limit]
-        // _anchor.position += transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
-        // Vector3 direction = transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f);
-        // RaycastHit2D hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
-        // RaycastHit2D hit = Physics2D.Raycast(_motor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
-        Vector2 offset = (transform.right * Random.Range(-1f, 1f) + transform.up * Random.Range(-1f, 1f)).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(Position, offset, value, GameVariables.ScanLayerObstruction);
-        EventPoint temp = new EventPoint();
-        // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .3f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
-        // temp.Position = hit ? grid_map.Instance.WorldToGrid(hit.point + hit.normal * .5f) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
-        // if (Physics2D.OverlapCircle(temp.Position, .9f, game_variables.Instance.ScanLayerObstruction) != null)
-        //     temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
-        // temp.Position = hit ? grid_map.Instance.WorldToGrid(_motor.Position) : grid_map.Instance.WorldToGrid(_motor.Position + (Vector3)offset * value);
-        temp.Position = hit ? GameGrid.Instance.WorldToGrid(hit.point + hit.normal * .5f) : GameGrid.Instance.WorldToGrid(Position);
-        // safety ?
-        if (Physics2D.OverlapCircle(temp.Position, .9f, GameVariables.ScanLayerObstruction) != null)
-            // temp.Position = grid_map.Instance.WorldToGrid(_motor.Position);
-            temp.Position = GetWaypoint();
-        temp.Layer = _anchor.Layer;
-        temp.Time = _anchor.Time;
-        _anchor = temp;
-        // else
-        //     // temp.Position = _anchor.Position + direction;
-        //     // temp.Position = _motor.Position + direction.normalized * value;
-        //     temp.Position = _anchor.Position;
-        // // ? locking
-        // while (hit)
-        // {
-        //     direction = transform.right * Random.Range(-value, value) + transform.up * Random.Range(-value, value);
-        //     hit = Physics2D.Raycast(_anchor.Position, direction.normalized, value, game_variables.Instance.ScanLayerObstruction);
-        // }
-        // temp.Position = _anchor.Position + direction;
-        Task.current.Succeed();
+        // do occlusion check in straight line behind creature
+        RaycastHit2D hit = Physics2D.Raycast(Position, -transform.up, max, GameVariables.ScanLayerObstruction);
+        // all clear
+        if (!hit)
+        {
+            // mark position for movement
+            _anchor = new EventPoint(Position - transform.up * max, _anchor.Layer, _anchor.Time);
+            // found valid position
+            ThisTask.Succeed();
+        }
+        // acceptable distance
+        else if (hit.distance >= min)
+        {
+            // mark position for movement
+            _anchor = new EventPoint(hit.point - (Vector2)transform.up * .1f, _anchor.Layer, _anchor.Time);
+            // found valid position
+            ThisTask.Succeed();
+        }
+        // no place to move to
+        else ThisTask.Fail();
     }
     [Task]
     void AnchorToTrigger()
     {
+        // nothing detected
         if (_positionTrigger == null) ThisTask.Fail();
         else
         {
@@ -713,6 +739,13 @@ public class Mob : Creature
         ThisTask.Succeed();
     }
     [Task]
+    void AnchorToWaypointOffset()
+    {
+        // 0 - current waypoint | 1 - next waypoint
+        _anchor = new EventPoint(GetWaypoint(true, true), _anchor.Layer, _anchor.Time);
+        Task.current.Succeed();
+    }
+    [Task]
     void DoAttack(int indexPrefab, int indexSpawn, int parent)
     {
         // // * testing [? safety]
@@ -721,7 +754,7 @@ public class Mob : Creature
         // 
         GameObject temp = Instantiate(_prefabs[indexPrefab], _spawns[indexSpawn].position, _spawns[indexSpawn].rotation);
         // 
-        temp.GetComponent<BaseHitbox>().Initialize(this as Breakable);
+        temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
         // 
         if (parent == 1) temp.transform.SetParent(_spawns[indexSpawn]);
         // 
@@ -732,7 +765,8 @@ public class Mob : Creature
     [Task]
     void EntityAtAnchor(float value)
     {
-        float distance = Vector3.Distance(Position, _anchor.Position);
+        // ignore z depth
+        float distance = Vector2.Distance(Position, _anchor.Position);
         ThisTask.debugInfo = distance.ToString();
         ThisTask.Complete(distance <= value);
     }
@@ -752,7 +786,9 @@ public class Mob : Creature
         // 
         // Move(_anchor.Position);
         // 
-        ThisTask.Succeed();
+        // ThisTask.Succeed();
+        // ? promote to property
+        ThisTask.Complete(_speedMove > 0);
     }
     // [Task]
     // void EntityToPath()
@@ -823,6 +859,22 @@ public class Mob : Creature
         ThisTask.Complete(_waypoint ? _waypoint.IsWaypoint(_anchor.Position) : false);
     }
     [Task]
+    void IsFlag(int index)
+    {
+        // * testing [? check flag int default zero]
+        if (index > -1 && index < _countFlags)
+        {
+            ThisTask.debugInfo = _flags[index].ToString();
+            ThisTask.Complete(_flags[index]);
+        }
+        else
+        {
+            Debug.LogWarning(gameObject.name + ":\tAttempting to access undefined flag");
+            // 
+            ThisTask.Fail();
+        }
+    }
+    [Task]
     void IsTimer(int index)
     {
         if (index > -1 && index < _countTimers)
@@ -831,7 +883,11 @@ public class Mob : Creature
             ThisTask.Complete(_timers[index] > 0);
         }
         else
+        {
+            Debug.LogWarning(gameObject.name + ":\tAttempting to access undefined timer");
+            // 
             ThisTask.Succeed();
+        }
     }
     // * testing [? use entity timer]
     protected int _scanTimer = 0;
@@ -891,6 +947,16 @@ public class Mob : Creature
         ThisTask.Complete(CheckTrigger() || CheckVision());
     }
     [Task]
+    void SetAttack(int index, int value)
+    {
+        if (_prefabs[index].activeSelf != (value == 1))
+        {
+            _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
+            _prefabs[index].SetActive(value == 1);
+        }
+        ThisTask.Succeed();
+    }
+    [Task]
     void SetColor(int index)
     {
         if (index > -1 && index < _colors.Length)
@@ -898,17 +964,12 @@ public class Mob : Creature
             _sprite.color = _colors[index];
             ThisTask.Succeed();
         }
-        else ThisTask.Fail();
-    }
-    [Task]
-    void SetAttack(int index, int value)
-    {
-        if (_prefabs[index].activeSelf != (value == 1))
+        else
         {
-            _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable);
-            _prefabs[index].SetActive(value == 1);
+            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined color");
+            // 
+            ThisTask.Fail();
         }
-        ThisTask.Succeed();
     }
     [Task]
     void SetColliders(int value)
@@ -929,6 +990,21 @@ public class Mob : Creature
     // {
     //     _rotation = transform.eulerAngles.z + value;
     // }
+    [Task]
+    void SetFlag(int index, int value)
+    {
+        if (index > -1 && index < _countFlags)
+        {
+            _flags[index] = value == 1;
+            ThisTask.Succeed();
+        }
+        else
+        {
+            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined flag");
+            // 
+            ThisTask.Fail();
+        }
+    }
     // ? rename to set speed move for consistency
     [Task]
     void SetSpeedMove(float value)
@@ -954,7 +1030,12 @@ public class Mob : Creature
             // _anim.SetSprite(value);
             ThisTask.Succeed();
         }
-        else ThisTask.Fail();
+        else
+        {
+            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined sprite");
+            // 
+            ThisTask.Fail();
+        }
     }
     // // look target
     // // 0 - anchor [sensor detection implicit]
@@ -975,7 +1056,12 @@ public class Mob : Creature
             _timers[index] = value;
             ThisTask.Succeed();
         }
-        else ThisTask.Fail();
+        else
+        {
+            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined timer");
+            // 
+            ThisTask.Fail();
+        }
     }
     [Task]
     void SetTriggers(int value)

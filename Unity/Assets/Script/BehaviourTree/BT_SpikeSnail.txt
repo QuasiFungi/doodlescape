@@ -23,9 +23,8 @@ tree "Attack"
     sequence
         AnchorToTrigger
         IsAnchorCreature
-        SetAttack 0 1
+        DoAttack 0 0 1
         Wait 1
-        SetAttack 0 0
 
 tree "Peek"
     sequence

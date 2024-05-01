@@ -6,12 +6,12 @@ public class Waypoint : MonoBehaviour
     [Tooltip("Directional links")] [SerializeField] protected List<Waypoint> _neighbours = new List<Waypoint>();
     void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1f, 0f, 1f, 1f);
+        Gizmos.color = new Color(1f, 1f, 1f, 1f);
         foreach (Waypoint next in _neighbours)
             if (next)
                 Gizmos.DrawLine(transform.position, next.Position);
-        Gizmos.color = new Color(1f, 0f, 1f, .5f);
-        Gizmos.DrawSphere(transform.position, _radius);
+        Gizmos.color = new Color(1f, 1f, 1f, .5f);
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
     // position + random deviation
     public Vector3 PositionRandom()
@@ -28,7 +28,8 @@ public class Waypoint : MonoBehaviour
     }
     public bool IsWaypoint(Vector3 position)
     {
-        return Vector3.Distance(position, transform.position) < _radius;
+        // ignore z depth
+        return Vector2.Distance(position, transform.position) < _radius;
     }
     public Vector3 Position
     {

@@ -1,34 +1,52 @@
 tree "Alive"
     fallback
-        tree "Wander"
+        tree "Flee"
         tree "Attack"
+        tree "Wander"
+
+tree "Flee"
+    fallback
+        sequence
+            not IsFlag 0
+            IsAlert
+            AnchorToTrigger
+            EntityAtAnchor 1.0
+            SetFlag 0 1
+            SetSpeedMove 1.0
+            AnchorToBack 5.0 3.0
+            // EntityToAnchor
+        sequence
+            IsFlag 0
+            EntityToAnchor
+            mute
+                sequence
+                    EntityAtAnchor 1.0
+                    SetFlag 0 0
+
+tree "Attack"
+    sequence
+        // not IsFlag 0
+        IsAlert
+        // AnchorToTrigger
+        EntityAtAnchor 2.0
+        SetSpeedMove 0.0
+        // ? turn to look in general direction
+        // IsDirection 90.0
+        DoAttack 0 0 0
+        Wait 3
+        // UnsetAlert
 
 tree "Wander"
     sequence
-        // EntityToAnchor
-        SetSpeedMove 0.7
-        not SensorAny
+        SetSpeedMove 1.0
+        EntityToAnchor
+        // not SensorAny
         IsBored
         mute
             sequence
                 fallback
                     IsAnchorWaypoint
-                    AnchorToWaypointOffset
-                tree "Hold"
-
-tree "Hold"
-    sequence
-        EntityAtAnchor 1.5
-        Wait 2.0
-        AnchorToWaypointOffset
-
-tree "Attack"
-    sequence
-        AnchorToTrigger
-        IsAlert
-        EntityAtAnchor 2.0
-        SetSpeedMove 0.0
-        IsDirection 15.0
-        DoAttack 0 0 0
-        Wait 3.0
-        UnsetAlert
+                    AnchorToWaypoint 0
+                EntityAtAnchor 1.0
+                // Wait 2
+                AnchorToWaypointOffset
