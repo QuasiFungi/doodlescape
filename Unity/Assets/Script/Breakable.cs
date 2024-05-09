@@ -99,7 +99,11 @@ public class Breakable : Entity
         // 
         StopCoroutine("LerpPosition");
         // * testing ? remove in awake, lots of unparented bodies..? collider as child?
-        if (_body.parent) _body.SetParent(null);
+        if (_body.parent)
+        {
+            _body.name += "-" + gameObject.name;
+            _body.SetParent(null);
+        }
         // 
         _position = target;
         // 

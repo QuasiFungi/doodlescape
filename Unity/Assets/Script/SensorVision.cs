@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 public class SensorVision : Entity
 {
-    public float Radius = 5f;
+    [SerializeField] [Range(1, 4)] private int _radius = 4;
+    private float Radius;
     [Range(0, 360)] public float Angle = 90f;
     // ? store creature class references
     protected List<Transform> _targets = new List<Transform>();
@@ -18,6 +19,8 @@ public class SensorVision : Entity
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+        // 
+        Radius = _radius + .5f;
     }
     public struct ViewCastInfo
     {
@@ -84,7 +87,7 @@ public class SensorVision : Entity
     void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * Radius);
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * (_radius + .5f));
         // ! borked
         // Gizmos.color = Color.magenta;
         // Gizmos.DrawLine(transform.position, transform.position + new Vector3(Radius * Mathf.Cos(Angle / 2), Radius * Mathf.Sin(Angle / 2), 0f));
@@ -101,6 +104,7 @@ public class SensorVision : Entity
     // called on parent active toggle ?
     void OnEnable()
     {
+        // ? possible bug with tick timing
         StartCoroutine("FindTargetsWithDelay", 0.2f);
     }
     void OnDisable()
@@ -146,8 +150,8 @@ public class SensorVision : Entity
                 if (target.GetComponent<Creature>().HealthInst == 0)
                     continue;
             // ? use vector2 here
-            Vector3 direction = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.up, direction) <= Angle / 2f)
+            Vector2 direction = (target.position - transform.position).normalized;
+            if (Vector2.Angle(transform.up, direction) <= Angle / 2f)
             {
                 float distance = Vector2.Distance(transform.position, target.position);
                 // center left right ? memory overhead
@@ -158,7 +162,7 @@ public class SensorVision : Entity
                     _targets.Add(target);
                 // else if(_testing) print(target.name + ": failed raycast check");
             }
-            // else if(_testing) print(target.name + ": failed angle check");
+            // else if(_testing) print(target.name + ": failed angle check\t" + Vector3.Angle(transform.up, direction));
         }
     }
     public Vector3 Position

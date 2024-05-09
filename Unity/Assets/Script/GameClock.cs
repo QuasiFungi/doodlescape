@@ -10,6 +10,8 @@ public class GameClock : MonoBehaviour
     private float tickDuration = 1f;
     private float tickTimer;
     [Tooltip("tick on keypress")] [SerializeField] private bool _devManualTick = false;
+    // * testing
+    [Range(1, 10)] public int _tickDuration = 1;
     void OnEnable()
     {
         GameInput.onTap += ManualTick;
@@ -36,6 +38,9 @@ public class GameClock : MonoBehaviour
     void Update()
     {
         if (_devManualTick) return;
+        // 
+        // * testing
+        Time.timeScale = 1f / (float)_tickDuration;
         // 
         if (tickTimer > 0f) tickTimer -= Time.deltaTime;
         else if (!_isBusy)

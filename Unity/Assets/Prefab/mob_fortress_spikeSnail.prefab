@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 
-  Radius: 3
+  _radius: 2
   Angle: 180
   _resolution: 1
 --- !u!1 &8225463149860418272

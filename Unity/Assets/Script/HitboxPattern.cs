@@ -3,7 +3,7 @@ using UnityEngine;
 public class HitboxPattern : BaseHitbox
 {
     // assumes square grid of odd size ? case for rectangle, sparce matrix
-    [Tooltip("Pattern sequence for attack")] [TextAreaAttribute] [SerializeField] string _pattern;
+    [Tooltip("Pattern sequence for attack")] [TextAreaAttribute] [SerializeField] string[] _pattern;
     // file format:
     // pattern 1
     // pattern 2
@@ -15,41 +15,45 @@ public class HitboxPattern : BaseHitbox
     protected override void Awake()
     {
         base.Awake();
-        string[] lines = _pattern.Split('\n');
-        int size = lines[0].Trim().Split(',').Length;
-        int step = lines.Length / size;
+        // 
+        int size = _pattern[0].Split('\n').Length;
+        int step = _pattern.Length;
+        string[] lines = new string[size * step];
+        for (int i = step - 1; i > -1; i--)
+        {
+            string[] pattern = _pattern[i].Split('\n');
+            for (int j = pattern.Length - 1; j > -1; j--) lines[i * size + j] = pattern[j];
+        }
         _sequence = new bool[size, size, step];
         string[] lineData;
         int value;
-        for (int line = lines.Length - 1; line > -1; line--)
+        for (int index = lines.Length - 1; index > -1; index--)
         {
-            lineData = lines[line].Trim().Split(',');
+            lineData = lines[index].Trim().Split(',');
             for (int character = lineData.Length - 1; character > -1; character--)
             {
                 int.TryParse(lineData[character], out value);
-                _sequence[character, size - 1 - (line % size), (line / size) % step] = value == 1;
-                // print(character + ",\t" + line % size + ",\t" + (line / size) % step + ":\t" + (value == 1));
+                _sequence[character, size - 1 - (index % size), (index / size) % step] = value == 1;
             }
-            // print("-\n");
         }
         _index = 0;
         _offset = (_sequence.GetLength(0) - 1) / 2f;
-        // // process one tick immediately
-        // Iterate();
+        // process one tick immediately
+        Iterate();
         // _testTime = Time.time;
     }
-    // * testing
-    public int _testPattern = -1;
-    void OnDrawGizmosSelected()
-    {
-        if (_sequence == null || _testPattern < 0 || _testPattern >= _sequence.GetLength(2)) return;
-        // 
-        Gizmos.color = new Color(1f, 0f, 0f, .5f);
-        float offset = (_sequence.GetLength(0) - 1) / 2f;
-        for (int y = _sequence.GetLength(1) - 1; y > -1; y--)
-            for (int x = _sequence.GetLength(0) - 1; x > -1; x--)
-                if (_sequence[x, y, _testPattern]) Gizmos.DrawSphere(transform.position + new Vector3(x - offset, y - offset), .5f);
-    }
+    // // * testing
+    // public int _testPattern = -1;
+    // void OnDrawGizmosSelected()
+    // {
+    //     if (_sequence == null || _testPattern < 0 || _testPattern >= _sequence.GetLength(2)) return;
+    //     // 
+    //     Gizmos.color = new Color(1f, 0f, 0f, .5f);
+    //     float offset = (_sequence.GetLength(0) - 1) / 2f;
+    //     for (int y = _sequence.GetLength(1) - 1; y > -1; y--)
+    //         for (int x = _sequence.GetLength(0) - 1; x > -1; x--)
+    //             if (_sequence[x, y, _testPattern]) Gizmos.DrawSphere(transform.position + new Vector3(x - offset, y - offset), .5f);
+    // }
     void OnEnable()
     {
         GameClock.onTick += Iterate;
@@ -68,8 +72,8 @@ public class HitboxPattern : BaseHitbox
         // // 
         // print(Time.time - _testTime);
         // _testTime = Time.time;
-        // * testing
-        if (_testPattern > -1) return;
+        // // * testing
+        // if (_testPattern > -1) return;
         // 
         if (_index == _sequence.GetLength(2))
         {

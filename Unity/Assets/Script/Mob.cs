@@ -23,15 +23,6 @@ public class Mob : Creature
         UpdateState();
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
-        // // * testing movement
-        // if(_speedMove > 0f) transform.position = _move;
-        // // * testing animation
-        // if (_path != null)
-        // {
-        //     // print(_path[1] + "\t" + Position);
-        //     // SetRotation(_path[Mathf.Clamp(0, _path.Length, _targetIndex + 1)]);
-        //     if (_path.Length > 1) SetTarget(_path[1]);
-        // }
     }
     protected bool _isAlert;
     protected bool _isAware;
@@ -694,15 +685,23 @@ public class Mob : Creature
     //     Task.current.Succeed();
     // }
     [Task]
-    void AnchorToBack(float max, float min)
+    // void AnchorToBack(float max, float min)
+    void AnchorToDirection(int dir, float max, float min)
     {
+        // clockwise from 0 to 3
+        Vector3 direction = Vector3.up;
+        if (dir == 1) direction = Vector3.left;
+        else if (dir == 2) direction = Vector3.down;
+        else if (dir == 3) direction = Vector3.right;
+        // global to local
+        direction = transform.TransformDirection(direction);
         // do occlusion check in straight line behind creature
-        RaycastHit2D hit = Physics2D.Raycast(Position, -transform.up, max, GameVariables.ScanLayerObstruction);
+        RaycastHit2D hit = Physics2D.Raycast(Position, direction, max, GameVariables.ScanLayerObstruction);
         // all clear
         if (!hit)
         {
             // mark position for movement
-            _anchor = new EventPoint(Position - transform.up * max, _anchor.Layer, _anchor.Time);
+            _anchor = new EventPoint(Position + direction * max, _anchor.Layer, _anchor.Time);
             // found valid position
             ThisTask.Succeed();
         }
@@ -710,7 +709,7 @@ public class Mob : Creature
         else if (hit.distance >= min)
         {
             // mark position for movement
-            _anchor = new EventPoint(hit.point - (Vector2)transform.up * .1f, _anchor.Layer, _anchor.Time);
+            _anchor = new EventPoint(hit.point + (Vector2)direction * .1f, _anchor.Layer, _anchor.Time);
             // found valid position
             ThisTask.Succeed();
         }
@@ -728,6 +727,21 @@ public class Mob : Creature
             _anchor = _positionTrigger;
             // ..? why did do this
             // _positionTrigger = null;
+            ThisTask.Succeed();
+        }
+    }
+    // * testing
+    [Task]
+    void AnchorToVision()
+    {
+        // nothing detected
+        if (_positionVision == null) ThisTask.Fail();
+        else
+        {
+            ThisTask.debugInfo = _positionVision.Position.ToString();
+            _anchor = _positionVision;
+            // ..? why did do this
+            // _positionVision = null;
             ThisTask.Succeed();
         }
     }

@@ -8,6 +8,19 @@ ToDo
 - readme github guide for development
 - mob BT edge case testing
 
+240509
+- attack hitbox one tick delay
+~ shroomPrisoner behaviour
++ game clock difficulty slider
+~ sensor vision radius incremental
+~ sensor vision angle distance check on 2D plane only
++ shroomPrisoner passive sprite
+
+240508
+~ hitbox pattern input cleanup
+~ mob can look in specific direction
++ mob set anchor to vision
+
 240501
 * added mob shroomPrisoner
 * mobs can now pathfind over creatures
