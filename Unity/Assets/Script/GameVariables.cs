@@ -5,6 +5,11 @@ public class GameVariables
     {
         return target.layer == LayerCreature && target.tag == TagPlayer;
     }
+    public static Vector3 PositionDamage(Vector2 position)
+    {
+        // ? hard coded
+        return new Vector3(position.x, position.y, 6f);
+    }
     private static string TagPlayer
     {
         get { return "player"; }
@@ -42,6 +47,12 @@ public class GameVariables
     {
         get { return LayerMask.NameToLayer("creature"); }
     }
+    // // ? match layers with z depth
+    // public static int LayerItem
+    // {
+    //     // get { return LayerMask.NameToLayer("item"); }
+    //     get { return 2; }
+    // }
     #endregion
     #region Scan Layer
     public static LayerMask ScanLayerCreature
@@ -61,6 +72,11 @@ public class GameVariables
     {
         get { return LayerMask.GetMask("item"); }
     }
+    // // 
+    // public static LayerMask ScanLayerIndestructible
+    // {
+    //     get { return LayerMask.GetMask("Default") | LayerMask.GetMask("creature") | LayerMask.GetMask("item") | LayerMask.GetMask("interact"); }
+    // }
     // used by game navigation for player actions ? creature
     public static LayerMask ScanLayerAction
     {

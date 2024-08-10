@@ -1,5 +1,7 @@
 using UnityEngine;
-public class BaseHitbox : MonoBehaviour
+// ? inherit from entity
+// public class BaseHitbox : MonoBehaviour
+public class BaseHitbox : Entity
 {
     // reference to entity that spawned this
     protected Breakable _source;
@@ -15,11 +17,11 @@ public class BaseHitbox : MonoBehaviour
         _source = source;
         _target = target;
     }
-    protected void Discard()
-    {
-        // * testing
-        gameObject.SetActive(false);
-        // allow unsubscribe from tick events
-        Destroy(gameObject, 1f);
-    }
+    // protected void Discard()
+    // {
+    //     // * testing
+    //     gameObject.SetActive(false);
+    //     // allow unsubscribe from tick events
+    //     Destroy(gameObject, 1f);
+    // }
 }

@@ -8,7 +8,6 @@ tree "Flee"
     fallback
         sequence
             not IsFlag 0
-            // IsAlert
             SensorAny
             fallback
                 AnchorToTrigger
@@ -16,7 +15,11 @@ tree "Flee"
             EntityAtAnchor 1.5
             SetFlag 0 1
             SetSpeedMove 1.0
-            AnchorToDirection 2 5.0 3.0
+            mute
+                sequence
+                    TrackAnchor
+                    AnchorToDirection 2 5.0 3.0
+                    // AnchorToFlee 5.0 3.0
         sequence
             IsFlag 0
             SetVisions 0
@@ -34,16 +37,17 @@ tree "Attack"
     sequence
         IsAlert
         EntityAtAnchor 3.0
-        SetSpeedMove 0.0
-        SetVisions 0
-        SetSprite 1
-        // ? turn to look in general direction
-        // IsDirection 90.0
-        DoAttack 0 0 0
-        UnsetAlert
-        Wait 2
-        SetVisions 1
-        SetSprite 0
+        mute
+            sequence
+                TrackAnchor
+                SetSpeedMove 0.0
+                SetVisions 0
+                SetSprite 1
+                DoAttack 0 0 0
+                UnsetAlert
+                Wait 2
+                SetVisions 1
+                SetSprite 0
 
 tree "Wander"
     sequence

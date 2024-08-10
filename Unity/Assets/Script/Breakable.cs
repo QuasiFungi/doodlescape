@@ -45,6 +45,20 @@ public class Breakable : Entity
         // if (_healthInst == 0) Discard();
         // if (_healthInst == 0) Hide();
     }
+    protected override void Hide()
+    {
+        // * testing ? delete or pool
+        _body.gameObject.SetActive(false);
+        // 
+        base.Hide();
+    }
+    protected override void Show()
+    {
+        // * testing ? delete or pool
+        _body.gameObject.SetActive(true);
+        // 
+        base.Show();
+    }
     public override void Discard()
     {
         // * testing ? delete or pool
@@ -109,14 +123,17 @@ public class Breakable : Entity
         // 
         StartCoroutine("LerpPosition");
     }
+    [Tooltip("Rotate in move direction")] [SerializeField] private bool _isRotate = false;
     IEnumerator LerpPosition()
     {
-        // * testing
-        // look in direction to move always
-        // if (_testRotation)
-        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - Position.y, _position.x - Position.x) * Mathf.Rad2Deg - 90f);
-        _body.eulerAngles = transform.eulerAngles;
-        // _body.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - transform.position.y, _position.x - transform.position.x) * Mathf.Rad2Deg);
+        // look in direction to move
+        if (_isRotate)
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - Position.y, _position.x - Position.x) * Mathf.Rad2Deg - 90f);
+            _body.eulerAngles = transform.eulerAngles;
+        }
+        // * testing, check if target tile clear ? handled for player by game action
+        if (Physics2D.OverlapCircleAll(_position, .45f, GameVariables.ScanLayerAction).Length > 0) yield break;
         // record start position
         Vector3 start = Position;
         // move collider to target position
@@ -134,7 +151,23 @@ public class Breakable : Entity
             yield return null;
         }
     }
-    protected Vector3 Position
+    // * testing
+    protected void SetPosition(Vector3 position)
+    {
+        // stop current movement
+        StopCoroutine("LerpPosition");
+        // move collider
+        transform.position = position;
+        // move sprite
+        _body.position = position;
+    }
+    // * testing, player face room enter direction on transition ? disgraceful
+    public void SetRotation(Vector2Int direction)
+    {
+        transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f);
+        _body.eulerAngles = transform.eulerAngles;
+    }
+    public Vector3 Position
     {
         get { return transform.position; }
     }

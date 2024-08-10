@@ -6,6 +6,8 @@ public class InteractDrop : Interact
     // [Tooltip("Reference to item dropped on active")] [SerializeField] protected Item _drop = null;
     // place item on same tile as interact
     protected Item _drop = null;
+    // // * testing
+    // protected Vector2 _offset = Vector2.zero;
     protected override void Start()
     {
         base.Start();
@@ -18,7 +20,8 @@ public class InteractDrop : Interact
             _drop = hit.GetComponent<Item>();
             // hide item if exists/valid
             // _drop?.Hide();
-            if (_drop) _drop.Hide();
+            // if (_drop) _drop.Hide();
+            if (_drop) _drop.ToggleActive(false);
             // throw error to notify dev
             // else print(gameObject.name + " : no assigned item drop");
             else Debug.Log(gameObject.name + "\t<color=red>Attempted to assign invalid item drop</color>", this);
@@ -37,7 +40,9 @@ public class InteractDrop : Interact
             // allow pickup action on dropped item
             Deactivate();
             // show item if exists
-            _drop?.Reveal();
+            // _drop?.Reveal();
+            // _drop?.Show();
+            _drop?.ToggleActive(true);
         }
     }
 }

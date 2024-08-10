@@ -6,18 +6,20 @@ public class BaseChunk : MonoBehaviour
     protected List<BaseChunk> _neighbours;
     protected Vector2Int _bounds;
     protected Vector3 _offset;
-    protected List<GameObject> _objects;    // mob prop item interact fluid sensor
+    // protected List<GameObject> _objects;    // mob prop item interact fluid sensor
+    protected List<Entity> _entities;    // mob prop item interact fluid sensor
     protected int _state;   // 0 - player | 1 + neighbour
     protected Vector2Int offsetIndex;
     // * testing
-    public static bool _showChunk = false;
+    public static bool _showChunk = true;
     void Awake()
     {
         _neighbours = new List<BaseChunk>();
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
         _bounds = new Vector2Int(Mathf.FloorToInt(collider.size.x), Mathf.FloorToInt(collider.size.y));
         _offset = collider.offset;
-        _objects = new List<GameObject>();
+        // _objects = new List<GameObject>();
+        _entities = new List<Entity>();
         // 
         GetComponent<Collider2D>().isTrigger = true;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
@@ -45,7 +47,9 @@ public class BaseChunk : MonoBehaviour
     //     // if (_state != 0)
     //     //     SetState(game_variables.Instance.Depth - 1);
     // }
+    // initial scuffed coloration is just a visual bug, tested by changing to always gizmo
     void OnDrawGizmosSelected()
+    // void OnDrawGizmos()
     {
         if (!_showChunk) return;
         // player
@@ -162,10 +166,12 @@ public class BaseChunk : MonoBehaviour
         if (_state == value)
             return;
         // (re)load objects
+        // (re)load entities
         if (_state < GameVariables.Depth)
         {
             // restock
-            _objects.Clear();
+            // _objects.Clear();
+            _entities.Clear();
             for (int x = -_bounds.x / 2; x < _bounds.x / 2; x++)
                 for (int y = -_bounds.y / 2; y < _bounds.y / 2; y++)
                 {
@@ -175,12 +181,15 @@ public class BaseChunk : MonoBehaviour
                         if (collider.tag == "ignore")
                             continue;
                         else
-                            _objects.Add(collider.gameObject);
+                            // _objects.Add(collider.gameObject);
+                            _entities.Add(collider.transform.GetComponent<Entity>());
                 }
         }
         // apply
-        foreach (GameObject temp in _objects)
-            temp?.SetActive(value < GameVariables.Depth);
+        // foreach (GameObject temp in _objects)
+        //     temp?.SetActive(value < GameVariables.Depth);
+        foreach (Entity entity in _entities)
+            entity?.ToggleActive(value < GameVariables.Depth);
         // update
         _state = value;
     }

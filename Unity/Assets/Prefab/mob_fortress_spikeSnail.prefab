@@ -465,6 +465,7 @@ MonoBehaviour:
   _id: mob_fortress_spikeSnail
   _health: 2
   _body: {fileID: 3120118416543280974}
+  _isRotate: 1
   _isAI: 1
   _attentionTime: 3
   _isSensors: 1

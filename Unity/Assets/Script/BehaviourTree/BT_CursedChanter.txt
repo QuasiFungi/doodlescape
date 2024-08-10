@@ -1,55 +1,59 @@
 tree "Alive"
     fallback
-        tree "Wander"
-        tree "Investigate"
         tree "Attack"
-        tree "Search"
-
-tree "Wander"
-    sequence
-        // EntityToAnchor
-        SetSpeedMove 1.0
-        not SensorAny
-        IsBored
-        mute
-            sequence
-                fallback
-                    IsAnchorWaypoint
-                    AnchorToWaypoint 0
-                EntityAtAnchor 2.0
-                tree "Hold"
-
-tree "Hold"
-    sequence
-        SetSpeedMove 0.0
-        ScanVision 45.0 4 1
-        AnchorToWaypoint 1
-
-tree "Investigate"
-    sequence
-        mute
-            SensorAny
-        not IsAware
-        tree "Search"
-
-tree "Search"
-    mute
-        sequence
-            EntityAtAnchor 1.0
-            ScanVision 30.0 2 1
-            AnchorToOffsetRadius 5.0
+        tree "Investigate"
+        tree "Return"
+        tree "Observe"
 
 tree "Attack"
     sequence
-        IsAlert
+        // if you see hostile
+        AnchorToVision
         IsAnchorCreature
-        mute
+        SetSprite 0
+        // try to attack it
+        fallback
+            // melee
+            sequence
+                EntityAtAnchor 1.0
+                SetSpeedMove 0.0
+                TrackAnchor
+                DoAttack 1 1 0
+                SetSprite 1
+                Wait 1
+                SetSprite 0
+            // ranged
             sequence
                 EntityAtAnchor 5.0
                 SetSpeedMove 0.0
                 not IsTimer 0
-                IsDirection 15.0
+                TrackAnchor
                 DoAttack 0 0 0
-                Wait 1.0
-                SetTimer 0 5
-                UnsetAlert
+                SetTimer 0 6
+
+tree "Investigate"
+    sequence
+        // otherwise move towards it
+        SensorAny
+        SetSpeedMove 1.0
+        EntityToAnchor
+
+tree "Return"
+    sequence
+        // when bored
+        SetSprite 1
+        IsBored
+        mute
+            sequence
+                // move back to spawn
+                AnchorToWaypoint 0
+                SetSpeedMove 1.0
+                EntityToAnchor
+                EntityAtAnchor 1.0
+                // and look around
+                tree "Observe"
+
+tree "Observe"
+    sequence
+        SetSpeedMove 0.0
+        ScanVision 90.0 4 1

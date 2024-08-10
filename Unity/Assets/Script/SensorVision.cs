@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class SensorVision : Entity
 {
-    [SerializeField] [Range(1, 4)] private int _radius = 4;
+    [SerializeField] [Range(1, 5)] private int _radius = 4;
     private float Radius;
     [Range(0, 360)] public float Angle = 90f;
     // ? store creature class references
@@ -78,9 +78,33 @@ public class SensorVision : Entity
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
     }
+    // public void ToggleFOV(bool state)
+    // {
+    //     _isFOV = state;
+    //     // ToggleActive(state);
+    //     if (!_isFOV) viewMesh.Clear();
+    //     // if (!IsActive) viewMesh.Clear();
+    // }
+    // public override void ToggleActive(bool state)
+    // {
+    //     if (!state) viewMesh.Clear();
+    //     // 
+    //     base.ToggleActive(state);
+    // }
+    // additional behaviour on hidden
+    protected override void Hide()
+    {
+        // remove vision cone
+        viewMesh.Clear();
+        // 
+        base.Hide();
+    }
+    // private bool _isFOV = true;
     void LateUpdate()
     {
         DrawFOV();
+        // if (_isFOV) DrawFOV();
+        // if (IsActive) DrawFOV();
     }
     #endregion
     // 
@@ -94,40 +118,60 @@ public class SensorVision : Entity
         // Gizmos.DrawLine(transform.position, transform.position + new Vector3(-Radius * Mathf.Cos(-Angle / 2), -Radius * Mathf.Sin(-Angle / 2), 0f));
         // Gizmos.DrawWireSphere(transform.position, Radius);
         // 
-        // if (_testing)
+        // if (_debug)
         // {
         //     Gizmos.color = Color.red;
         //     foreach (Transform target in _testTargets) Gizmos.DrawLine(transform.position, target.position);
         //     foreach (Transform target in _targets) Gizmos.DrawSphere(target.position, .1f);
         // }
+        // if (_debug)
+        // {
+        //     // Gizmos.color = Color.magenta;
+        //     Vector2 direction;
+        //     foreach (Transform target in _targets)
+        //     {
+        //         // Gizmos.DrawLine(transform.position, target.position);
+        //         direction = target.position - transform.position;
+        //         // 
+        //         Gizmos.DrawLine(transform.position + Vector3.Cross(direction, Vector3.forward) * .1f, target.position + Vector3.Cross(direction, Vector3.forward) * .1f);
+        //         Gizmos.DrawLine(transform.position + Vector3.Cross(Vector3.forward, direction) * .1f, target.position + Vector3.Cross(Vector3.forward, direction) * .1f);
+        //     }
+        // }
     }
     // called on parent active toggle ?
     void OnEnable()
     {
-        // ? possible bug with tick timing
-        StartCoroutine("FindTargetsWithDelay", 0.2f);
+        // // ? possible bug with tick timing
+        // StartCoroutine("FindTargetsWithDelay", 0.2f);
+        GameClock.onTick += FindTargets;
     }
     void OnDisable()
     {
-        StopCoroutine("FindTargetsWithDelay");
+        // skip calculations if AI off
+        // StopCoroutine("FindTargetsWithDelay");
+        GameClock.onTick -= FindTargets;
     }
     // public void SetActive(bool value)
     // {
     //     if (gameObject.activeSelf != value)
     //         gameObject.SetActive(value);
     // }
-    IEnumerator FindTargetsWithDelay(float delay)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindTargets();
-        }
-    }
-    // public bool _testing = false;
+    // IEnumerator FindTargetsWithDelay(float delay)
+    // {
+    //     while (true)
+    //     {
+    //         yield return new WaitForSeconds(delay);
+    //         FindTargets();
+    //     }
+    // }
+    public bool _debug = false;
     // private List<Transform> _testTargets = new List<Transform>();
     void FindTargets()
     {
+        // // ? skip calculations if AI off
+        // if (!_isFOV) return;
+        // if (!IsActive) return;
+        // 
         _targets.Clear();
         // _testTargets.Clear();
         Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, Radius, GameVariables.ScanLayerTarget);
@@ -151,7 +195,7 @@ public class SensorVision : Entity
                     continue;
             // ? use vector2 here
             Vector2 direction = (target.position - transform.position).normalized;
-            if (Vector2.Angle(transform.up, direction) <= Angle / 2f)
+            if (Vector2.Angle(transform.up, direction) <= Angle / 2f + .1f)
             {
                 float distance = Vector2.Distance(transform.position, target.position);
                 // center left right ? memory overhead
@@ -160,9 +204,11 @@ public class SensorVision : Entity
                     || !Physics2D.Raycast(transform.position + Vector3.Cross(Vector3.forward, direction) * .1f, direction, distance, GameVariables.ScanLayerObstruction))
                     // player mob item
                     _targets.Add(target);
-                // else if(_testing) print(target.name + ": failed raycast check");
+                // * testing
+                else if(_debug) print(target.name + ": failed raycast check");
             }
-            // else if(_testing) print(target.name + ": failed angle check\t" + Vector3.Angle(transform.up, direction));
+            // * testing
+            else if(_debug) print(target.name + ": failed angle check\t" + Vector2.Angle(transform.up, direction) + " > " + (Angle / 2f));
         }
     }
     public Vector3 Position

@@ -19,6 +19,7 @@ public class GameGrid : MonoBehaviour
                 // Gizmos.color = _grid[x, y].IsWalkable ? Color.black : Color.red;
                 // Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(_weightBounds.x, _weightBounds.y, _grid[x, y].Weight));
                 if (_grid[x, y].IsWalkable) Gizmos.DrawWireCube(IndexToWorld(x, y), Vector3.one * .45f);
+                // else Gizmos.DrawWireCube(IndexToWorld(x, y), Vector3.one * .1f);
            }
         }
     }
@@ -172,7 +173,7 @@ public class GameGrid : MonoBehaviour
     {
         foreach (Vector2Int[] chunk in chunks)
             foreach (Vector2Int position in chunk)
-           {
+            {
                 GridData data = new GridData();
                 data.IsWalkable = _gridStatic[position.x, position.y] && (_gridDynamic[position.x, position.y] != -1);
                 // print(data.IsWalkable);
@@ -183,7 +184,7 @@ public class GameGrid : MonoBehaviour
                 _weightBounds.x = data.Weight;
                 if (data.Weight > _weightBounds.y)
                 _weightBounds.y = data.Weight;
-           }
+            }
         // for (int x = 0; x < _sizeGrid_Int.x; x++)
         // {
         //    for (int y = 0; y < _sizeGrid_Int.y; y++)

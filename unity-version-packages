@@ -1,0 +1,23 @@
+
+unity 2022.3.39f1
+packages
+- 2d sprite
+- 2d tilemap editor
+- 2d tilemap extras
+- burst
+- collections
+- core rp library
+- custom nunit
+- mathematics
+- mono cecil
+- performance testing api
+- searcher
+- shader graph
+- sysroot base
+- sysroot linux x64
+- test framework
+- toolchain linux x64
+- unity ui
+- universal rp
+- universal rp config
+- visual studio editor

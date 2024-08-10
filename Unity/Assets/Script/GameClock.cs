@@ -10,8 +10,8 @@ public class GameClock : MonoBehaviour
     private float tickDuration = 1f;
     private float tickTimer;
     [Tooltip("tick on keypress")] [SerializeField] private bool _devManualTick = false;
-    // * testing
-    [Range(1, 10)] public int _tickDuration = 1;
+    // * testing diffculty slider
+    [Tooltip("difficulty: 1 - easy | 2 - normal | 3 - hard")] [SerializeField] [Range(1, 3)] private int _tickDuration = 2;
     void OnEnable()
     {
         GameInput.onTap += ManualTick;
@@ -20,9 +20,11 @@ public class GameClock : MonoBehaviour
     {
         GameInput.onTap += ManualTick;
     }
-    private void ManualTick(Vector2 position)
+    // private void ManualTick(int typeButton, int typeInput, Vector2 position)
+    private void ManualTick(int typeButton, int typeInput, int index)
     {
-        if (position.sqrMagnitude > 0f) return;
+        // if (position.sqrMagnitude > 0f) return;
+        if (index != 8) return;
         // 
         if (_devManualTick) StartCoroutine("Tick");
     }
@@ -32,15 +34,17 @@ public class GameClock : MonoBehaviour
         // // * testing ? things move forward one tick immediately
         // onTick?.Invoke();
         // onTickLate?.Invoke();
-        if (_devManualTick) Debug.LogWarning(gameObject.name + ":\tTick manual override (press Space to advance time)");
+        if (_devManualTick) Debug.LogWarning(gameObject.name + ":\tTick manual override (press Left Shift to advance time)");
+        else Debug.LogWarning(gameObject.name + ":\tDifficulty set to " + (_tickDuration == 1 ? "Easy" : (_tickDuration == 2 ? "Normal" : "Hard")));
     }
     // ? dev manual override to space
     void Update()
     {
-        if (_devManualTick) return;
+        if (_devManualTick || !_isTick) return;
         // 
         // * testing
-        Time.timeScale = 1f / (float)_tickDuration;
+        // Time.timeScale = 1f / (float)_tickDuration;
+        Time.timeScale = (float)_tickDuration / 2f;
         // 
         if (tickTimer > 0f) tickTimer -= Time.deltaTime;
         else if (!_isBusy)
@@ -61,6 +65,7 @@ public class GameClock : MonoBehaviour
         yield return null;
         // - game grid, tick grid
         // - ui inventory, icons update
+        // - sensor vision, find targets
         onTick?.Invoke();
         yield return null;
         // - mob, behaviour tick
@@ -75,5 +80,18 @@ public class GameClock : MonoBehaviour
         _isBusy = false;
         // countdown to next tick
         tickTimer += tickDuration;
+    }
+    private bool _isTick = true;
+    public void ToggleClock(bool state)
+    {
+        _isTick = state;
+        // clock enabled
+        if (_isTick)
+        {
+            // reset countdown to next tick
+            tickTimer = tickDuration;
+            // show transition icon immediately
+            onTickUI?.Invoke();
+        }
     }
 }

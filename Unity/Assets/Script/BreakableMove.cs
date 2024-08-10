@@ -23,10 +23,10 @@ public class BreakableMove : Breakable
         // 
         base.HealthModify(value, source);
     }
-    public override void Discard()
-    {
-        _body.gameObject.SetActive(false);
-        // 
-        base.Discard();
-    }
+    // public override void Discard()
+    // {
+    //     _body.gameObject.SetActive(false);
+    //     // 
+    //     base.Discard();
+    // }
 }

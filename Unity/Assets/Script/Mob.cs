@@ -9,20 +9,71 @@ public class Mob : Creature
         // ? after player has moved
         // GameClock.onTick += BehaviourTick;
         GameClock.onTickLate += BehaviourTick;
+        // GameAction.onTransition += ToggleAI;
+        GameMaster.onTransitionComplete += ToggleMob;
     }
     void OnDisable()
     {
         // GameClock.onTick -= BehaviourTick;
         GameClock.onTickLate -= BehaviourTick;
+        // GameAction.onTransition -= ToggleAI;
+        GameMaster.onTransitionComplete += ToggleMob;
     }
     private PandaBehaviour _ai;
     [Tooltip("ai tick tied to clock (vs frame)")] [SerializeField] private bool _isAI = true;
     private void BehaviourTick()
     {
+        // * testing room loading
+        if (_disableMob) return;
         // get latest info
         UpdateState();
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
+    }
+    private bool _disableMob = true;
+    // all mobs belong to maximum two domains ? bosses exception
+    private Vector2Int[] _domain = new Vector2Int[2];
+    protected float _spawnRotation;
+    private void ToggleMob(Vector2Int room)
+    {
+        // // * testing ? unbounded, glitch possible
+        // _enableAI = !_enableAI;
+        // * testing ? case for mobs on border ? multi room domain, all domains mismatched
+        // _disableMob = room != _domain[0];
+        _disableMob = room != _domain[0] && room != _domain[1];
+        // reset mob state
+        if (_disableMob)
+        {
+            // move to spawn position
+            SetPosition(_spawn);
+            // set rotation to spawn default
+            transform.eulerAngles = Vector3.forward * _spawnRotation;
+            _body.eulerAngles = transform.eulerAngles;
+            // // cancel navigation
+            // // SetSpeedMove(0f);
+            // NavigateCancel();
+            // ? reset bt execution
+            // _ai.Reset();
+            // reset dynamic state parameters
+            InitializeState();
+            // ? waypoint info
+            if (_isNavigate)
+                // ? position change can result in following wrong waypoint group, inspector assigned waypoint group/filter
+                _waypoint = ManagerWaypoint.Instance.GetWaypointNearest(Position);
+            // bt specific parameters like collider sprite color vision trigger, offload logic to bt? redundant block?
+            // ?
+            SetColliders(true);
+            _sprite.sprite = _sprites[0];
+            _sprite.color = _colors[0];
+            // // apply default state to sensors, use other explicit method for sensor debug?
+            // foreach(SensorTrigger sensor in _sensorsTrigger) sensor.gameObject.SetActive(_isTrigger);
+            // foreach(SensorVision sensor in _sensorsVision) sensor.gameObject.SetActive(_isVision);
+            // ? spawned effects like attack particle, delete/pool
+        }
+        // * testing
+        // foreach (SensorTrigger sensor in _sensorsTrigger) sensor.ToggleActive(!_disableMob);
+        // foreach (SensorVision sensor in _sensorsVision) sensor.ToggleFOV(!_disableMob);
+        foreach (SensorVision sensor in _sensorsVision) sensor.ToggleActive(!_disableMob);
     }
     protected bool _isAlert;
     protected bool _isAware;
@@ -33,8 +84,11 @@ public class Mob : Creature
     [Tooltip("ignore/forget older sensor events")] [SerializeField] protected int _attentionTime;
     // ? feels ugly to use, enums maybe
     [Tooltip("enable/disable all sensors")] [SerializeField] protected bool _isSensors;
+    // protected bool _useSensors;
     [Tooltip("enable/disable trigger sensors only")] [SerializeField] protected bool _isTrigger;
+    protected bool _useTrigger;
     [Tooltip("enable/disable vision sensors only")] [SerializeField] protected bool _isVision;
+    protected bool _useVision;
     // * testing ? get automatically from children
     [SerializeField] protected SensorVision[] _sensorsVision;
     [SerializeField] protected List<SensorTrigger> _sensorsTrigger;
@@ -87,25 +141,32 @@ public class Mob : Creature
     protected Color[] _colors;
     protected float _rotation;
     protected float _speedTurn = 0f;
+    // initialize static state parameters
     void Awake()
     {
         _ai = GetComponent<PandaBehaviour>();
         // 
-        _anchor = new EventPoint(Position, gameObject.layer, 0f);
-        // _BT = GetComponent<PandaBehaviour>();
-        // _isBT = false;
-        _isAlert = false;
-        _isAware = false;
-        _awareTimer = 0;
-        _sensorTimer = _attentionTime;
-        // _isVision = true;
-        // _isTrigger = true;
+        // _anchor = new EventPoint(Position, gameObject.layer, 0f);
+        // // _BT = GetComponent<PandaBehaviour>();
+        // // _isBT = false;
+        // _isAlert = false;
+        // _isAware = false;
+        // _awareTimer = 0;
+        // _sensorTimer = _attentionTime;
+        // 
         // _isSensors = true;
-        if ((!_isTrigger && !_isVision) || !_isSensors) Debug.LogWarning(gameObject.name + ":\tMob has no active sensors");
-        _positionVision = null;
-        _positionTrigger = null;
-        _timers = new int[_countTimers];
-        _flags = new bool[_countFlags];
+        // _isTrigger = true;
+        _useTrigger = _isTrigger;
+        // _isVision = true;
+        _useVision = _isVision;
+        if ((!_useTrigger && !_useVision) || !_isSensors) Debug.LogWarning(gameObject.name + ":\tMob has no active sensors");
+        // 
+        // _positionVision = null;
+        // _positionTrigger = null;
+        // _timers = new int[_countTimers];
+        // _flags = new bool[_countFlags];
+        InitializeState();
+        // 
         // _sleep = true;
         // _timerPath = 0f;
         // _flagStatus = -1;
@@ -163,15 +224,16 @@ public class Mob : Creature
         _colors[0] = new Color(0f, 1f, 0f, 1f);
         _colors[1] = new Color(.25f, .25f, .25f, 1f);
         // _rotation = transform.eulerAngles.z;
-        _rotation = 0f;
+        // _rotation = 0f;
         // 
         // - MOTOR
         // 
-        _path = Position;
+        // _path = Position;
         // _move = Position;
         _spawn = Position;
-        _directionCheck = 0f;
-        _directionTarget = Position;
+        _spawnRotation = transform.eulerAngles.z;
+        // _directionCheck = 0f;
+        // _directionTarget = Position;
         // 
         // - ANIM
         // 
@@ -222,6 +284,27 @@ public class Mob : Creature
         }
         _lerp.keys = keyframes.ToArray();
     }
+    // dynamic state parameters ? pass in state data
+    private void InitializeState()
+    {
+        _anchor = new EventPoint(Position, gameObject.layer, 0f);
+        _isAlert = false;
+        _isAware = false;
+        _awareTimer = 0;
+        _sensorTimer = _attentionTime;
+        // ? sensors to default
+        _positionVision = null;
+        _positionTrigger = null;
+        // ? new vs set value, garbage collector load
+        _timers = new int[_countTimers];
+        _flags = new bool[_countFlags];
+        // 
+        _rotation = 0f;
+        // 
+        _path = Position;
+        _directionCheck = 0f;
+        _directionTarget = Position;
+    }
     protected override void Start()
     {
         base.Start();
@@ -233,6 +316,25 @@ public class Mob : Creature
             // just in case
             if (_waypoint == null) Debug.LogWarning(gameObject.name + ":\tRequires waypoint but failed to find one");
         }
+        // 
+        // convert spawn position to room position
+        // - offset by (5, 5)
+        // - round off by 10
+        // _domain = new Vector2Int((_spawn.x + 5f) / 10f, (_spawn.y + 5f) / 10f);
+        // if (gameObject.name == "mob_fortress_spikeSnail")
+        //     print(gameObject.name + ": " + Mathf.FloorToInt((_spawn.x + 4.5f) / 9f) + ", " + Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
+        // get primary domain
+        _domain[0] = new Vector2Int(Mathf.FloorToInt((_spawn.x + 4.5f) / 9f), Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
+        // get secondary domain
+        // - initialize to default
+        _domain[1] = _domain[0];
+        // - get adjusted spawn
+        Vector2 offset = new Vector2(_spawn.x + 4.5f, _spawn.y + 4.5f);
+        // - check if on border
+        if (offset.x % 9f == 0f) _domain[1] += _domain[0].x * 9f > _spawn.x ? Vector2Int.left : Vector2Int.right;
+        else if (offset.y % 9f == 0f) _domain[1] += _domain[0].y * 9f > _spawn.y ? Vector2Int.down : Vector2Int.up;
+        // * testing ? use player position/room from save data
+        ToggleMob(Vector2Int.zero);
     }
     private void LoadAdjacentTiles(Vector2 position, ref List<Vector2> list)
     {
@@ -312,10 +414,8 @@ public class Mob : Creature
     // ? executed twice first in behaviour tree then update tick
     protected void ProcessVision()
     {
-        // if (!_isVision || !_isSensors)
-        //     return false;
         // is vision allowed
-        if (!_isVision || !_isSensors) return;
+        if (!_useVision || !_isSensors) return;
         float distance = float.MaxValue;
         foreach (SensorVision sensor in _sensorsVision)
         {
@@ -335,7 +435,7 @@ public class Mob : Creature
     private bool CheckVision()
     {
         // is vision allowed
-        if (!_isVision || !_isSensors) return false;
+        if (!_useVision || !_isSensors) return false;
         if (_positionVision != null)
         {
             // // enable waypoints ? borked ?
@@ -351,9 +451,8 @@ public class Mob : Creature
     // ? executed twice first in behaviour tree then update tick
     protected void ProcessTrigger()
     {
-        // if (!_isTrigger || !_isSensors)
-        //     return false;
-        if (!_isTrigger || !_isSensors) return;
+        // is trigger allowed
+        if (!_useTrigger || !_isSensors) return;
         float distance = float.MaxValue;
         foreach (SensorTrigger sensor in _sensorsTrigger)
         {
@@ -379,7 +478,7 @@ public class Mob : Creature
     private bool CheckTrigger()
     {
         // is trigger allowed
-        if (!_isTrigger || !_isSensors) return false;
+        if (!_useTrigger || !_isSensors) return false;
         if (_positionTrigger != null)
         {
             // // enable waypoints ? borked ?
@@ -616,7 +715,9 @@ public class Mob : Creature
         // _rotation = value;
         // transform.eulerAngles = Vector3.forward * value;
         // 
+        // * testing ? simulate eyes moving ? sprite not moved
         transform.eulerAngles = new Vector3(0f, 0f, -90f + value);
+        // _body.eulerAngles = transform.eulerAngles;
         // transform.eulerAngles = new Vector3(0f, 0f, value);
         // _target = transform.position;
         // _rotationTo = -90f + value;
@@ -759,6 +860,20 @@ public class Mob : Creature
         _anchor = new EventPoint(GetWaypoint(true, true), _anchor.Layer, _anchor.Time);
         Task.current.Succeed();
     }
+    // [Task]
+    // void DoAttack(int indexPrefab)
+    // {
+    //     // ? not needed anymore
+    //     NavigateCancel();
+    //     // 
+    //     GameObject temp = Instantiate(_prefabs[indexPrefab], GameVariables.PositionDamage(_anchor.Position), transform.rotation);
+    //     // 
+    //     temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
+    //     // 
+    //     temp.SetActive(true);
+    //     // 
+    //     ThisTask.Succeed();
+    // }
     [Task]
     void DoAttack(int indexPrefab, int indexSpawn, int parent)
     {
@@ -766,7 +881,7 @@ public class Mob : Creature
         // _anim.SetTarget(_anchor.Position);
         NavigateCancel();
         // 
-        GameObject temp = Instantiate(_prefabs[indexPrefab], _spawns[indexSpawn].position, _spawns[indexSpawn].rotation);
+        GameObject temp = Instantiate(_prefabs[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
         // 
         temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
         // 
@@ -909,11 +1024,10 @@ public class Mob : Creature
     protected float _scanOffset;
     // * testing ? game variables or utility
     private AnimationCurve _lerp;
-    // * testing [? sensor interrupt, animation rotation offset]
-    // step []
+    // * testing ? sensor interrupt, animation rotation offset?
+    // angle - deviation from forward to rotate in
     // duration - time taken to complete one full scan
     // steps - number of scans
-    // angle - deviation from forward to rotate in
     [Task]
     void ScanVision(float angle, int duration, int steps)
     {
@@ -956,7 +1070,7 @@ public class Mob : Creature
     [Task]
     void SensorAny()
     {
-        ThisTask.debugInfo = "S:" + _isSensors + " V:" + _isVision + " T:" + _isTrigger;
+        ThisTask.debugInfo = "S:" + _isSensors + " V:" + _useVision + " T:" + _useTrigger;
         // check sensors [priority]
         ThisTask.Complete(CheckTrigger() || CheckVision());
     }
@@ -1082,12 +1196,15 @@ public class Mob : Creature
     {
         bool status = value == 1;
         // not already active/inactive
-        if (_isTrigger != status)
+        if (_useTrigger != status)
         {
             // disable/enable all trigger sensors
-            foreach(SensorTrigger sensor in _sensorsTrigger) sensor.gameObject.SetActive(status);
+            // foreach(SensorTrigger sensor in _sensorsTrigger) sensor.gameObject.SetActive(status);
+            foreach(SensorTrigger sensor in _sensorsTrigger) sensor.ToggleActive(status);
+                // if (status) sensor.Show();
+                // else sensor.Hide();
             // ? only bool check disable works fine since sensor not shown visually, can use for example hiding roots when seedFlower dies? doesnt work for shroomPrisoner, saves extra calculation
-            _isTrigger = status;
+            _useTrigger = status;
         }
         ThisTask.Succeed();
     }
@@ -1096,14 +1213,42 @@ public class Mob : Creature
     {
         bool status = value == 1;
         // not already active/inactive
-        if (_isVision != status)
+        if (_useVision != status)
         {
             // disable/enable all vision sensors
-            foreach(SensorVision sensor in _sensorsVision) sensor.gameObject.SetActive(status);
+            // foreach(SensorVision sensor in _sensorsVision) sensor.gameObject.SetActive(status);
+            foreach(SensorVision sensor in _sensorsVision) sensor.ToggleActive(status);
+                // if (status) sensor.Show();
+                // else sensor.Hide();
             // 
-            _isVision = status;
+            _useVision = status;
         }
         ThisTask.Succeed();
+    }
+    [Task]
+    void TrackAnchor()
+    {
+        // check signed angle between forward and anchor
+        float angle = Vector2.SignedAngle(transform.up, _anchor.Position - Position);
+        // X, facing
+        if (angle >= -45f && angle <= 45f) ThisTask.Succeed();
+        // Y, left
+        else if (angle > 45f)
+        {
+            transform.eulerAngles += Vector3.forward * 90f;
+            _body.eulerAngles = transform.eulerAngles;
+            // 
+            ThisTask.Fail();
+        }
+        // -Y, right
+        // else if (angle < -45f)
+        else
+        {
+            transform.eulerAngles -= Vector3.forward * 90f;
+            _body.eulerAngles = transform.eulerAngles;
+            // 
+            ThisTask.Fail();
+        }
     }
     [Task]
     void UnsetAlert()

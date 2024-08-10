@@ -5,8 +5,46 @@ Legend
 * untested
 
 ToDo
-- readme github guide for development
+! - readme github guide for development
 - mob BT edge case testing
+
+240810
++ room based exploration, previously free roam
++ placeholder UI overlay
++ mob domains, toggle AI on/off based on current shown room
++ placeholder room transition animation
++ full keyboard controls, WASD arrows LShift RShift
++ item pouch, upgradable inventory
++ action cancel button
++ standarized hide/show/toggle for entities
+~ everything is an entity
+~ tile layers sequence modified
+~ player face room entered
+~ mob hide visionSensor render with ai disable
+~ mob reset spawn/parameters on room enter
+* hold input, drop item for inventory, undecided for action, auto detected
+
+240525
+~ cursedChanter behaviour implement
++ cursedChanter idle sprite
+
+240524
+~ sensor vision radius now 5
++ hitbox radius spawn effect on all creatures in radius
+~ mob attacks now spawn on damage layer z depth
+~ spikeSnail damage sprite
+
+240520
++ mob turn to face threat
+
+240518
+~ breakable rotate in move direction if bool check
++ hitbox intercept that blocks all entity actions
+~ chunk and damage layers no longer interact
+
+240511
+~ sensor vision now tick dependent
++ mob cursedChanter
 
 240509
 - attack hitbox one tick delay
