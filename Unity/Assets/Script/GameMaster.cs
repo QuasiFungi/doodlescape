@@ -117,6 +117,10 @@ public class GameMaster : MonoBehaviour
     public static event OnTransitionComplete onTransitionComplete;
     IEnumerator DoTransition()
     {
+        // cache to prevent transition animation from bugging halfway
+        Vector2Int roomDirection = _roomDirection;
+        // prevent player from walking ? prevent all mobs from walking
+        FilterModify("player", GameAction.ActionType.WALK, true);
         // 
         _clock.ToggleClock(false);
         yield return null;
@@ -124,7 +128,7 @@ public class GameMaster : MonoBehaviour
         _camera.ToggleTriggers(false);
         yield return null;
         // fog fade in ? use timescale
-        _camera.ToggleFog(true, _roomDirection);
+        _camera.ToggleFog(true, roomDirection);
         yield return new WaitForSeconds(1f);
         // move camera
         _camera.SetPosition(_roomNext);
@@ -135,10 +139,10 @@ public class GameMaster : MonoBehaviour
         _roomNext = temp;
         yield return null;
         // turn player
-        _player.SetRotation(_roomDirection);
+        _player.SetRotation(roomDirection);
         yield return null;
         // fog fade out ? use timescale
-        _camera.ToggleFog(false, _roomDirection);
+        _camera.ToggleFog(false, roomDirection);
         yield return new WaitForSeconds(1f);
         // enable auto transition detection
         _camera.ToggleTriggers(true);
@@ -147,5 +151,7 @@ public class GameMaster : MonoBehaviour
         onTransitionComplete?.Invoke(_roomCurrent);
         // 
         _clock.ToggleClock(true);
+        // allow player to walk ? prevent all mobs from walking
+        FilterModify("player", GameAction.ActionType.WALK, false);
     }
 }

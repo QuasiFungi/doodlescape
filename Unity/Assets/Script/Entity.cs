@@ -25,16 +25,6 @@ public class Entity : MonoBehaviour
         Destroy(gameObject, 1f);
     }
     // * testing chunk loading, just a wrapper for show/hide
-    // // by default everything is inactive, otherwise active become mega active
-    // private int _isActive = 0;
-    // public void ToggleActive(bool isActive)
-    // {
-    //     _isActive += isActive ? 1 : -1;
-    //     // 
-    //     if (_isActive > 0) gameObject.SetActive(true);
-    //     // if (IsActive) gameObject.SetActive(true);
-    //     else Hide();
-    // }
     public void ToggleActive(bool state)
     {
         if (state) Show();
@@ -44,8 +34,4 @@ public class Entity : MonoBehaviour
     {
         get { return _id; }
     }
-    // protected bool IsActive
-    // {
-    //     get { return _isActive > 0; }
-    // }
 }

@@ -27,20 +27,8 @@ public class GameAction
     {
         _type = ActionType.NULL;
     }
-    // public GameAction(Vector2 position, GameObject source)
-    // public GameAction(int typeButton, int typeInput, Vector2 direction, GameObject source)
     public GameAction(int typeButton, int typeInput, int index, GameObject source)
     {
-        // float distance = Vector2.Distance(position, source.transform.position);
-        // float distance = direction.magnitude;
-        // // 
-        // if (distance >= 2f)
-        // {
-        //     _type = ActionType.NULL;
-        //     return;
-        // }
-        // 
-        // _position = position;
         _index = index;
         _source = source;
         _typeButton = typeButton;
@@ -88,19 +76,14 @@ public class GameAction
                         _direction = Vector3.zero;
                         break;
                 }
-                // direction to position
-                _position = GameGrid.Instance.WorldToGrid(source.transform.position + _direction);
-                // tile at target position
-                int layer = GameNavigation.GetTileAtPosition(_position, out _target);
-                // int layer = GameNavigation.GetTileAtPosition(GameGrid.Instance.WorldToGrid(source.transform.position + (Vector3)direction), out _target);
                 // action allowed
-                // if (_source.GetComponent<Creature>().ItemHas("item_feather") || distance == 1f)
-                // if (_source.GetComponent<Creature>().ItemHas("item_feather") || direction.magnitude == 1f)
                 if (_source.GetComponent<Creature>().ItemHas("item_feather") || _direction.magnitude == 1f)
                 {
-                    // ? inventory check
+                    // direction to position
+                    _position = GameGrid.Instance.WorldToGrid(source.transform.position + _direction);
+                    // tile at target position
+                    int layer = GameNavigation.GetTileAtPosition(_position, out _target);
                     // Transition
-                    // if (GameMaster.IsTransition(direction)) _type = ActionType.TRANSITION;
                     if (GameMaster.IsTransition(_direction)) _type = ActionType.TRANSITION;
                     // Walk
                     else if (!_target) _type = ActionType.WALK;
@@ -118,51 +101,7 @@ public class GameAction
                 break;
             // INVENTORY
             case 1:
-                // // inventory input layout
-                // switch (_index)
-                // {
-                //     case 4:
-                //         // UL
-                //         _direction = new Vector3(-1f, 1f);
-                //         break;
-                //     case 0:
-                //         // U
-                //         _direction = new Vector3(0f, 1f);
-                //         break;
-                //     case 5:
-                //         // UR
-                //         _direction = new Vector3(1f, 1f);
-                //         break;
-                //     case 1:
-                //         // L
-                //         _direction = new Vector3(-1f, 0f);
-                //         break;
-                //     case 2:
-                //         // R
-                //         _direction = new Vector3(1f, 0f);
-                //         break;
-                //     case 6:
-                //         // DL
-                //         _direction = new Vector3(-1f, -1f);
-                //         break;
-                //     case 3:
-                //         // D
-                //         _direction = new Vector3(0f, -1f);
-                //         break;
-                //     case 7:
-                //         // DR
-                //         _direction = new Vector3(1f, -1f);
-                //         break;
-                //     default:
-                //         // 
-                //         _direction = Vector3.zero;
-                //         break;
-                // }
-                // _position = GameGrid.Instance.WorldToGrid(source.transform.position + _direction);
-                // 
                 // slot holds item, is valid slot
-                // if (_source.GetComponent<Creature>().ItemHas("item_pouch") || direction.magnitude == 1f) _type = ActionType.USE;
-                // if (_source.GetComponent<Creature>().ItemHas("item_pouch") || _direction.magnitude == 1f) _type = ActionType.USE;
                 if (_source.GetComponent<Creature>().ItemGet(_index) && (_source.GetComponent<Creature>().ItemHas("item_pouch") || index < 4))
                 {
                     // TAP
@@ -170,8 +109,6 @@ public class GameAction
                     // HOLD
                     else _type = ActionType.DROP;
                 }
-                // // Invalid
-                // else _type = ActionType.NULL;
                 break;
             // CANCEL
             case 2:
@@ -182,130 +119,102 @@ public class GameAction
     public void Process()
     {
         // * testing ? cant redefine in parallel case for whatever reason
-        Creature temp;
+        Creature creature = _source.GetComponent<Creature>();
+        // parse action based on type
         switch (_type)
         {
             case ActionType.WALK:
-                // // * testing
-                // // look in direction to move
-                // _source.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(_position.y - _source.transform.position.y, _position.x - _source.transform.position.x) * Mathf.Rad2Deg - 90f);
-                // ? lerp to position over time, diagonal movement feels jarring
-                // _source.transform.position = _position;
-                // StartCoroutine("LerpPosition");
-                _source.GetComponent<Creature>().Move(_position);
-                // _source.GetComponent<Creature>().Move(GameGrid.Instance.WorldToGrid(source.transform.position + (Vector3)position));
+                // 
+                creature.Move(_position);
                 break;
             case ActionType.ATTACK:
+                // turn creature to face action direction
+                creature.SetRotation(Direction_Int);
                 // * testing
                 // ? source position not necessarily adjacent to target for damage direction calculation
                 _target.GetComponent<Breakable>().HealthModify(-1, _source.GetComponent<Creature>());
                 break;
             case ActionType.INTERACT:
+                // turn creature to face action direction
+                creature.SetRotation(Direction_Int);
+                // 
                 _target.GetComponent<Interact>().TryAction(_source.GetComponent<Creature>());
                 break;
             case ActionType.PICKUP:
-                _source.GetComponent<Creature>().ItemAdd(_target.GetComponent<Item>());
+                // turn creature to face action direction
+                creature.SetRotation(Direction_Int);
+                // logic offloaded because inventory info held by creature
+                if (!creature.ItemAdd(_target.GetComponent<Item>()))
+                // ? teleprompt
+                    Debug.Log(_source.name + ":\tInventory full");
                 break;
             case ActionType.TRANSITION:
-                // Debug.Log("transition");
-                // GameMaster.DoTransition();
-                // ? case for diagonal
+                // 
                 onTransition?.Invoke();
-                // onTransition?.Invoke(Direction);
-                // onTransition?.Invoke((_position + Vector2.one * 5f) / 9f);
                 break;
             case ActionType.USE:
-                // 
-                // int index = -1;
-                // // inventory button pressed
-                // if (typeButton == 1)
-                // {
-                //     // direction to index
-                //     if (_direction.x > 0f)
-                //     {
-                //         if (_direction.y > 0f)
-                //         {
-                //             // UR
-                //             index = 5;
-                //         }
-                //         else if (_direction.y < 0f)
-                //         {
-                //             // DR
-                //             index = 7;
-                //         }
-                //         else
-                //         {
-                //             // R
-                //             index = 2;
-                //         }
-                //     }
-                //     else if (_direction.x < 0f)
-                //     {
-                //         if (_direction.y > 0f)
-                //         {
-                //             // UL
-                //             index = 4;
-                //         }
-                //         else if (_direction.y < 0f)
-                //         {
-                //             // DL
-                //             index = 6;
-                //         }
-                //         else
-                //         {
-                //             // L
-                //             index = 1;
-                //         }
-                //     }
-                //     else
-                //     {
-                //         if (_direction.y > 0f)
-                //         {
-                //             // U
-                //             index = 0;
-                //         }
-                //         else if (_direction.y < 0f)
-                //         {
-                //             // D
-                //             index = 3;
-                //         }
-                //         else
-                //         {
-                //             // invalid
-                //         }
-                //     }
-                // }
-                temp = _source.GetComponent<Creature>();
-                if (temp.ItemGet(_index)) Debug.Log("try use: " + temp.ItemGet(_index).ID);
+                // // * testing
+                // if (creature.ItemGet(_index)) Debug.Log("try use: " + creature.ItemGet(_index).ID);
+                Item item = creature.ItemGet(_index);
+                // parse by item category
+                switch (item.Type)
+                {
+                    case Item.ItemType.SUPPORT:
+                        // ? teleprompt item info/usage
+                        break;
+                    case Item.ItemType.AOE:
+                        // ? teleprompt item info/usage
+                        break;
+                    case Item.ItemType.WEAPON:
+                        // ? teleprompt item info/usage
+                        break;
+                    case Item.ItemType.COLLECTABLE:
+                        // ? teleprompt item info/usage
+                        break;
+                    case Item.ItemType.UTILITY:
+                        // ? teleprompt item info/usage
+                        break;
+                    case Item.ItemType.RECOVERY:
+                        // 
+                        // creature.HealthModify((item as ItemHeal).Consume(), creature);
+                        // 
+                        // creature.HealthModify((item as ItemHeal).Health, creature);
+                        // (item as ItemHeal).Consume(););
+                        // 
+                        // create local reference
+                        ItemHeal heal = item as ItemHeal;
+                        // apply health modifier
+                        creature.HealthModify(heal.Health, creature);
+                        // fully consumed, discard
+                        if (heal.Consume()) creature.ItemRemove(item.ID);
+                        break;
+                }
                 break;
             case ActionType.DROP:
-                // temp = _source.GetComponent<Creature>();
-                // if (temp.ItemGet(_index)) Debug.Log("try drop: " + temp.ItemGet(_index).ID);
+                // verify/get valid empty tile for item drop
+                // F > L > R > B > FL > FR > BL > BR
+                if (IsDirectionClear(new Vector3(0f, 1f)) || IsDirectionClear(new Vector3(-1f, 0f)) || IsDirectionClear(new Vector3(1f, 0f)) || IsDirectionClear(new Vector3(0f, -1f)) || 
+                    IsDirectionClear(new Vector3(-1f, 1f)) || IsDirectionClear(new Vector3(1f, 1f)) || IsDirectionClear(new Vector3(-1f, -1f)) || IsDirectionClear(new Vector3(1f, -1f)))
+                    creature.ItemDrop(_index, _position);
                 // 
-                _source.GetComponent<Creature>().ItemDrop(_index);
+                else Debug.Log(_source.name + ":\tNo empty space to drop item in");
                 break;
         }
     }
-    // public delegate void OnTransition(Vector2 room);
+    // check if tile in given direction occupied
+    private bool IsDirectionClear(Vector3 direction)
+    {
+        // direction local to world
+        _direction = _source.transform.TransformDirection(direction);
+        // direction to position
+        _position = GameGrid.Instance.WorldToGrid(_source.transform.position + _direction);
+        // tile at target position
+        GameNavigation.GetTileAtPosition(_position, out _target);
+        // empty check
+        return !_target;
+    }
     public delegate void OnTransition();
     public static event OnTransition onTransition;
-    // IEnumerator LerpPosition()
-    // {
-    //     // record start position
-    //     Vector3 start = _source.transform.position;
-    //     // lerp counter
-    //     float lerp = 0f;
-    //     // not at target position
-    //     while (Vector3.Distance(start, _position) > 0f)
-    //     {
-    //         // advance lerp timer
-    //         lerp += Time.deltaTime;
-    //         // update position offset for this frame
-    //         _source.transform.position = Vector3.Lerp(start, _position, lerp);
-    //         // wait till next frame
-    //         yield return null;
-    //     }
-    // }
     public GameObject Source
     {
         get { return _source; }
@@ -314,19 +223,10 @@ public class GameAction
     {
         get { return _type != ActionType.NULL; }
     }
-    // public Vector2 Position
-    // {
-    //     get { return _position; }
-    // }
     public ActionType Type
     {
         get { return _type; }
     }
-    // public Vector2 Direction
-    // {
-    //     // get { return _position - (Vector2)_source.transform.position; }
-    //     get { return _direction; }
-    // }
     public int TypeButton
     {
         get { return _typeButton; }
@@ -334,5 +234,9 @@ public class GameAction
     public int Index
     {
         get { return _index; }
+    }
+    private Vector2Int Direction_Int
+    {
+        get { return new Vector2Int(Mathf.FloorToInt(_direction.x), Mathf.FloorToInt(_direction.y)); }
     }
 }

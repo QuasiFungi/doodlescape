@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-// crate
+// crate ? deprecated by loot system
 public class BreakableDrop : Breakable
 {
     // damage sources

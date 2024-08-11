@@ -8,6 +8,14 @@ ToDo
 ! - readme github guide for development
 - mob BT edge case testing
 
+240811
++ item categories, Support AOE Weapon Collectable Utility Recovery
++ item drop behaviour, adjacent empty tile in sequence F L R B FL FR BL BR, fail if no empty slot
++ drop pouch, pouch hold extra slot items, give illusion of pickup restore, not apply effects for items in disabled slots via failed item check
++ player rotate when action
++ not pick up items in extra slots unless has pouch
+~ inventory keyboard binds fixed
+
 240810
 + room based exploration, previously free roam
 + placeholder UI overlay

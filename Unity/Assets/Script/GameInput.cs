@@ -40,21 +40,21 @@ public class GameInput : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.Alpha4)) 
         // if (Input.GetKeyDown(KeyCode.Alpha5)) 
         // UL
-        if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 0);
+        if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 4);
         // UR
-        else if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 2);
+        else if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 5);
         // DL
-        else if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 5);
+        else if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 6);
         // DR
         else if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 7);
         // U
-        else if (Input.GetKeyDown(KeyCode.W)) onTap?.Invoke(1, 0, 1);
+        else if (Input.GetKeyDown(KeyCode.W)) onTap?.Invoke(1, 0, 0);
         // D
-        else if (Input.GetKeyDown(KeyCode.S)) onTap?.Invoke(1, 0, 6);
+        else if (Input.GetKeyDown(KeyCode.S)) onTap?.Invoke(1, 0, 3);
         // L
-        else if (Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 3);
+        else if (Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 1);
         // R
-        else if (Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 4);
+        else if (Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 2);
         // - cancel
         if (Input.GetKeyDown(KeyCode.RightShift)) onTap?.Invoke(2, 0, 0);
         // - tick

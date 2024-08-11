@@ -13,7 +13,8 @@ public class Breakable : Entity
     // }
     // ? taken from anim or entity
     protected SpriteRenderer _sprite;
-    private Color _colorFlash;
+    private Color _colorHurt;
+    private Color _colorHeal;
     private Color _colorDefault;
     protected List<Collider2D> _colliders;
     protected virtual void Start()
@@ -22,8 +23,10 @@ public class Breakable : Entity
         _healthInst = _health;
         // * testing walk animation ? move to anim
         _sprite = _body.GetComponent<SpriteRenderer>();
-        // color to take when hurt
-        _colorFlash = new Color(1f, 0f, 0f, 1f);
+        // flash red when hurt
+        _colorHurt = new Color(1f, 0f, 0f, 1f);
+        // flash white when heal
+        _colorHeal = new Color(1f, 1f, 1f, 1f);
         // ? conflict with BT color assign, wait few frames for BT execution
         // remember current color
         _colorDefault = _sprite.color;
@@ -34,11 +37,12 @@ public class Breakable : Entity
     // 
     public virtual void HealthModify(int value, Creature source)
     {
-        // 
-        _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // * testing ? coroutine being called after dead... unknown behaviour with mob
         StopCoroutine("Flash");
-        StartCoroutine("Flash");
+        if (value < 0f) StartCoroutine(Flash(_colorHurt));
+        else if (value > 0f) StartCoroutine(Flash(_colorHeal));
+        // apply health modifier
+        _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // if (IsDead) Discard();
         // else StartCoroutine("Flash");
         // * testing
@@ -66,7 +70,7 @@ public class Breakable : Entity
         // 
         base.Discard();
     }
-    IEnumerator Flash()
+    IEnumerator Flash(Color colorFlash)
     {
         // fade alpha over tick duration ? account for dynamic tick size
         Color color = _colorDefault;
@@ -81,7 +85,8 @@ public class Breakable : Entity
         // flash to white then slowly back to original color
         for(float t = 0f; t < 1f; t += Time.deltaTime * 1f)
         {
-            _sprite.color = Color.Lerp(_colorFlash, color, t);
+            // _sprite.color = Color.Lerp(_colorFlash, color, t);
+            _sprite.color = Color.Lerp(colorFlash, color, t);
             yield return null;
         }
         // reapply default color

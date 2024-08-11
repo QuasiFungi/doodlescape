@@ -8,6 +8,7 @@ public class Creature : Breakable
     {
         _inventory = new Item[8];
     }
+    // ? bypass ItemHas check
     public Item ItemGet(int index)
     {
         if (index < 0 || index >= 8) return null;
@@ -19,29 +20,45 @@ public class Creature : Breakable
         if (index < 0 || index >= 8) return;
         _inventory[index] = item;
     }
-    public bool ItemHas(string id)
+    public bool ItemHas(string id, bool checkExtra = true)
     {
-        foreach (Item item in _inventory) if (item != null && item.ID == id) return true;
+        // foreach (Item item in _inventory) if (item != null && item.ID == id) return true;
+        // run full or half inventory check
+        for (int i = checkExtra ? 7 : 3; i > -1; i--)
+            // prevent item detect in extra slots unless has pouch, run check once on start
+            if (i == 7 && !ItemHas("item_pouch", false)) break;
+            // 
+            else if (_inventory[i] != null && _inventory[i].ID == id) return true;
         return false;
     }
+    // private bool 
     // // * testing
     // public bool ItemHas(int id)
     // {
     //     foreach (Item item in _inventory) if (item != null && item.ID == id) return true;
     //     return false;
     // }
-    public void ItemAdd(Item item)
+    public bool ItemAdd(Item item)
     {
+        // fill items from slot marked 0 and onwards
         for (int i = 0; i < 8; i++)
-            if (_inventory[i] == null)
+            // prevent item pickup in extra slots unless has pouch, run check once on start
+            if (i == 4 && !ItemHas("item_pouch", false)) return false;
+            // found empty slot
+            else if (_inventory[i] == null)
             {
+                // store item reference
                 _inventory[i] = item;
-                // item.Hide();
                 // hide physical item entity, not discard
+                // item.Hide();
                 item.ToggleActive(false);
-                break;
+                // success
+                return true;
             }
+        // all valid slots full
+        return false;
     }
+    // ? bypass ItemHas check
     public void ItemRemove(string id)
     {
         for (int i = 0; i < 8; i++)
@@ -52,12 +69,14 @@ public class Creature : Breakable
                 break;
             }
     }
-    public void ItemDrop(int index)
+    // ? bypass ItemHas check
+    public void ItemDrop(int index, Vector3 position)
     {
         if (index < 0 || index >= 8) return;
         // * testing
         // _inventory[index].Reveal(Position);
-        _inventory[index].Show(Position);
+        // _inventory[index].Show(Position);
+        _inventory[index].Show(position);
         _inventory[index] = null;
     }
     // // used by crate ? filter based on type
@@ -67,5 +86,15 @@ public class Creature : Breakable
     //     for (int i = 0; i < 5; i++) if (_inventory[i]) items[i] = _inventory[i].ID;
     //     return items;
     // }
-    // item drop
+    // // * testing, preemptive check for item pickup action, at least one slot empty
+    // public bool SlotEmpty(bool checkExtra)
+    // {
+    //     for (int i = checkExtra ? 7 : 3; i > -1; i--) if (_inventory[i] == null) return true;
+    //     return false;
+    // }
+    // // for item drop
+    // public bool IsDirectionClear(Vector3 direction)
+    // {
+    //     // 
+    // }
 }
