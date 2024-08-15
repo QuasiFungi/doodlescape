@@ -5,8 +5,11 @@ public class TestTrigger : Entity
 {
     protected List<Transform> _targets;
     protected SpriteRenderer _sprite;
-    void Awake()
+    protected override void Awake()
     {
+        // does not have loot
+        // base.Awake();
+        // 
         _targets = new List<Transform>();
         _sprite = GetComponent<SpriteRenderer>();
         GetComponent<Collider2D>().isTrigger = true;

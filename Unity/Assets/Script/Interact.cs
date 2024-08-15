@@ -19,8 +19,10 @@ public class Interact : Entity
     [Tooltip("Sprite for when state changes")] [SerializeField] private Sprite _spriteChanged = null;
     // ? also used by creatures, though some have multiple
     protected Collider2D _collider;
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        // 
         _sprite = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
         // ? copy vs reference

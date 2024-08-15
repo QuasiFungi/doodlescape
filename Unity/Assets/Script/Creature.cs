@@ -47,6 +47,8 @@ public class Creature : Breakable
             // found empty slot
             else if (_inventory[i] == null)
             {
+                // inform of item info/usage ? only if player
+                Teleprompter.Register(item.Description);
                 // store item reference
                 _inventory[i] = item;
                 // hide physical item entity, not discard
@@ -64,7 +66,12 @@ public class Creature : Breakable
         for (int i = 0; i < 8; i++)
             if (_inventory[i] && _inventory[i].ID == id)
             {
+                // // * testing
+                // TestTeleprompt(_inventory[i].Name + " discarded");
+                // 
+                // ? never discard entities only disable/hide
                 _inventory[i].Discard();
+                // _inventory[i].Hide();
                 _inventory[i] = null;
                 break;
             }

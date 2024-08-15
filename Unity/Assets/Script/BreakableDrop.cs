@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-// crate ? deprecated by loot system
+// crate ? deprecated by entity loot system ? exception
 public class BreakableDrop : Breakable
 {
     // damage sources
@@ -45,8 +45,11 @@ public class BreakableDrop : Breakable
         // print(drop ? drop.ID : "fail");
         if (drop)
         {
+            // ? use similar approach to chest items
             // ? request copy from object pool
-            Instantiate(Resources.Load(drop.ID), transform.position, transform.rotation);
+            // Instantiate(Resources.Load(drop.ID), transform.position, transform.rotation);
+            // // * testing ? object pooling
+            // ObjectPool.GetItem(drop.ID);
         }
         // 
         base.Discard();

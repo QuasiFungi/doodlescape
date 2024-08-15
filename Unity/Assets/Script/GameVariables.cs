@@ -5,6 +5,10 @@ public class GameVariables
     {
         return target.layer == LayerCreature && target.tag == TagPlayer;
     }
+    // public static bool IsItem(GameObject target)
+    // {
+    //     return target.layer == LayerItem;
+    // }
     public static Vector3 PositionDamage(Vector2 position)
     {
         // ? hard coded
@@ -46,6 +50,10 @@ public class GameVariables
     public static int LayerCreature
     {
         get { return LayerMask.NameToLayer("creature"); }
+    }
+    public static int LayerItem
+    {
+        get { return LayerMask.NameToLayer("item"); }
     }
     // // ? match layers with z depth
     // public static int LayerItem

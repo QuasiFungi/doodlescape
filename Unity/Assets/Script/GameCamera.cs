@@ -38,11 +38,14 @@ public class GameCamera : MonoBehaviour
         if (state) _fog.gameObject.SetActive(true);
         // snap to start position
         _fog.position = start;
+        // _fog.position = new Vector3(start.x, start.y);
         // lerp counter, in reverse because of simpler bool check
         float lerp = 1f;
         // not at target position
         while (lerp > 0f)
         {
+            // wait till next frame
+            yield return null;
             // advance lerp timer
             // lerp += Time.deltaTime * 2f;
             lerp -= Time.deltaTime;
@@ -50,8 +53,6 @@ public class GameCamera : MonoBehaviour
             _fog.position = Vector3.Lerp(end, start, lerp);
             // * testing, move in steps of tile size
             _fog.position = new Vector3(Mathf.Round(_fog.position.x), Mathf.Round(_fog.position.y));
-            // wait till next frame
-            yield return null;
         }
         // hide fog
         if (!state) _fog.gameObject.SetActive(false);

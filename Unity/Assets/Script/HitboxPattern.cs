@@ -78,6 +78,8 @@ public class HitboxPattern : BaseHitbox
         if (_index == _sequence.GetLength(2))
         {
             Discard();
+            // * testing, object pooling ? use toggleActive instead ? override discard in base class to use pool since explicit call every time feels iffy
+            // ManagerPool.PooledRelease(this as Entity);
             return;
         }
         // 

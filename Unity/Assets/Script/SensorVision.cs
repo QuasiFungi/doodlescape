@@ -13,8 +13,11 @@ public class SensorVision : Entity
     public float _resolution = 1f;
     private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
-    void Awake()
+    protected override void Awake()
     {
+        // does not have loot
+        // base.Awake();
+        // 
         viewMeshFilter = GetComponent<MeshFilter>();
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";

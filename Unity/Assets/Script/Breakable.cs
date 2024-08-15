@@ -16,6 +16,7 @@ public class Breakable : Entity
     private Color _colorHurt;
     private Color _colorHeal;
     private Color _colorDefault;
+    // ? multiple colliders as in case of mob/boss must be assigned explicitly
     protected List<Collider2D> _colliders;
     protected virtual void Start()
     {
@@ -37,12 +38,12 @@ public class Breakable : Entity
     // 
     public virtual void HealthModify(int value, Creature source)
     {
+        // apply health modifier
+        _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // * testing ? coroutine being called after dead... unknown behaviour with mob
         StopCoroutine("Flash");
         if (value < 0f) StartCoroutine(Flash(_colorHurt));
         else if (value > 0f) StartCoroutine(Flash(_colorHeal));
-        // apply health modifier
-        _healthInst = Mathf.Clamp(_healthInst + value, 0, _health);
         // if (IsDead) Discard();
         // else StartCoroutine("Flash");
         // * testing
@@ -58,18 +59,20 @@ public class Breakable : Entity
     }
     protected override void Show()
     {
-        // * testing ? delete or pool
-        _body.gameObject.SetActive(true);
+        // deny if dead
+        if (!IsDead)
+            // * testing ? delete or pool
+            _body.gameObject.SetActive(true);
         // 
         base.Show();
     }
-    public override void Discard()
-    {
-        // * testing ? delete or pool
-        _body.gameObject.SetActive(false);
-        // 
-        base.Discard();
-    }
+    // public override void Discard()
+    // {
+    //     // * testing ? delete or pool
+    //     _body.gameObject.SetActive(false);
+    //     // 
+    //     base.Discard();
+    // }
     IEnumerator Flash(Color colorFlash)
     {
         // fade alpha over tick duration ? account for dynamic tick size
@@ -81,6 +84,7 @@ public class Breakable : Entity
             color.a = 0f;
             // disable colliders
             SetColliders(false);
+            // Discard();
         }
         // flash to white then slowly back to original color
         for(float t = 0f; t < 1f; t += Time.deltaTime * 1f)
@@ -91,8 +95,9 @@ public class Breakable : Entity
         }
         // reapply default color
         _sprite.color = color;
-        // // * testing
+        // // * testing ? mob logic for death must be provided in override discard ? never delete entities
         // if (IsDead) Discard();
+        // if (IsDead) Hide();
     }
     protected void SetColliders(bool value)
     {
@@ -157,14 +162,16 @@ public class Breakable : Entity
         }
     }
     // * testing
-    protected void SetPosition(Vector3 position)
+    // protected void SetPosition(Vector3 position)
+    protected override void SetPosition(Vector3 position)
     {
         // stop current movement
         StopCoroutine("LerpPosition");
-        // move collider
-        transform.position = position;
         // move sprite
         _body.position = position;
+        // move collider
+        // transform.position = position;
+        base.SetPosition(position);
     }
     // * testing, player face room enter direction on transition ? disgraceful
     public void SetRotation(Vector2Int direction)

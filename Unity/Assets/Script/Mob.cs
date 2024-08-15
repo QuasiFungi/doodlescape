@@ -142,8 +142,10 @@ public class Mob : Creature
     protected float _rotation;
     protected float _speedTurn = 0f;
     // initialize static state parameters
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        // 
         _ai = GetComponent<PandaBehaviour>();
         // 
         // _anchor = new EventPoint(Position, gameObject.layer, 0f);
@@ -880,14 +882,19 @@ public class Mob : Creature
         // // * testing [? safety]
         // _anim.SetTarget(_anchor.Position);
         NavigateCancel();
-        // 
+        // ? value not returned
         GameObject temp = Instantiate(_prefabs[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+        // Entity temp = ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+        // ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+        // print(temp);
         // 
         temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
+        // (temp as BaseHitbox).Initialize(this as Breakable, _anchor.Position);
         // 
         if (parent == 1) temp.transform.SetParent(_spawns[indexSpawn]);
         // 
         temp.SetActive(true);
+        // temp.ToggleActive(true);
         // 
         ThisTask.Succeed();
     }

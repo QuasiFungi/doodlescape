@@ -59,7 +59,7 @@ public class GameInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightShift)) onTap?.Invoke(2, 0, 0);
         // - tick
         // if (Input.GetKeyDown(KeyCode.Space)) onTap?.Invoke(0, 0, direction);
-        if (Input.GetKeyDown(KeyCode.LeftShift)) onTap?.Invoke(0, 0, 8);
+        if (Input.GetKeyDown(KeyCode.LeftShift)) onTap?.Invoke(3, 0, 0);
     }
     // void OnEnable()
     // {
@@ -138,7 +138,7 @@ public class GameInput : MonoBehaviour
         BaseButton.onInteract -= OnAction;
         // BaseTransition.onTrigger -= OverrideAction;
     }
-    // pipeline between buttons and player
+    // pipeline between buttons and player/clock
     private void OnAction(int typeButton, int typeInput, int id)
     {
         // print(type + " " + id + " " + state);

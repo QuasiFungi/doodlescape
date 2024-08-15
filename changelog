@@ -8,6 +8,13 @@ ToDo
 ! - readme github guide for development
 - mob BT edge case testing
 
+240815
++ entity loot, drop on death/etc
+~ improved chunk loading, tied to room system
++ teleprompt, show/queue messages
+~ transition animation, fog doesnt clip behind creatures
+~ player doesnt get hurt when LShift pressed while inventory full
+
 240811
 + item categories, Support AOE Weapon Collectable Utility Recovery
 + item drop behaviour, adjacent empty tile in sequence F L R B FL FR BL BR, fail if no empty slot

@@ -113,8 +113,10 @@ public class GameMaster : MonoBehaviour
         StartCoroutine("DoTransition");
     }
     // * testing ? too special purpose, what about the other one time reference uses
-    public delegate void OnTransitionComplete(Vector2Int room);
-    public static event OnTransitionComplete onTransitionComplete;
+    public delegate void OnTransitionRoom(Vector2Int room);
+    public static event OnTransitionRoom onTransitionBegin;
+    public static event OnTransitionRoom onTransitionReady;
+    public static event OnTransitionRoom onTransitionComplete;
     IEnumerator DoTransition()
     {
         // cache to prevent transition animation from bugging halfway
@@ -129,7 +131,12 @@ public class GameMaster : MonoBehaviour
         yield return null;
         // fog fade in ? use timescale
         _camera.ToggleFog(true, roomDirection);
+        // 
+        onTransitionBegin?.Invoke(_roomNext);
         yield return new WaitForSeconds(1f);
+        // 
+        onTransitionReady?.Invoke(_roomNext);
+        yield return null;
         // move camera
         _camera.SetPosition(_roomNext);
         yield return null;

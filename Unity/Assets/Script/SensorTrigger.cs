@@ -14,8 +14,11 @@ public class SensorTrigger : Entity
     // private float Angle;
     public float Radius = 0.4f;
     // [Tooltip("visually show area covered by sensor")] public bool _isRender = false;
-    void Awake()
+    protected override void Awake()
     {
+        // does not have loot
+        // base.Awake();
+        // 
         // if (_isRender)
         // {
         //     viewMeshFilter = GetComponent<MeshFilter>();

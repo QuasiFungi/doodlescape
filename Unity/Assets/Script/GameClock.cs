@@ -4,6 +4,8 @@ public class GameClock : MonoBehaviour
 {
     public delegate void OnTick();
     public static event OnTick onTickEarly;
+    public static event OnTick onTickChunk;
+    public static event OnTick onTickPool;
     public static event OnTick onTick;
     public static event OnTick onTickLate;
     public static event OnTick onTickUI;
@@ -24,7 +26,7 @@ public class GameClock : MonoBehaviour
     private void ManualTick(int typeButton, int typeInput, int index)
     {
         // if (position.sqrMagnitude > 0f) return;
-        if (index != 8) return;
+        if (typeButton != 3) return;
         // 
         if (_devManualTick) StartCoroutine("Tick");
     }
@@ -47,10 +49,7 @@ public class GameClock : MonoBehaviour
         Time.timeScale = (float)_tickDuration / 2f;
         // 
         if (tickTimer > 0f) tickTimer -= Time.deltaTime;
-        else if (!_isBusy)
-        {
-            StartCoroutine("Tick");
-        }
+        else if (!_isBusy) StartCoroutine("Tick");
     }
     private bool _isBusy = false;
     IEnumerator Tick()
@@ -62,6 +61,12 @@ public class GameClock : MonoBehaviour
         // - ui action, marker clear
         // - ui clock, sprite reset
         onTickEarly?.Invoke();
+        yield return null;
+        // - base chunk, local state
+        onTickChunk?.Invoke();
+        yield return null;
+        // - manager pool, chunk update
+        onTickPool?.Invoke();
         yield return null;
         // - game grid, tick grid
         // - ui inventory, icons update

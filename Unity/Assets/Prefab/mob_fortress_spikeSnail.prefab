@@ -164,6 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 
+  _vfxPooled: []
+  _attackPooled: []
+  _damagePooled: []
+  _sfxPooled: []
+  _isPooled: 0
   Radius: 1.4
 --- !u!1 &6085321478913808327
 GameObject:
@@ -346,9 +351,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 
+  _vfxPooled: []
+  _attackPooled: []
+  _damagePooled: []
+  _sfxPooled: []
+  _isPooled: 0
   _radius: 2
   Angle: 180
   _resolution: 1
+  _debug: 0
 --- !u!1 &8225463149860418272
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,6 +474,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: mob_fortress_spikeSnail
+  _vfxPooled: []
+  _attackPooled:
+  - atk_fortress_spikeSnail
+  _damagePooled: []
+  _sfxPooled: []
+  _isPooled: 0
   _health: 2
   _body: {fileID: 3120118416543280974}
   _isRotate: 1

@@ -18,8 +18,10 @@ public class React : Entity
     [Tooltip("All interacts that can control this react")] [SerializeField] protected List<InteractReact> _sources = null;
     // protected List<InteractReact> _sources = null;
     // [Tooltip("Auto select all interacts in radius to control this react")] [SerializeField] private float _radius = 1f;
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        // 
         _count = _match.Length;
         _signal = new bool [_count];
         // _collider = GetComponent<Collider2D>();

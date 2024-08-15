@@ -20,6 +20,7 @@ public class GameAction
     private Vector3 _direction;
     private Vector3 _position;
     private GameObject _target;
+    // ? store reference as creature instead of gameObject
     private GameObject _source;
     private int _typeButton;
     private int _index;
@@ -96,13 +97,13 @@ public class GameAction
                     // Item
                     else if (layer == 8) _type = ActionType.PICKUP;
                 }
-                // invalid action
-                else _type = ActionType.NULL;
+                // // invalid action
+                // else _type = ActionType.NULL;
                 break;
             // INVENTORY
             case 1:
                 // slot holds item, is valid slot
-                if (_source.GetComponent<Creature>().ItemGet(_index) && (_source.GetComponent<Creature>().ItemHas("item_pouch") || index < 4))
+                if (_source.GetComponent<Creature>().ItemGet(_index) && (_source.GetComponent<Creature>().ItemHas("item_pouch") || _index < 4))
                 {
                     // TAP
                     if (typeInput == 0) _type = ActionType.USE;
@@ -145,8 +146,10 @@ public class GameAction
                 creature.SetRotation(Direction_Int);
                 // logic offloaded because inventory info held by creature
                 if (!creature.ItemAdd(_target.GetComponent<Item>()))
-                // ? teleprompt
-                    Debug.Log(_source.name + ":\tInventory full");
+                // inform cant pickup item
+                    Teleprompter.Register("Inventory full");
+                // // 
+                // else Teleprompter.Register(creature.ItemGet(_index).Description);
                 break;
             case ActionType.TRANSITION:
                 // 
@@ -160,19 +163,24 @@ public class GameAction
                 switch (item.Type)
                 {
                     case Item.ItemType.SUPPORT:
-                        // ? teleprompt item info/usage
+                        // show item info/usage
+                        Teleprompter.Register(creature.ItemGet(_index).Description);
                         break;
                     case Item.ItemType.AOE:
                         // ? teleprompt item info/usage
+                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
                         break;
                     case Item.ItemType.WEAPON:
                         // ? teleprompt item info/usage
+                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
                         break;
                     case Item.ItemType.COLLECTABLE:
                         // ? teleprompt item info/usage
+                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
                         break;
                     case Item.ItemType.UTILITY:
                         // ? teleprompt item info/usage
+                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
                         break;
                     case Item.ItemType.RECOVERY:
                         // 
@@ -185,8 +193,15 @@ public class GameAction
                         ItemHeal heal = item as ItemHeal;
                         // apply health modifier
                         creature.HealthModify(heal.Health, creature);
-                        // fully consumed, discard
-                        if (heal.Consume()) creature.ItemRemove(item.ID);
+                        // fully consumed
+                        if (heal.Consume())
+                        {
+                            // inform of discard
+                            // Teleprompter.Register(creature.ItemGet(_index).Name + " uses depleted; discarded");
+                            Teleprompter.Register(creature.ItemGet(_index).Consumed);
+                            // discard
+                            creature.ItemRemove(item.ID);
+                        }
                         break;
                 }
                 break;
@@ -197,7 +212,8 @@ public class GameAction
                     IsDirectionClear(new Vector3(-1f, 1f)) || IsDirectionClear(new Vector3(1f, 1f)) || IsDirectionClear(new Vector3(-1f, -1f)) || IsDirectionClear(new Vector3(1f, -1f)))
                     creature.ItemDrop(_index, _position);
                 // 
-                else Debug.Log(_source.name + ":\tNo empty space to drop item in");
+                // else Debug.Log(_source.name + ":\tNo empty space to drop item in");
+                else Teleprompter.Register("No space to drop item");
                 break;
         }
     }
