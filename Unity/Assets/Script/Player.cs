@@ -3,19 +3,45 @@ public class Player : Creature
 {
     public delegate void OnAction(GameAction action);
     public static event OnAction onAction;
-    protected override void Start()
+    // protected override void Start()
+    // {
+    //     InventoryInitialize();
+    //     // 
+    //     base.Start();
+    // }
+    // have singleton since only one player ever
+    public static Player Instance;
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+        // discard old copy
+        if (Instance) Destroy(Instance.gameObject);
+        Instance = this;
+    }
+    // protected void OnEnable()
+    protected override void OnEnable()
+    {
+        base.OnEnable();
         // 
-        InventoryInitialize();
-    }
-    void OnEnable()
-    {
         GameInput.onTap += ActionConstruct;
+        // * testing save/load
+        // since player not tracked by chunks, done before other entities
+        GameMaster.onTransitionBegin += DataSave;
     }
-    void OnDisable()
+    // protected void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        // 
         GameInput.onTap -= ActionConstruct;
+        // * testing save/load
+        // since player not tracked by chunks, done before other entities
+        GameMaster.onTransitionBegin -= DataSave;
+    }
+    // * testing save/load, wrapper for room transition event ? inelegant
+    private void DataSave(Vector2Int room)
+    {
+        DataSave();
     }
     // private void ActionConstruct(int typeButton, int typeInput, Vector2 position)
     // private void ActionConstruct(int typeButton, int typeInput, Vector2 direction)
@@ -38,4 +64,17 @@ public class Player : Creature
         // only carry event if action is valid
         if (playerAction.IsValid) onAction?.Invoke(playerAction);
     }
+    // // * testing game clear
+    // public delegate void OnGeneric();
+    // // public static event OnGeneric onDead;
+    // public static event OnGeneric onClear;
+    // // 
+    // private Vector2Int _roomClear = new Vector2Int(0, -10);
+    // protected override void DataSave()
+    // {
+    //     base.DataSave();
+    //     // 
+    //     // if (IsDead) onDead?.Invoke();
+    //     if (GameData.Room == _roomClear) onClear?.Invoke();
+    // }
 }

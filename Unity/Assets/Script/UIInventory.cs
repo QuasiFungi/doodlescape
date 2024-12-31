@@ -12,6 +12,7 @@ public class UIInventory : MonoBehaviour
         // GameClock.onTickEarly += MarkerClear;
         // Player.onAction += RegisterAction;
         GameClock.onTick += IconsUpdate;
+        GameMaster.onStartupInput += IconsUpdate;
     }
     void OnDisable()
     {
@@ -19,14 +20,15 @@ public class UIInventory : MonoBehaviour
         // GameClock.onTickEarly -= MarkerClear;
         // Player.onAction -= RegisterAction;
         GameClock.onTick -= IconsUpdate;
+        GameMaster.onStartupInput -= IconsUpdate;
     }
     // private Image[] markers;
-    private Image[] slots;
+    private Image[,] slots;
     private bool flagExtended;
     void Awake()
     {
         // ? use global variable
-        slots = new Image[8];
+        slots = new Image[8,2];
         // for (int i = 0; i < 8; i++) slots[i] = transform.GetChild(i).GetComponent<Image>();
         // markers = new Image[8];
         // for (int i = 0; i < 9; i++)
@@ -53,14 +55,22 @@ public class UIInventory : MonoBehaviour
         // markers[6] = transform.GetChild(6).GetComponent<Image>();
         // markers[7] = transform.GetChild(8).GetComponent<Image>();
         // for (int i = 0; i < 8; i++) slots[i] = markers[i].transform.GetChild(0).GetComponent<Image>();
-        slots[0] = transform.GetChild(1).GetChild(0).GetComponent<Image>();
-        slots[1] = transform.GetChild(3).GetChild(0).GetComponent<Image>();
-        slots[2] = transform.GetChild(5).GetChild(0).GetComponent<Image>();
-        slots[3] = transform.GetChild(7).GetChild(0).GetComponent<Image>();
-        slots[4] = transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        slots[5] = transform.GetChild(2).GetChild(0).GetComponent<Image>();
-        slots[6] = transform.GetChild(6).GetChild(0).GetComponent<Image>();
-        slots[7] = transform.GetChild(8).GetChild(0).GetComponent<Image>();
+        slots[0,0] = transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        slots[0,1] = transform.GetChild(1).GetChild(2).GetComponent<Image>();
+        slots[1,0] = transform.GetChild(3).GetChild(1).GetComponent<Image>();
+        slots[1,1] = transform.GetChild(3).GetChild(2).GetComponent<Image>();
+        slots[2,0] = transform.GetChild(5).GetChild(1).GetComponent<Image>();
+        slots[2,1] = transform.GetChild(5).GetChild(2).GetComponent<Image>();
+        slots[3,0] = transform.GetChild(7).GetChild(1).GetComponent<Image>();
+        slots[3,1] = transform.GetChild(7).GetChild(2).GetComponent<Image>();
+        slots[4,0] = transform.GetChild(0).GetChild(1).GetComponent<Image>();
+        slots[4,1] = transform.GetChild(0).GetChild(2).GetComponent<Image>();
+        slots[5,0] = transform.GetChild(2).GetChild(1).GetComponent<Image>();
+        slots[5,1] = transform.GetChild(2).GetChild(2).GetComponent<Image>();
+        slots[6,0] = transform.GetChild(6).GetChild(1).GetComponent<Image>();
+        slots[6,1] = transform.GetChild(6).GetChild(2).GetComponent<Image>();
+        slots[7,0] = transform.GetChild(8).GetChild(1).GetComponent<Image>();
+        slots[7,1] = transform.GetChild(8).GetChild(2).GetComponent<Image>();
         // 
         flagExtended = false;
     }
@@ -71,19 +81,26 @@ public class UIInventory : MonoBehaviour
         Item temp;
         for (int i = 0; i < 8; i++)
         {
-            if (!flagExtended && i > 3) slots[i].sprite = spriteDisable;
+            if (!flagExtended && i > 3)
+            {
+                slots[i,0].sprite = spriteDisable;
+                slots[i,1].sprite = spriteDisable;
+            }
             else
             {
                 temp = source.ItemGet(i);
                 if (temp)
                 {
-                    slots[i].sprite = temp.Icon;
-                    slots[i].color = new Color(0f, 1f, 1f, 1f);
+                    slots[i,0].sprite = temp.IconB;
+                    slots[i,1].sprite = temp.IconA;
+                    // slots[i].color = new Color(0f, 1f, 1f, 1f);
                 }
                 else
                 {
-                    slots[i].sprite = spriteDefault;
-                    slots[i].color = new Color(1f, 1f, 1f, 1f);
+                    // slots[i].sprite = spriteDefault;
+                    slots[i,0].sprite = spriteDisable;
+                    slots[i,1].sprite = spriteDisable;
+                    // slots[i].color = new Color(1f, 1f, 1f, 1f);
                 }
             }
         }

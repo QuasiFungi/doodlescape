@@ -46,6 +46,11 @@ public class GameGrid : MonoBehaviour
     // [SerializeField] protected float _sizeTile = 1f;
     [SerializeField] protected Vector3 _offset;
     // [SerializeField] protected float _correction = 0.1f;
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + _offset, new Vector3(_sizeGrid.x, _sizeGrid.y, 1f));
+    }
     protected bool[,] _gridStatic;
     protected int[,] _gridDynamic;
     protected GridData[,] _grid;
@@ -112,7 +117,7 @@ public class GameGrid : MonoBehaviour
     void OnDisable()
     {
         // GameClock.onTickEarly += TickGrid;
-        GameClock.onTick += TickGrid;
+        GameClock.onTick -= TickGrid;
     }
     private void TickGrid()
     {
@@ -239,6 +244,11 @@ public class GameGrid : MonoBehaviour
     public int SizeY
     {
         get { return _sizeGrid_Int.y; }
+    }
+    // * testing null error on reload
+    void OnDestroy()
+    {
+        Instance = null;
     }
 }
 // 

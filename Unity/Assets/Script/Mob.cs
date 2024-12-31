@@ -4,35 +4,129 @@ using System.Collections.Generic;
 using Panda;
 public class Mob : Creature
 {
-    void OnEnable()
+    // protected void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         // ? after player has moved
         // GameClock.onTick += BehaviourTick;
         GameClock.onTickLate += BehaviourTick;
         // GameAction.onTransition += ToggleAI;
+        // GameMaster.onTransitionBegin += ToggleMob;
         GameMaster.onTransitionComplete += ToggleMob;
+        // ? bad approach, control mob via game master like player
+        HitboxIntercept.onIntercept += FilterModify;
     }
-    void OnDisable()
+    // protected void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         // GameClock.onTick -= BehaviourTick;
         GameClock.onTickLate -= BehaviourTick;
         // GameAction.onTransition -= ToggleAI;
-        GameMaster.onTransitionComplete += ToggleMob;
+        // GameMaster.onTransitionBegin -= ToggleMob;
+        GameMaster.onTransitionComplete -= ToggleMob;
+        // ? bad approach, control mob via game master like player
+        HitboxIntercept.onIntercept -= FilterModify;
+    }
+    // ? very hacked together solution, control mob via game master instead
+    private bool _isCharm = false;
+    // [Tooltip("How long effects of bell last")] [SerializeField] private int _durationBell = 0;
+    private void FilterModify(string idUnique, GameAction.ActionType type, bool state, Breakable source)
+    {
+        if (idUnique == IDUnique)
+        {
+            // if (_isDebug) print("id match");
+            switch (type)
+            {
+                // charm
+                case GameAction.ActionType.WALK:
+                    // if (_isDebug) print("charmed");
+                    // ? time freezing mobs too op
+                    _isCharm = state;
+                    break;
+                // bell
+                case GameAction.ActionType.NOISE:
+                    // _positionTrigger = new EventPoint(source.Position, source.gameObject.layer, Time.time);
+                    // _positionVision = new EventPoint(source.Position, source.gameObject.layer, Time.time);
+                    // ? separate BT for bell behaviour that tick while under effect ? internal flag or timer
+                    // SetTimer(0, _durationBell);
+                    // _timers[0] = _durationBell;
+                    // 
+                    // only alert on noise begin
+                    if (!state) return;
+                    // queue bell bt
+                    _flags[0] = true;
+                    // if (_isDebug) print("noise");
+                    // give illusion of seeing hostile
+                    Aggravate();
+                    break;
+            }
+        }
+    }
+    // * testing aggro on hurt
+    private void Aggravate()
+    {
+        // give illusion of seeing hostile
+        _awareTimer = _attentionTime;
+        _sensorTimer = 0;
+        _isAlert = true;
+    }
+    public override void HealthModify(int value, Creature source)
+    {
+        // hurt by player
+        if (value < 0f && GameVariables.IsPlayer(source.gameObject))
+        {
+            // reuse bell logic
+            Aggravate();
+            // let mob know of player position
+            _positionTrigger = new EventPoint(source.Position, source.gameObject.layer, Time.time);
+            _positionVision = new EventPoint(source.Position, source.gameObject.layer, Time.time);
+        }
+        // 
+        base.HealthModify(value, source);
     }
     private PandaBehaviour _ai;
-    [Tooltip("ai tick tied to clock (vs frame)")] [SerializeField] private bool _isAI = true;
+    // [Tooltip("ai tick tied to clock (vs frame)")] [SerializeField] private bool _isAI = true;
+    [Header("Mob")]
+    [Tooltip("disable ai (for testing)")] [SerializeField] private bool _isAI = true;
     private void BehaviourTick()
     {
+        // print(ID + ": " + (_disableMob ? "Disabled" : "Enabled"));
         // * testing room loading
         if (_disableMob) return;
         // get latest info
         UpdateState();
+        // freeze in place if charmed
+        if (_isCharm) return;
         // act on new info ? creatures that tick every frame are taxing
         if (_isAI) _ai.Tick();
+        else Debug.LogWarning(IDUnique + ":\tMob AI is disabled");
     }
     private bool _disableMob = true;
-    // all mobs belong to maximum two domains ? bosses exception
-    private Vector2Int[] _domain = new Vector2Int[2];
+    // // all mobs belong to maximum two domains ? bosses exception
+    // private Vector2Int[] _domain = new Vector2Int[2];
+    private Vector2Int[] _domain;
+    private void GetDomain()
+    {
+        _domain = ManagerChunk.Instance.GetDomain(Position);
+        // 
+        ToggleMob(GameData.Room);
+    }
+    // // * testing
+    // public bool _isDebug = false;
+    private bool IsDomain(Vector2Int room)
+    {
+        // if (_isDebug) print(room + " " + _domain.Length);
+        // 
+        for (int i = _domain.Length - 1; i > -1; i--)
+            if (_domain[i] == room) return true;
+        return false;
+    }
+    // private Vector2Int GetDomain(float posX, float posY)
+    // {
+    //     // 
+    // }
     protected float _spawnRotation;
     private void ToggleMob(Vector2Int room)
     {
@@ -40,15 +134,17 @@ public class Mob : Creature
         // _enableAI = !_enableAI;
         // * testing ? case for mobs on border ? multi room domain, all domains mismatched
         // _disableMob = room != _domain[0];
-        _disableMob = room != _domain[0] && room != _domain[1];
+        // _disableMob = room != _domain[0] && room != _domain[1];
+        _disableMob = !IsDomain(room);
         // reset mob state
         if (_disableMob)
         {
             // move to spawn position
             SetPosition(_spawn);
             // set rotation to spawn default
-            transform.eulerAngles = Vector3.forward * _spawnRotation;
-            _body.eulerAngles = transform.eulerAngles;
+            // transform.eulerAngles = Vector3.forward * _spawnRotation;
+            // _body.eulerAngles = transform.eulerAngles;
+            SetRotation(Vector3.forward * _spawnRotation);
             // // cancel navigation
             // // SetSpeedMove(0f);
             // NavigateCancel();
@@ -64,16 +160,33 @@ public class Mob : Creature
             // ?
             SetColliders(true);
             _sprite.sprite = _sprites[0];
-            _sprite.color = _colors[0];
+            // don't change color here, let BT handle it ?
+            // _sprite.color = _colors[0];
             // // apply default state to sensors, use other explicit method for sensor debug?
             // foreach(SensorTrigger sensor in _sensorsTrigger) sensor.gameObject.SetActive(_isTrigger);
             // foreach(SensorVision sensor in _sensorsVision) sensor.gameObject.SetActive(_isVision);
             // ? spawned effects like attack particle, delete/pool
+            _scanTimer = -1;
+            // ? handle sensor state via BT
+            _useTrigger = false;
+            _useVision = false;
+            // * testing
+            // foreach (SensorTrigger sensor in _sensorsTrigger) sensor.ToggleActive(!_disableMob);
+            // foreach (SensorVision sensor in _sensorsVision) sensor.ToggleFOV(!_disableMob);
+            // foreach (SensorVision sensor in _sensorsVision) sensor.ToggleActive(!_disableMob);
+            // foreach (SensorTrigger sensor in _sensorsTrigger) sensor.Disable();
+            // foreach (SensorVision sensor in _sensorsVision) sensor.Disable();
+            // foreach (SensorTrigger sensor in _sensorsTrigger) sensor.ToggleActive(false);
+            // foreach (SensorVision sensor in _sensorsVision) sensor.ToggleActive(false);
         }
-        // * testing
-        // foreach (SensorTrigger sensor in _sensorsTrigger) sensor.ToggleActive(!_disableMob);
-        // foreach (SensorVision sensor in _sensorsVision) sensor.ToggleFOV(!_disableMob);
-        foreach (SensorVision sensor in _sensorsVision) sensor.ToggleActive(!_disableMob);
+        else
+        {
+            _useTrigger = _isTrigger;
+            _useVision = _isVision;
+        }
+        // * testing room transition
+        foreach (SensorTrigger sensor in _sensorsTrigger) sensor.ToggleDisabled(_disableMob);
+        foreach (SensorVision sensor in _sensorsVision) sensor.ToggleDisabled(_disableMob);
     }
     protected bool _isAlert;
     protected bool _isAware;
@@ -106,6 +219,10 @@ public class Mob : Creature
             Position = position;
             Time = time;
         }
+        public void Refresh(Vector3 position)
+        {
+            Position = position;
+        }
     }
     protected EventPoint _anchor;
     protected EventPoint _positionVision;
@@ -115,7 +232,7 @@ public class Mob : Creature
     // [Tooltip("colors this entity can take")] [SerializeField] protected Color[] _colors;
     [Tooltip("Number of internal timers")] [SerializeField] protected int _countTimers;
     protected int[] _timers;
-    [Tooltip("Number of internal flags")] [SerializeField] protected int _countFlags;
+    [Tooltip("Number of internal flags")] [Range(1, 9)] [SerializeField] protected int _countFlags;
     protected bool[] _flags;
     // * testing [attack ? effect]
     [Tooltip("Attacks, effects, etc")] [SerializeField] protected GameObject[] _prefabs;
@@ -141,10 +258,14 @@ public class Mob : Creature
     protected Color[] _colors;
     protected float _rotation;
     protected float _speedTurn = 0f;
+    // // * testing movement trail
+    // public GameObject _trail;
     // initialize static state parameters
     protected override void Awake()
     {
         base.Awake();
+        // 
+        GameMaster.onStartupMob += GetDomain;
         // 
         _ai = GetComponent<PandaBehaviour>();
         // 
@@ -161,7 +282,7 @@ public class Mob : Creature
         _useTrigger = _isTrigger;
         // _isVision = true;
         _useVision = _isVision;
-        if ((!_useTrigger && !_useVision) || !_isSensors) Debug.LogWarning(gameObject.name + ":\tMob has no active sensors");
+        if ((!_useTrigger && !_useVision) || !_isSensors) Debug.LogWarning(IDUnique + ":\tMob has no active sensors");
         // 
         // _positionVision = null;
         // _positionTrigger = null;
@@ -233,58 +354,63 @@ public class Mob : Creature
         // _path = Position;
         // _move = Position;
         _spawn = Position;
-        _spawnRotation = transform.eulerAngles.z;
+        _spawnRotation = Rotation.z;
         // _directionCheck = 0f;
         // _directionTarget = Position;
         // 
-        // - ANIM
+        // // - ANIM
+        // // 
+        // _lerp = new AnimationCurve();
+        // _lerp.AddKey(0f, 0f);
+        // _lerp.AddKey(.25f, 1f);
+        // _lerp.AddKey(.75f, -1f);
+        // _lerp.AddKey(1f, 0f);
+        // // 
+        // // _lerp.SmoothTangents(0, -1f);
+        // // _lerp.SmoothTangents(1, -1f);
+        // // _lerp.SmoothTangents(2, -1f);
+        // // _lerp.SmoothTangents(3, -1f);
+        // // 
+        // // _lerp = AnimationCurve.Linear(0f, 0f, .25f, 1f);
+        // // _lerp += AnimationCurve.Linear(.25f, 1f, .75f, -1f);
+        // // _lerp.Linear(.75f, -1f, 1f, 0f);
+        // // 
+        // List<Keyframe> keyframes = new List<Keyframe>();
+        // for (int i = 0; i < _lerp.length; i++)
+        // {
+        //     Keyframe frame = _lerp[i];
+        //     if (i > 0&& i != _lerp.length - 1)
+        //     {
+        //         var nextFrame=_lerp[i+1];
+        //         var prefFrame=_lerp[i-1];
+        //         float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
+        //         float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
+        //         frame.inTangent = inTangent;
+        //         frame.outTangent = outTangent;
+        //     }
+        //     else
+        //     {
+        //         if (i == 0)
+        //         {
+        //             var nextFrame=_lerp[i+1];
+        //             float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
+        //             frame.outTangent = outTangent;
+        //         }
+        //         else if (i == _lerp.length - 1)
+        //         {
+        //             var prefFrame=_lerp[i-1];
+        //             float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
+        //             frame.inTangent = inTangent;
+        //         }
+        //     }
+        //     keyframes.Add(frame);
+        // }
+        // _lerp.keys = keyframes.ToArray();
+    }
+    void OnDestroy()
+    {
         // 
-        _lerp = new AnimationCurve();
-        _lerp.AddKey(0f, 0f);
-        _lerp.AddKey(.25f, 1f);
-        _lerp.AddKey(.75f, -1f);
-        _lerp.AddKey(1f, 0f);
-        // 
-        // _lerp.SmoothTangents(0, -1f);
-        // _lerp.SmoothTangents(1, -1f);
-        // _lerp.SmoothTangents(2, -1f);
-        // _lerp.SmoothTangents(3, -1f);
-        // 
-        // _lerp = AnimationCurve.Linear(0f, 0f, .25f, 1f);
-        // _lerp += AnimationCurve.Linear(.25f, 1f, .75f, -1f);
-        // _lerp.Linear(.75f, -1f, 1f, 0f);
-        // 
-        List<Keyframe> keyframes = new List<Keyframe>();
-        for (int i = 0; i < _lerp.length; i++)
-        {
-            Keyframe frame = _lerp[i];
-            if (i > 0&& i != _lerp.length - 1)
-            {
-                var nextFrame=_lerp[i+1];
-                var prefFrame=_lerp[i-1];
-                float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
-                float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
-                frame.inTangent = inTangent;
-                frame.outTangent = outTangent;
-            }
-            else
-            {
-                if (i == 0)
-                {
-                    var nextFrame=_lerp[i+1];
-                    float outTangent = (float) (((double) nextFrame.value - (double) frame.value) / ((double) nextFrame.time - (double)  frame.time ));
-                    frame.outTangent = outTangent;
-                }
-                else if (i == _lerp.length - 1)
-                {
-                    var prefFrame=_lerp[i-1];
-                    float inTangent = (float) (((double) frame.value - (double) prefFrame.value) / ((double) frame.time - (double)  prefFrame.time ));
-                    frame.inTangent = inTangent;
-                }
-            }
-            keyframes.Add(frame);
-        }
-        _lerp.keys = keyframes.ToArray();
+        GameMaster.onStartupMob -= GetDomain;
     }
     // dynamic state parameters ? pass in state data
     private void InitializeState()
@@ -306,6 +432,9 @@ public class Mob : Creature
         _path = Position;
         _directionCheck = 0f;
         _directionTarget = Position;
+        // 
+        _newVision = false;
+        _newTrigger = false;
     }
     protected override void Start()
     {
@@ -316,27 +445,28 @@ public class Mob : Creature
             // ? position change can result in following wrong waypoint group
             _waypoint = ManagerWaypoint.Instance.GetWaypointNearest(Position);
             // just in case
-            if (_waypoint == null) Debug.LogWarning(gameObject.name + ":\tRequires waypoint but failed to find one");
+            if (_waypoint == null) Debug.LogWarning(IDUnique + ":\tRequires waypoint but failed to find one");
         }
-        // 
-        // convert spawn position to room position
-        // - offset by (5, 5)
-        // - round off by 10
-        // _domain = new Vector2Int((_spawn.x + 5f) / 10f, (_spawn.y + 5f) / 10f);
-        // if (gameObject.name == "mob_fortress_spikeSnail")
-        //     print(gameObject.name + ": " + Mathf.FloorToInt((_spawn.x + 4.5f) / 9f) + ", " + Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
-        // get primary domain
-        _domain[0] = new Vector2Int(Mathf.FloorToInt((_spawn.x + 4.5f) / 9f), Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
-        // get secondary domain
-        // - initialize to default
-        _domain[1] = _domain[0];
-        // - get adjusted spawn
-        Vector2 offset = new Vector2(_spawn.x + 4.5f, _spawn.y + 4.5f);
-        // - check if on border
-        if (offset.x % 9f == 0f) _domain[1] += _domain[0].x * 9f > _spawn.x ? Vector2Int.left : Vector2Int.right;
-        else if (offset.y % 9f == 0f) _domain[1] += _domain[0].y * 9f > _spawn.y ? Vector2Int.down : Vector2Int.up;
-        // * testing ? use player position/room from save data
-        ToggleMob(Vector2Int.zero);
+        // // 
+        // // convert spawn position to room position
+        // // - offset by (5, 5)
+        // // - round off by 10
+        // // _domain = new Vector2Int((_spawn.x + 5f) / 10f, (_spawn.y + 5f) / 10f);
+        // // if (gameObject.name == "mob_fortress_spikeSnail")
+        // //     print(gameObject.name + ": " + Mathf.FloorToInt((_spawn.x + 4.5f) / 9f) + ", " + Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
+        // // get primary domain
+        // _domain[0] = new Vector2Int(Mathf.FloorToInt((_spawn.x + 4.5f) / 9f), Mathf.FloorToInt((_spawn.y + 4.5f) / 9f));
+        // // get secondary domain
+        // // - initialize to default
+        // _domain[1] = _domain[0];
+        // // - get adjusted spawn
+        // Vector2 offset = new Vector2(_spawn.x + 4.5f, _spawn.y + 4.5f);
+        // // - check if on border
+        // if (offset.x % 9f == 0f) _domain[1] += _domain[0].x * 9f > _spawn.x ? Vector2Int.left : Vector2Int.right;
+        // else if (offset.y % 9f == 0f) _domain[1] += _domain[0].y * 9f > _spawn.y ? Vector2Int.down : Vector2Int.up;
+        // // * testing ? use player position/room from save data
+        // // ToggleMob(Vector2Int.zero);
+        // ToggleMob(GameData.Room);
     }
     private void LoadAdjacentTiles(Vector2 position, ref List<Vector2> list)
     {
@@ -377,19 +507,26 @@ public class Mob : Creature
             // print(_rotation);
             // print("rotate?");
             // * testing ? high speed jitter ? handle overshoot
+            // if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
+            //     transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
+            // else
+            //     transform.eulerAngles += Vector3.forward * _rotation * Time.deltaTime;
+            // _body.eulerAngles = transform.eulerAngles;
             if (Mathf.Abs(_rotation) > _speedTurn * Time.deltaTime)
-                transform.eulerAngles += Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime;
+                SetRotation(Rotation + Vector3.forward * Mathf.Sign(_rotation) * _speedTurn * Time.deltaTime);
             else
-                transform.eulerAngles += Vector3.forward * _rotation * Time.deltaTime;
-            _body.eulerAngles = transform.eulerAngles;
+                SetRotation(Rotation + Vector3.forward * _rotation * Time.deltaTime);
         }
         // 
         // * testing scan vision
         // if (_scanTimer > 0f) _scanTimer -= Time.deltaTime;
         // if (_scanTimer > 0) _scanTimer--;
     }
+    public bool _isDebug = false;
     private void UpdateState()
     {
+        _newVision = false;
+        _newTrigger = false;
         // get latest sensor info
         ProcessTrigger();
         ProcessVision();
@@ -399,12 +536,16 @@ public class Mob : Creature
             // prevent overshoot since trigger can set aware
             if (_awareTimer < _attentionTime) _awareTimer++;
         }
+        // slowly forget
         else if (_awareTimer > 0) _awareTimer--;
-        // 
+        // just detected hostile
         if (_awareTimer == _attentionTime) _isAware = true;
+        // been too long since detected hostile
         else if (_awareTimer == 0) _isAware = false;
         // ? check if not already max
         _sensorTimer = Mathf.Clamp(_sensorTimer + 1, 0, _attentionTime);
+        if (_isDebug) print("sensor:" + _sensorTimer + "\taware:" + _awareTimer);
+        // _sensorTimer = Mathf.Clamp(_sensorTimer, 0, _attentionTime);
         // 
         if (_positionTrigger != null && Time.time - _positionTrigger.Time > (float)_attentionTime) _positionTrigger = null;
         if (_positionVision != null && Time.time - _positionVision.Time > (float)_attentionTime) _positionVision = null;
@@ -413,6 +554,7 @@ public class Mob : Creature
         // 
         if (_timerPath > 0) _timerPath--;
     }
+    private bool _newVision, _newTrigger;
     // ? executed twice first in behaviour tree then update tick
     protected void ProcessVision()
     {
@@ -429,6 +571,7 @@ public class Mob : Creature
                 {
                     distance = Vector3.Distance(Position, target.position);
                     _positionVision = new EventPoint(target.position, target.gameObject.layer, Time.time);
+                    _newVision = true;
                 }
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
@@ -440,12 +583,23 @@ public class Mob : Creature
         if (!_useVision || !_isSensors) return false;
         if (_positionVision != null)
         {
+            // * testing trophy
+            GameData.SetTrophy(GameData.Trophy.NINJA);
             // // enable waypoints ? borked ?
             // EnableWaypoints();
-            _isAlert = true;
-            _sensorTimer = 0;
-            // refresh awareness if already aware
-            if (_isAware) _awareTimer = _attentionTime;
+            if (_newVision)
+            {
+                // _newVision = false;
+                _isAlert = true;
+                _sensorTimer = 0;
+                // refresh awareness if already aware
+                if (_isAware) _awareTimer = _attentionTime;
+            }
+            // {
+            //     _awareTimer = _attentionTime;
+            //     // // * testing sfx alert
+            //     // GameAudio.Instance.Register(3);
+            // }
             return true;
         }
         return false;
@@ -472,6 +626,7 @@ public class Mob : Creature
                 {
                     distance = Vector3.Distance(Position, target.position);
                     _positionTrigger = new EventPoint(target.position, target.gameObject.layer, Time.time);
+                    _newTrigger = true;
                 }
             }
             // print(gameObject.name + "\t" + sensor.Targets.Count);
@@ -483,12 +638,19 @@ public class Mob : Creature
         if (!_useTrigger || !_isSensors) return false;
         if (_positionTrigger != null)
         {
+            // * testing trophy ? filter out player in process function in case of mob vs mob
+            GameData.SetTrophy(GameData.Trophy.NINJA);
             // // enable waypoints ? borked ?
             // EnableWaypoints();
-            _isAlert = true;
-            _sensorTimer = 0;
-            // *testing instant aware
-            _awareTimer = _attentionTime;
+            if (_newTrigger)
+            {
+                _isAlert = true;
+                _sensorTimer = 0;
+                // // * testing sfx alert
+                // GameAudio.Instance.Register(3);
+                // *testing instant aware
+                _awareTimer = _attentionTime;
+            }
             return true;
         }
         return false;
@@ -522,9 +684,9 @@ public class Mob : Creature
         if (direction.sqrMagnitude > 0f) angle -= 90f;
         angle = angle < 0 ? angle + 360f : angle;
         // print(angle + " : " + transform.eulerAngles.z);
-        if (angle > transform.eulerAngles.z)
-            return angle - transform.eulerAngles.z <= _directionCheck;
-        return transform.eulerAngles.z - angle <= _directionCheck;
+        if (angle > Rotation.z)
+            return angle - Rotation.z <= _directionCheck;
+        return Rotation.z - angle <= _directionCheck;
     }
     // * testing move
     void OnDrawGizmosSelected()
@@ -542,7 +704,7 @@ public class Mob : Creature
             foreach (SensorTrigger sensor in _sensorsTrigger)
             {
                 Gizmos.color = new Color(1f, 0f, 0f, .5f);
-                Gizmos.DrawCube(sensor.transform.position, Vector3.one * .9f);
+                Gizmos.DrawCube(sensor.Position, Vector3.one * .9f);
             }
         }
         // ensure trigger detection align to grid
@@ -578,6 +740,7 @@ public class Mob : Creature
             }
         }
     }
+    public AudioClip[] _sfxAttacks;
     #region Navigation
     [SerializeField] private bool _showPath = false;
     // protected Vector3[] _path = null;
@@ -617,6 +780,8 @@ public class Mob : Creature
         {
             _path = path[0];
             // 
+            // // * testing movement trail
+            // if (_trail) Instantiate(_trail, GameVariables.PositionTrail(Position), transform.rotation);
             // * testing mob walk "animation"
             Move(_path);
             // 
@@ -701,7 +866,7 @@ public class Mob : Creature
         if (next)
         {
             if (_waypoint) _waypoint = _waypoint.GetNext();
-            else Debug.LogWarning(gameObject.name + ":\tAttempting to use waypoint without having one assigned first (check if isNavigate is enabled)");
+            else Debug.LogWarning(IDUnique + ":\tAttempting to use waypoint without having one assigned first (check if isNavigate is enabled)");
         }
         return _waypoint ? (offset ? _waypoint.PositionRandom() : _waypoint.Position) : _spawn;
     }
@@ -712,28 +877,28 @@ public class Mob : Creature
     //     // Vector3 direction = (target - _motor.Position).normalized;
     //     transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(target.y - Position.y, target.x - Position.x) * Mathf.Rad2Deg - 90f);
     // }
-    private void SetRotation(float value)
-    {
-        // _rotation = value;
-        // transform.eulerAngles = Vector3.forward * value;
-        // 
-        // * testing ? simulate eyes moving ? sprite not moved
-        transform.eulerAngles = new Vector3(0f, 0f, -90f + value);
-        // _body.eulerAngles = transform.eulerAngles;
-        // transform.eulerAngles = new Vector3(0f, 0f, value);
-        // _target = transform.position;
-        // _rotationTo = -90f + value;
-        // _rotation = -90f + value;
-        // _target.position = _motor.Position;
-        // _timer = _time;
-        // _rotation = transform.eulerAngles.z;
-        _rotation = 0f;
-    }
+    // private void SetRotation(float value)
+    // {
+    //     // _rotation = value;
+    //     // transform.eulerAngles = Vector3.forward * value;
+    //     // 
+    //     // * testing ? simulate eyes moving ? sprite not moved
+    //     transform.eulerAngles = new Vector3(0f, 0f, -90f + value);
+    //     // _body.eulerAngles = transform.eulerAngles;
+    //     // transform.eulerAngles = new Vector3(0f, 0f, value);
+    //     // _target = transform.position;
+    //     // _rotationTo = -90f + value;
+    //     // _rotation = -90f + value;
+    //     // _target.position = _motor.Position;
+    //     // _timer = _time;
+    //     // _rotation = transform.eulerAngles.z;
+    //     _rotation = 0f;
+    // }
     // 
     private void GetRotation()
     {
         Vector3 direction = (_directionTarget - Position).normalized;
-        float from = transform.eulerAngles.z % 360f;
+        float from = Rotation.z % 360f;
         from = from < 0 ? from + 360f : from;
         float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f) % 360f;
         // float to = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360f;
@@ -804,20 +969,91 @@ public class Mob : Creature
         if (!hit)
         {
             // mark position for movement
-            _anchor = new EventPoint(Position + direction * max, _anchor.Layer, _anchor.Time);
-            // found valid position
-            ThisTask.Succeed();
+            // _anchor = new EventPoint(GameGrid.Instance.WorldToGrid(Position + direction * max), _anchor.Layer, _anchor.Time);
+            _anchor.Refresh(GameGrid.Instance.WorldToGrid(Position + direction * max));
+            // // found valid position
+            // ThisTask.Succeed();
         }
         // acceptable distance
         else if (hit.distance >= min)
         {
             // mark position for movement
-            _anchor = new EventPoint(hit.point + (Vector2)direction * .1f, _anchor.Layer, _anchor.Time);
-            // found valid position
-            ThisTask.Succeed();
+            // _anchor = new EventPoint(GameGrid.Instance.WorldToGrid(hit.point - (Vector2)direction * .1f), _anchor.Layer, _anchor.Time);
+            _anchor.Refresh(GameGrid.Instance.WorldToGrid(hit.point - (Vector2)direction * .1f));
+            // // found valid position
+            // ThisTask.Succeed();
         }
         // no place to move to
-        else ThisTask.Fail();
+        else
+        {
+            ThisTask.Fail();
+            // 
+            return;
+        }
+        // * testing restrict mob to domain
+        // - convert anchor position to room position
+        // Vector2Int room = new Vector2Int(Mathf.FloorToInt((_anchor.Position.x + 4.5f) / 9f), Mathf.FloorToInt((_anchor.Position.y + 4.5f) / 9f));
+        // Vector2Int room = BaseChunk.ToRoom(_anchor.Position.x, _anchor.Position.y);
+        // - check if in domain
+        // if (room == _domain[0] || room == _domain[1])
+        // if (IsDomain(room))
+        if (IsDomain(BaseChunk.ToRoom(_anchor.Position.x, _anchor.Position.y)))
+        {
+            // found valid position
+            ThisTask.Succeed();
+            // 
+            return;
+        }
+        // - snap to nearest domain border
+        // // use current room as domain, assuming mob never left domain
+        // room = BaseChunk.ToRoom(Position.x, Position.y);
+        // Vector3 position = _anchor.Position;
+        // Vector3 offset;
+        // // // -- check X ? only do one side ? why primary domain only
+        // // offset = new Vector3(_domain[0].x * 9f + 4.5f, _domain[0].y * 9f);
+        // // if (_anchor.Position.x > offset.x) position = new Vector3(offset.x, position.y, position.z);
+        // // offset = new Vector3(_domain[0].x * 9f - 4.5f, _domain[0].y * 9f);
+        // // if (_anchor.Position.x < offset.x) position = new Vector3(offset.x, position.y, position.z);
+        // // // -- check Y ? only do one side
+        // // offset = new Vector3(_domain[0].x * 9f, _domain[0].y * 9f + 4.5f);
+        // // if (_anchor.Position.y > offset.y) position = new Vector3(position.x, offset.y, position.z);
+        // // offset = new Vector3(_domain[0].x * 9f, _domain[0].y * 9f - 4.5f);
+        // // if (_anchor.Position.y < offset.y) position = new Vector3(position.x, offset.y, position.z);
+        // // -- check X ? only do one side
+        // offset = new Vector3(room.x * GameVariables.ROOM_SIZE + GameVariables.ROOM_SIZE / 2f, room.y * GameVariables.ROOM_SIZE);
+        // if (_anchor.Position.x > offset.x) position = new Vector3(offset.x, position.y, position.z);
+        // offset = new Vector3(room.x * GameVariables.ROOM_SIZE - GameVariables.ROOM_SIZE / 2f, room.y * GameVariables.ROOM_SIZE);
+        // if (_anchor.Position.x < offset.x) position = new Vector3(offset.x, position.y, position.z);
+        // // -- check Y ? only do one side
+        // offset = new Vector3(room.x * GameVariables.ROOM_SIZE, room.y * GameVariables.ROOM_SIZE + GameVariables.ROOM_SIZE / 2f);
+        // if (_anchor.Position.y > offset.y) position = new Vector3(position.x, offset.y, position.z);
+        // offset = new Vector3(room.x * GameVariables.ROOM_SIZE, room.y * GameVariables.ROOM_SIZE - GameVariables.ROOM_SIZE / 2f);
+        // if (_anchor.Position.y < offset.y) position = new Vector3(position.x, offset.y, position.z);
+        // - create new anchor with adjusted position ? make a refresh function that takes only position
+        // _anchor = new EventPoint(position, _anchor.Layer, _anchor.Time);
+        // 
+        // - snap to nearest domain border
+        // use current room as domain, assuming mob never left domain
+        // _anchor = new EventPoint(SnapToRoom(_anchor.Position, BaseChunk.ToRoom(Position.x, Position.y)), _anchor.Layer, _anchor.Time);
+        _anchor.Refresh(SnapToRoom(_anchor.Position, BaseChunk.ToRoom(Position.x, Position.y)));
+        // reverify distance validity
+        float distance = (Position - _anchor.Position).magnitude;
+        ThisTask.Complete(distance <= max && distance >= min);
+    }
+    private Vector3 SnapToRoom(Vector3 position, Vector2Int room)
+    {
+        Vector3 offset;
+        // -- check X ? only do one side
+        offset = new Vector3(room.x * GameVariables.ROOM_SIZE + GameVariables.ROOM_SIZE / 2f, room.y * GameVariables.ROOM_SIZE);
+        if (position.x > offset.x) position = new Vector3(offset.x, position.y, position.z);
+        offset = new Vector3(room.x * GameVariables.ROOM_SIZE - GameVariables.ROOM_SIZE / 2f, room.y * GameVariables.ROOM_SIZE);
+        if (position.x < offset.x) position = new Vector3(offset.x, position.y, position.z);
+        // -- check Y ? only do one side
+        offset = new Vector3(room.x * GameVariables.ROOM_SIZE, room.y * GameVariables.ROOM_SIZE + GameVariables.ROOM_SIZE / 2f);
+        if (position.y > offset.y) position = new Vector3(position.x, offset.y, position.z);
+        offset = new Vector3(room.x * GameVariables.ROOM_SIZE, room.y * GameVariables.ROOM_SIZE - GameVariables.ROOM_SIZE / 2f);
+        if (position.y < offset.y) position = new Vector3(position.x, offset.y, position.z);
+        return position;
     }
     [Task]
     void AnchorToTrigger()
@@ -852,16 +1088,17 @@ public class Mob : Creature
     void AnchorToWaypoint(int value)
     {
         // 0 - current waypoint | 1 - next waypoint
-        _anchor = new EventPoint(GetWaypoint(value == 1), _anchor.Layer, _anchor.Time);
+        // _anchor = new EventPoint(GetWaypoint(value == 1), _anchor.Layer, _anchor.Time);
+        _anchor.Refresh(GetWaypoint(value == 1));
         ThisTask.Succeed();
     }
-    [Task]
-    void AnchorToWaypointOffset()
-    {
-        // 0 - current waypoint | 1 - next waypoint
-        _anchor = new EventPoint(GetWaypoint(true, true), _anchor.Layer, _anchor.Time);
-        Task.current.Succeed();
-    }
+    // [Task]
+    // void AnchorToWaypointOffset()
+    // {
+    //     // 0 - current waypoint | 1 - next waypoint
+    //     _anchor = new EventPoint(GetWaypoint(true, true), _anchor.Layer, _anchor.Time);
+    //     Task.current.Succeed();
+    // }
     // [Task]
     // void DoAttack(int indexPrefab)
     // {
@@ -877,26 +1114,138 @@ public class Mob : Creature
     //     ThisTask.Succeed();
     // }
     [Task]
-    void DoAttack(int indexPrefab, int indexSpawn, int parent)
+    void DoAttack(int indexPrefab, int indexSpawn, int parent, int align)
     {
-        // // * testing [? safety]
-        // _anim.SetTarget(_anchor.Position);
-        NavigateCancel();
-        // ? value not returned
-        GameObject temp = Instantiate(_prefabs[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
-        // Entity temp = ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
-        // ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
-        // print(temp);
-        // 
-        temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
-        // (temp as BaseHitbox).Initialize(this as Breakable, _anchor.Position);
-        // 
-        if (parent == 1) temp.transform.SetParent(_spawns[indexSpawn]);
-        // 
-        temp.SetActive(true);
-        // temp.ToggleActive(true);
-        // 
+        if (indexPrefab > -1 && indexPrefab < _prefabs.Length && indexSpawn > -1 && indexSpawn < _spawns.Length)
+        {
+            // // * testing [? safety]
+            // _anim.SetTarget(_anchor.Position);
+            NavigateCancel();
+            // ? value not returned
+            GameObject temp = Instantiate(_prefabs[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+            // // adjust trajectory
+            // if (lookAnchor == 1)
+            // {
+            //     Vector2 direction = _anchor.Position - _spawns[indexSpawn].position;
+            //     if (direction.sqrMagnitude > 0f)
+            //         temp.transform.eulerAngles = new Vector3(temp.transform.eulerAngles.x, temp.transform.eulerAngles.y, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+            // }
+            // Entity temp = ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+            // ManagerPool.PooledGet("Attack/" + _attackPooled[indexPrefab], GameVariables.PositionDamage(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+            // print(temp);
+            // 
+            // temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
+            // temp.GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position, new Vector2Int(Mathf.FloorToInt((Position.x + 4.5f) / 9f), Mathf.FloorToInt((Position.y + 4.5f) / 9f)));
+            temp.GetComponent<BaseHitbox>().Initialize(this as Creature, _anchor.Position, BaseChunk.ToRoom(Position.x, Position.y));
+            // (temp as BaseHitbox).Initialize(this as Breakable, _anchor.Position);
+            // 
+            if (parent == 1) temp.transform.SetParent(_spawns[indexSpawn]);
+            // attacks should align with grid in case mob facing diagonal
+            if (align == 1) temp.transform.eulerAngles = Vector3.zero;
+            // 
+            temp.SetActive(true);
+            // temp.ToggleActive(true);
+            // 
+            ThisTask.Succeed();
+        }
+        else
+        {
+            Debug.LogWarning(IDUnique + ":\tAttempting to access undefined Prefab(" + indexPrefab + ") or Spawn(" + indexSpawn + ")");
+            ThisTask.Fail();
+        }
+    }
+    [Task]
+    void DoSFX(int index)
+    {
+        // * testing sfx attack etc
+        if (index > -1 && index < _sfxAttacks.Length)
+        {
+            if (_sfxAttacks[index] == null) Debug.LogWarning(IDUnique + ":\tAttempting to use missing SFX(" + index + ")");
+            else GameAudio.Instance.Register(_sfxAttacks[index], GameAudio.AudioType.ENTITY);
+        }
+        else Debug.LogWarning(IDUnique + ":\tAttempting to use undefined SFX(" + index + ")");
+        // missing sfx not break BT logic
         ThisTask.Succeed();
+    }
+    [Task]
+    void DoTranslate(int direction, float distance)
+    {
+        bool flag = false;
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(GameVariables.ScanLayerAction);
+        bool isCardinal = Mathf.FloorToInt(Rotation.z) % 90 == 0;
+        switch ((Direction)direction)
+        {
+            case Direction.UP:
+                if (Translate(new Vector3(0, 1, 0), filter, distance, isCardinal ? 1f : Mathf.Sqrt(2f))) flag = true;
+                break;
+            case Direction.UP_LEFT:
+                if (Translate(new Vector3(-1, 1, 0), filter, distance, isCardinal ? Mathf.Sqrt(2f) : 1f)) flag = true;
+                break;
+            case Direction.LEFT:
+                if (Translate(new Vector3(-1, 0, 0), filter, distance, isCardinal ? 1f : Mathf.Sqrt(2f))) flag = true;
+                break;
+            case Direction.DOWN_LEFT:
+                if (Translate(new Vector3(-1, -1, 0), filter, distance, isCardinal ? Mathf.Sqrt(2f) : 1f)) flag = true;
+                break;
+            case Direction.DOWN:
+                if (Translate(new Vector3(0, -1, 0), filter, distance, isCardinal ? 1f : Mathf.Sqrt(2f))) flag = true;
+                break;
+            case Direction.DOWN_RIGHT:
+                if (Translate(new Vector3(1, -1, 0), filter, distance, isCardinal ? Mathf.Sqrt(2f) : 1f)) flag = true;
+                break;
+            case Direction.RIGHT:
+                if (Translate(new Vector3(1, 0, 0), filter, distance, isCardinal ? 1f : Mathf.Sqrt(2f))) flag = true;
+                break;
+            case Direction.UP_RIGHT:
+                if (Translate(new Vector3(1, 1, 0), filter, distance, isCardinal ? Mathf.Sqrt(2f) : 1f)) flag = true;
+                break;
+        }
+        ThisTask.debugInfo = ((Direction)direction).ToString();
+        ThisTask.Complete(flag);
+    }
+    private bool Translate(Vector3 direction, ContactFilter2D filter, float distance, float scale = 1f)
+    {
+        int count = 0;
+        // account for diagonals
+        distance *= scale;
+        float min = distance;
+        // local to global
+        direction = transform.TransformDirection(direction.normalized);
+        // obstructing objects
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+        // foe at least two tiles away, since foe collider never has radius 0
+        count = Physics2D.Raycast(Position, direction, filter, hits, distance);
+        for (int i = 0; i < count; i++)
+        {
+            // ignore self
+            if (hits[i].transform.gameObject.layer == GameVariables.LayerCreature && hits[i].transform.GetComponent<Entity>().IDUnique == IDUnique) continue;
+            // no space to move
+            if (hits[i].distance <= scale) return false;
+            // remember closest, adjust to tile center assuming collision ALWAYS at tile border (reason for item colliders being tile sized)
+            if (hits[i].distance < min) min = hits[i].distance - scale / 2f;
+        }
+        // store for reuse
+        Vector3 position = Position + direction * min;
+        // print(position + "\t" + GameGrid.Instance.WorldToGrid(position));
+        // keep destination to within currently occupied room ? reverify distance moved
+        Move(GameGrid.Instance.WorldToGrid(IsDomain(BaseChunk.ToRoom(position.x, position.y)) ? position : SnapToRoom(position, BaseChunk.ToRoom(Position.x, Position.y))), false);
+        // success
+        return true;
+    }
+    [Task]
+    void DoVFX(int indexPrefab, int indexSpawn)
+    {
+        if (indexPrefab > -1 && indexPrefab < _prefabs.Length && indexSpawn > -1 && indexSpawn < _spawns.Length)
+        {
+            Instantiate(_prefabs[indexPrefab], GameVariables.PositionVFX(_spawns[indexSpawn].position), _spawns[indexSpawn].rotation);
+            ThisTask.Succeed();
+        }
+        else
+        {
+            Debug.LogWarning(IDUnique + ":\tAttempting to access undefined Prefab(" + indexPrefab + ") or Spawn(" + indexSpawn + ")");
+            ThisTask.Fail();
+        }
     }
     [Task]
     void EntityAtAnchor(float value)
@@ -967,20 +1316,70 @@ public class Mob : Creature
         ThisTask.debugInfo = _sensorTimer + " : " + _attentionTime;
         ThisTask.Complete(_sensorTimer == _attentionTime);
     }
-    [Task]
-    void IsDirection(float value)
-    // void IsDirection()
+    private enum Direction
     {
-        // // * testing [? safety]
-        // NavigateCancel();
-        // SetTarget(_anchor.Position);
-        // SetRotation(_anchor.Position);
-        // GetRotation();
-        ThisTask.debugInfo = _rotation.ToString();
-        // * testing
-        _directionCheck = value;
-        _directionTarget = _anchor.Position;
-        ThisTask.Complete(CheckDirection());
+        UP, UP_LEFT, LEFT, DOWN_LEFT, DOWN, DOWN_RIGHT, RIGHT, UP_RIGHT
+    }
+    [Task]
+    // void IsDirection(float value)
+    // void IsDirection()
+    void IsDirection(int direction)
+    {
+        // // // * testing [? safety]
+        // // NavigateCancel();
+        // // SetTarget(_anchor.Position);
+        // // SetRotation(_anchor.Position);
+        // // GetRotation();
+        // ThisTask.debugInfo = _rotation.ToString();
+        // // * testing
+        // _directionCheck = value;
+        // _directionTarget = _anchor.Position;
+        // ThisTask.Complete(CheckDirection());
+        // 
+        // global to local
+        Vector2 displacement = transform.InverseTransformDirection(_anchor.Position - Position);
+        float angle = Mathf.Round(Mathf.Atan2(displacement.y, displacement.x) * Mathf.Rad2Deg - 90f);
+        if (angle < 0) angle += 360f;
+        bool flag = false;
+        switch ((Direction)direction)
+        {
+            case Direction.UP:
+                if (angle == 0f) flag = true;
+                break;
+            case Direction.UP_LEFT:
+                if (angle == 45f) flag = true;
+                break;
+            case Direction.LEFT:
+                if (angle == 90f) flag = true;
+                break;
+            case Direction.DOWN_LEFT:
+                if (angle == 135f) flag = true;
+                break;
+            case Direction.DOWN:
+                if (angle == 180f) flag = true;
+                break;
+            case Direction.DOWN_RIGHT:
+                if (angle == 225f) flag = true;
+                break;
+            case Direction.RIGHT:
+                if (angle == 270f) flag = true;
+                break;
+            case Direction.UP_RIGHT:
+                if (angle == 315f) flag = true;
+                break;
+        }
+        ThisTask.debugInfo = angle.ToString();
+        ThisTask.Complete(flag);
+    }
+    [Task]
+    void IsAnchorOccluded(float padding)
+    {
+        Vector2 direction = _anchor.Position - Position;
+        float distance = direction.magnitude;
+        direction.Normalize();
+        // left right ? memory overhead
+        ThisTask.Complete(Physics2D.Raycast(Position + Vector3.Cross(direction, Vector3.forward) * padding, direction, distance, GameVariables.ScanLayerObstruction)
+            || Physics2D.Raycast(Position + Vector3.Cross(Vector3.forward, direction) * padding, direction, distance, GameVariables.ScanLayerObstruction));
     }
     [Task]
     void IsAnchorCreature()
@@ -1005,7 +1404,7 @@ public class Mob : Creature
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to access undefined flag");
+            Debug.LogWarning(IDUnique + ":\tAttempting to access undefined flag");
             // 
             ThisTask.Fail();
         }
@@ -1020,58 +1419,124 @@ public class Mob : Creature
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to access undefined timer");
+            Debug.LogWarning(IDUnique + ":\tAttempting to access undefined timer");
             // 
             ThisTask.Succeed();
         }
     }
     // * testing [? use entity timer]
-    protected int _scanTimer = 0;
+    protected int _scanTimer = -1;
     // protected float[] _scanOffset;
-    protected float _scanOffset;
+    // protected float _scanOffset;
     // * testing ? game variables or utility
-    private AnimationCurve _lerp;
-    // * testing ? sensor interrupt, animation rotation offset?
-    // angle - deviation from forward to rotate in
-    // duration - time taken to complete one full scan
-    // steps - number of scans
+    // private AnimationCurve _lerp;
+    // // * testing ? sensor interrupt, animation rotation offset?
+    // // angle - deviation from forward to rotate in
+    // // duration - time taken to complete one full scan
+    // // steps - number of scans
+    // [Task]
+    // void ScanVision(float angle, int duration, int steps)
+    // {
+    //     // * testing
+    //     NavigateCancel();
+    //     Task.current.debugInfo = _scanTimer.ToString();
+    //     // if (_scanTimer >= 0f)
+    //     if (_scanTimer >= 0)
+    //     {
+    //         // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % step) / step) * Mathf.PI * 2f));
+    //         // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % duration) / (float)duration) * Mathf.PI * 2f));
+    //         SetRotation(_scanOffset + angle * _lerp.Evaluate((_scanTimer % duration) / (float)duration));
+    //         // print(Mathf.Sin(((_scanTimer % duration) / duration) * Mathf.PI * 2f));
+    //         // print(_scanTimer + "\t" + (1f - ((_scanTimer % step) / step)).ToString());
+    //         // print((int)_scanTimer % duration);
+    //         // print(Mathf.Lerp(-angle, angle, (_scanTimer % duration) / (float)duration));
+    //         // _scanTimer -= Time.deltaTime;
+    //         _scanTimer--;
+    //         // // * testing ? approximate
+    //         // _scanTimer -= 1f;
+    //         // if (_scanTimer < 0f)
+    //         if (_scanTimer < 0)
+    //         {
+    //             SetRotation(_scanOffset);
+    //             Task.current.Succeed();
+    //             return;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // * testing [? memory waste]
+    //         // _scanTimer = duration;
+    //         _scanTimer = duration * steps;
+    //         _scanOffset = 90f + _rotation;
+    //         // _scanOffset = _rotation;
+    //     }
+    //     Task.current.Fail();
+    // }
+    // 
     [Task]
-    void ScanVision(float angle, int duration, int steps)
+    void ScanReset()
     {
-        // * testing
+        _scanTimer = -1;
+        Task.current.Succeed();
+    }
+    [Task]
+    // direction, 1 counter clockwise | -1 clockwise
+    // offset? 1 90 degrees | 2 180 degrees | etc
+    void ScanVision(int direction, int offset)
+    {
         NavigateCancel();
+        // // begin scan ? only works one time
+        // if (Mathf.Round(_scanTimer) > offset) _scanTimer = offset;
+        // // scan in progress
+        // else
+        // {
+        //     // not facing spawn rotation
+        //     if (Mathf.Abs(transform.eulerAngles.z - _spawnRotation) > 0f)
+        //         // face spawn rotation
+        //         transform.eulerAngles = Vector3.forward * _spawnRotation;
+        //     // facing spawn rotation
+        //     else
+        //         // continue scan
+        //         _scanTimer--;
+        // }
+        // // show scan status
+        // Task.current.debugInfo = _scanTimer.ToString();
+        // // * testing hardcoded 180 turn
+        // transform.eulerAngles = Vector3.forward * (_spawnRotation + direction * Mathf.Lerp(0f, 180f, (1f - Mathf.Abs(_scanTimer) / offest)));
+        // // // end scan
+        // // if (_scanTimer < -2) transform.eulerAngles = Vector3.forward * _spawnRotation;
+        // // 
+        // Task.current.Succeed();
+        // 
+        // new scan
+        if (_scanTimer < 0)
+        {
+            // 
+            _scanTimer = offset * 2;
+            // already facing spawn rotation
+            if (Mathf.Abs(Rotation.z - _spawnRotation) == 0f)
+                // continue scan
+                _scanTimer--;
+        }
+        // show scan status
         Task.current.debugInfo = _scanTimer.ToString();
-        // if (_scanTimer >= 0f)
-        if (_scanTimer >= 0)
-        {
-            // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % step) / step) * Mathf.PI * 2f));
-            // SetRotation(_scanOffset + angle * Mathf.Sin(((_scanTimer % duration) / (float)duration) * Mathf.PI * 2f));
-            SetRotation(_scanOffset + angle * _lerp.Evaluate((_scanTimer % duration) / (float)duration));
-            // print(Mathf.Sin(((_scanTimer % duration) / duration) * Mathf.PI * 2f));
-            // print(_scanTimer + "\t" + (1f - ((_scanTimer % step) / step)).ToString());
-            // print((int)_scanTimer % duration);
-            // print(Mathf.Lerp(-angle, angle, (_scanTimer % duration) / (float)duration));
-            // _scanTimer -= Time.deltaTime;
-            _scanTimer--;
-            // // * testing ? approximate
-            // _scanTimer -= 1f;
-            // if (_scanTimer < 0f)
-            if (_scanTimer < 0)
-            {
-                SetRotation(_scanOffset);
-                Task.current.Succeed();
-                return;
-            }
-        }
-        else
-        {
-            // * testing [? memory waste]
-            // _scanTimer = duration;
-            _scanTimer = duration * steps;
-            _scanOffset = 90f + _rotation;
-            // _scanOffset = _rotation;
-        }
-        Task.current.Fail();
+        // * testing ? have dedicated rotation function
+        // transform.eulerAngles = Vector3.forward * (_spawnRotation + direction * Mathf.Lerp(0f, offset * 90f, (1f - Mathf.Abs(_scanTimer - offset) / (float)offset)));
+        // _body.eulerAngles = transform.eulerAngles;
+        SetRotation(Vector3.forward * (_spawnRotation + direction * Mathf.Lerp(0f, offset * 90f, (1f - Mathf.Abs(_scanTimer - offset) / (float)offset))));
+        // 
+        _scanTimer--;
+        // // show scan status
+        // Task.current.debugInfo = _scanTimer.ToString();
+        // // 
+        // if (_scanTimer < 0)
+        // {
+        //     // face spawn rotation
+        //     transform.eulerAngles = Vector3.forward * _spawnRotation;
+        //     Task.current.Succeed();
+        //     return;
+        // }
+        Task.current.Succeed();
     }
     // ? redundant, isAlert holds result of same operation, but needs manual reset?
     [Task]
@@ -1081,16 +1546,18 @@ public class Mob : Creature
         // check sensors [priority]
         ThisTask.Complete(CheckTrigger() || CheckVision());
     }
-    [Task]
-    void SetAttack(int index, int value)
-    {
-        if (_prefabs[index].activeSelf != (value == 1))
-        {
-            _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
-            _prefabs[index].SetActive(value == 1);
-        }
-        ThisTask.Succeed();
-    }
+    // [Task]
+    // void SetAttack(int index, int value)
+    // {
+    //     if (_prefabs[index].activeSelf != (value == 1))
+    //     {
+    //         // _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position);
+    //         // _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position, new Vector2Int(Mathf.FloorToInt((Position.x + 4.5f) / 9f), Mathf.FloorToInt((Position.y + 4.5f) / 9f)));
+    //         _prefabs[index].GetComponent<BaseHitbox>().Initialize(this as Breakable, _anchor.Position, BaseChunk.ToRoom(Position.x, Position.y));
+    //         _prefabs[index].SetActive(value == 1);
+    //     }
+    //     ThisTask.Succeed();
+    // }
     [Task]
     void SetColor(int index)
     {
@@ -1101,7 +1568,7 @@ public class Mob : Creature
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined color");
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined color");
             // 
             ThisTask.Fail();
         }
@@ -1109,7 +1576,7 @@ public class Mob : Creature
     [Task]
     void SetColliders(int value)
     {
-        SetColliders(value == 1);
+        SetColliders(value == 1, true);
         // _motor.CollidersToggle(value == 1);
         ThisTask.Succeed();
     }
@@ -1126,16 +1593,26 @@ public class Mob : Creature
     //     _rotation = transform.eulerAngles.z + value;
     // }
     [Task]
-    void SetFlag(int index, int value)
+    void SetDead()
+    {
+        // seppuku
+        HealthModify(-99, this as Creature);
+        // 
+        ThisTask.Succeed();
+    }
+    [Task]
+    // void SetFlag(int index, int value)
+    void SetFlag(int index)
     {
         if (index > -1 && index < _countFlags)
         {
-            _flags[index] = value == 1;
+            // _flags[index] = value == 1;
+            _flags[index] = true;
             ThisTask.Succeed();
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined flag");
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined flag");
             // 
             ThisTask.Fail();
         }
@@ -1167,7 +1644,7 @@ public class Mob : Creature
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined sprite");
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined sprite");
             // 
             ThisTask.Fail();
         }
@@ -1193,7 +1670,7 @@ public class Mob : Creature
         }
         else
         {
-            Debug.LogWarning(gameObject.name + ":\tAttempting to use undefined timer");
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined timer");
             // 
             ThisTask.Fail();
         }
@@ -1233,17 +1710,35 @@ public class Mob : Creature
         ThisTask.Succeed();
     }
     [Task]
+    void SpawnTrackAnchor(int index)
+    {
+        if (index > -1 && index < _spawns.Length)
+        {
+            Vector2 direction = _anchor.Position - _spawns[index].position;
+            _spawns[index].eulerAngles = new Vector3(_spawns[index].eulerAngles.x, _spawns[index].eulerAngles.y, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f);
+            ThisTask.Succeed();
+        }
+        else
+        {
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined spawn");
+            // 
+            ThisTask.Fail();
+        }
+    }
+    [Task]
     void TrackAnchor()
     {
         // check signed angle between forward and anchor
-        float angle = Vector2.SignedAngle(transform.up, _anchor.Position - Position);
+        float angle = Mathf.Round(Vector2.SignedAngle(transform.up, _anchor.Position - Position));
+        ThisTask.debugInfo = angle.ToString();
         // X, facing
         if (angle >= -45f && angle <= 45f) ThisTask.Succeed();
         // Y, left
         else if (angle > 45f)
         {
-            transform.eulerAngles += Vector3.forward * 90f;
-            _body.eulerAngles = transform.eulerAngles;
+            // transform.eulerAngles += Vector3.forward * 90f;
+            // _body.eulerAngles = transform.eulerAngles;
+            SetRotation(Rotation + Vector3.forward * 90f);
             // 
             ThisTask.Fail();
         }
@@ -1251,8 +1746,9 @@ public class Mob : Creature
         // else if (angle < -45f)
         else
         {
-            transform.eulerAngles -= Vector3.forward * 90f;
-            _body.eulerAngles = transform.eulerAngles;
+            // transform.eulerAngles -= Vector3.forward * 90f;
+            // _body.eulerAngles = transform.eulerAngles;
+            SetRotation(Rotation - Vector3.forward * 90f);
             // 
             ThisTask.Fail();
         }
@@ -1262,6 +1758,23 @@ public class Mob : Creature
     {
         _isAlert = false;
         ThisTask.Succeed();
+    }
+    [Task]
+    // void SetFlag(int index, int value)
+    void UnsetFlag(int index)
+    {
+        if (index > -1 && index < _countFlags)
+        {
+            // _flags[index] = value == 1;
+            _flags[index] = false;
+            ThisTask.Succeed();
+        }
+        else
+        {
+            Debug.LogWarning(IDUnique + ":\tAttempting to use undefined flag");
+            // 
+            ThisTask.Fail();
+        }
     }
     #endregion
 }

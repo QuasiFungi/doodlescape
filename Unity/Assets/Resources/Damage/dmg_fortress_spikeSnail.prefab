@@ -194,11 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 
-  _vfxPooled: []
-  _attackPooled: []
-  _damagePooled: []
-  _sfxPooled: []
-  _isPooled: 0
-  _damage: 0
+  _isPersistent: 0
+  _damage: 3
   _impactSensitive: 0
   _timer: 1

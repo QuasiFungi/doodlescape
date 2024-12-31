@@ -1,234 +1,86 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-// public class GameInput : MonoBehaviour, IPointerDownHandler
 public class GameInput : MonoBehaviour
 {
-    // public delegate void OnTap(int typeButton, int typeInput, Vector2 position);
-    // public delegate void OnTap(int typeButton, int typeInput, Vector2 direction);
     public delegate void OnTap(int typeButton, int typeInput, int index);
     public static event OnTap onTap;
-    void Update()
-    {
-        Vector2 direction = Vector2.zero;
-        // testing w/ keyboard
-        // - movement
-        // if (Input.GetKeyDown(KeyCode.UpArrow)) direction += Vector2.up;
-        // if (Input.GetKeyDown(KeyCode.DownArrow)) direction += Vector2.down;
-        // if (Input.GetKeyDown(KeyCode.LeftArrow)) direction += Vector2.left;
-        // if (Input.GetKeyDown(KeyCode.RightArrow)) direction += Vector2.right;
-        // if (direction.sqrMagnitude > 0f) onTap?.Invoke(0, 0, direction);
-        // UL
-        if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 0);
-        // UR
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 2);
-        // DL
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 5);
-        // DR
-        else if (Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 7);
-        // U
-        else if (Input.GetKeyDown(KeyCode.UpArrow)) onTap?.Invoke(0, 0, 1);
-        // D
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) onTap?.Invoke(0, 0, 6);
-        // L
-        else if (Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 3);
-        // R
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 4);
-        // - inventory
-        // if (Input.GetKeyDown(KeyCode.Alpha1)) 
-        // if (Input.GetKeyDown(KeyCode.Alpha2)) 
-        // if (Input.GetKeyDown(KeyCode.Alpha3)) 
-        // if (Input.GetKeyDown(KeyCode.Alpha4)) 
-        // if (Input.GetKeyDown(KeyCode.Alpha5)) 
-        // UL
-        if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 4);
-        // UR
-        else if (Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 5);
-        // DL
-        else if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 6);
-        // DR
-        else if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 7);
-        // U
-        else if (Input.GetKeyDown(KeyCode.W)) onTap?.Invoke(1, 0, 0);
-        // D
-        else if (Input.GetKeyDown(KeyCode.S)) onTap?.Invoke(1, 0, 3);
-        // L
-        else if (Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 1);
-        // R
-        else if (Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 2);
-        // - cancel
-        if (Input.GetKeyDown(KeyCode.RightShift)) onTap?.Invoke(2, 0, 0);
-        // - tick
-        // if (Input.GetKeyDown(KeyCode.Space)) onTap?.Invoke(0, 0, direction);
-        if (Input.GetKeyDown(KeyCode.LeftShift)) onTap?.Invoke(3, 0, 0);
-    }
-    // void OnEnable()
-    // {
-    //     GameClock.onTickUI += GetInput;
-    // }
-    // void OnDisable()
-    // {
-    //     GameClock.onTickUI -= GetInput;
-    // }
-    // private bool isInput = false;
-    // * testing
-    public Camera _camera;
-    public Transform _player;
-    // ? versus each button look for game input
-    // public Transform _move;
-    // public Transform _storage;
+    // public BaseButton auxLeft, auxRight, actionUL, actionU, actionUR, actionL, actionR, actionDL, actionDR, storageUL, storageU, storageUR, storageL, storageR, storageDL, storageD, storageDR;
+    // private float _holdTime = .35f;
+    // private float[] _holdTimers = 0f;
     // void Awake()
     // {
-    //     // action
-    //     // foreach (Transform child in transform.GetChild(0))
-    //     //     child.GetComponent<BaseButton>().onInteract += OnMove;
-    //     // // storage
-    //     // transform.GetChild(1);
+    //     _holdTimers = new float[16];
     // }
-    // void Awake()
+    // void Update()
     // {
-    //     _camera = GetComponent<Camera>();
-    // }
-    // private void GetInput()
-    // {
-    //     if (_pointerTap == Vector2.zero) return;
-    //     // print("get input");
+    //     // testing w/ keyboard
     //     // 
-    //     Vector2Int index = GameGrid.Instance.WorldToIndex(_camera.ScreenToWorldPoint(_pointerTap));
-    //     Vector3 direction = GameGrid.Instance.IndexToWorld(index.x, index.y) - _player.position;
-    //     if (direction.magnitude < 2f) onTap?.Invoke(direction);
-    //     print(direction);
+    //     // - auxillary
+    //     if (auxLeft.IsEnabled && Input.GetKeyDown(KeyCode.LeftAlt)) onTap?.Invoke(auxLeft.TypeButton, 0, auxLeft.Index);
+    //     if (auxRight.IsEnabled && Input.GetKeyDown(KeyCode.RightAlt)) onTap?.Invoke(auxRight.TypeButton, 0, auxRight.Index);
     //     // 
-    //     _pointerTap = Vector2.zero;
-    // }
-    // private Vector2 _pointerTap = Vector2.zero;
-    // public void OnPointerDown(PointerEventData eventData)
-    // {
-    //     // print("input");
-    //     // single finger input
-    //     // if (_pointerTap != Vector2.zero) return;
-    //     // _pointerTap = eventData.pressPosition;
+    //     if (_isDisabled) return;
     //     // 
-    //     // Vector2Int index = GameGrid.Instance.WorldToIndex(_camera.ScreenToWorldPoint(eventData.pressPosition));
-    //     // Vector3 direction = GameGrid.Instance.IndexToWorld(index.x, index.y) - _player.position;
-    //     Vector3 direction = GameGrid.Instance.WorldToGrid(_camera.ScreenToWorldPoint(eventData.pressPosition)) - _player.position;
-    //     // undo grid z offset
-    //     direction = new Vector3(direction.x, direction.y, 0f);
-    //     // player actions
-    //     if (direction.magnitude < 2f) onTap?.Invoke(direction);
-    //     // ? inventory
-    // }
-    // public void OnPointerUp(PointerEventData eventData)
-    // {
-    //     // single finger input
-    //     if (_pointerTap == Vector2.zero) return;
-    //     _pointerTap = Vector2.zero;
-    // }
-    // public void OnMove(BaseEventData eventData)
-    // {
-    //     PointerEventData data = eventData as PointerEventData;
-    //     print(data.position);
+    //     // - movement
+    //     // UL
+    //     if (actionUL.IsEnabled && Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 0);
+    //     // UR
+    //     else if (actionUR.IsEnabled && Input.GetKeyDown(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 2);
+    //     // DL
+    //     else if (actionDL.IsEnabled && Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 5);
+    //     // DR
+    //     else if (actionDR.IsEnabled && Input.GetKeyDown(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 7);
+    //     // U
+    //     else if (actionU.IsEnabled && Input.GetKeyDown(KeyCode.UpArrow)) onTap?.Invoke(0, 0, 1);
+    //     // D
+    //     else if (actionD.IsEnabled && Input.GetKeyDown(KeyCode.DownArrow)) onTap?.Invoke(0, 0, 6);
+    //     // L
+    //     else if (actionL.IsEnabled && Input.GetKeyDown(KeyCode.LeftArrow)) onTap?.Invoke(0, 0, 3);
+    //     // R
+    //     else if (actionR.IsEnabled && Input.GetKeyDown(KeyCode.RightArrow)) onTap?.Invoke(0, 0, 4);
+    //     // - inventory
+    //     // UL
+    //     if (storage.IsEnabled && Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 4);
+    //     // UR
+    //     else if (storageUR.IsEnabled && Input.GetKeyDown(KeyCode.W) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 5);
+    //     // DL
+    //     else if (storageDL.IsEnabled && Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 6);
+    //     // DR
+    //     else if (storageDR.IsEnabled && Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 7);
+    //     // U
+    //     else if (storageU.IsEnabled && Input.GetKeyDown(KeyCode.W)) onTap?.Invoke(1, 0, 0);
+    //     // D
+    //     else if (storageD.IsEnabled && Input.GetKeyDown(KeyCode.S)) onTap?.Invoke(1, 0, 3);
+    //     // L
+    //     else if (storageL.IsEnabled && Input.GetKeyDown(KeyCode.A)) onTap?.Invoke(1, 0, 1);
+    //     // R
+    //     else if (storageR.IsEnabled && Input.GetKeyDown(KeyCode.D)) onTap?.Invoke(1, 0, 2);
+    //     // // - cancel
+    //     // if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.LeftControl)) onTap?.Invoke(2, 0, 0);
+    //     // // - tick
+    //     // if (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift)) onTap?.Invoke(3, 0, 0);
     // }
     void OnEnable()
     {
         BaseButton.onInteract += OnAction;
-        // BaseTransition.onTrigger += OverrideAction;
+        GameMaster.onStartupInput += Initialize;
     }
     void OnDisable()
     {
         BaseButton.onInteract -= OnAction;
-        // BaseTransition.onTrigger -= OverrideAction;
+        GameMaster.onStartupInput -= Initialize;
+    }
+    private bool _isDisabled = true;
+    private void Initialize()
+    {
+        _isDisabled = false;
     }
     // pipeline between buttons and player/clock
     private void OnAction(int typeButton, int typeInput, int id)
     {
-        // print(type + " " + id + " " + state);
-        // switch (typeButton)
-        // {
-        //     // MOVE
-        //     case 0:
-        //         switch (typeInput)
-        //         {
-        //             // TAP
-        //             case 0:
-        //                 // switch (id)
-        //                 // {
-        //                 //     case 0:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(-1f, 1f));
-        //                 //         break;
-        //                 //     case 1:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(0f, 1f));
-        //                 //         break;
-        //                 //     case 2:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(1f, 1f));
-        //                 //         break;
-        //                 //     case 3:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(-1f, 0f));
-        //                 //         break;
-        //                 //     case 4:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(1f, 0f));
-        //                 //         break;
-        //                 //     case 5:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(-1f, -1f));
-        //                 //         break;
-        //                 //     case 6:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(0f, -1f));
-        //                 //         break;
-        //                 //     case 7:
-        //                 //         onTap?.Invoke(0, 0, new Vector2(1f, -1f));
-        //                 //         break;
-        //                 // }
-        //                 break;
-        //             // HOLD
-        //             case 1:
-        //                 // 
-        //                 break;
-        //         }
-        //         break;
-        //     // INVENTORY
-        //     case 1:
-        //         switch (typeInput)
-        //         {
-        //             // TAP
-        //             case 0:
-        //                 // switch (id)
-        //                 // {
-        //                 //     case 0:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(-1f, 1f));
-        //                 //         break;
-        //                 //     case 1:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(0f, 1f));
-        //                 //         break;
-        //                 //     case 2:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(1f, 1f));
-        //                 //         break;
-        //                 //     case 3:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(-1f, 0f));
-        //                 //         break;
-        //                 //     case 4:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(1f, 0f));
-        //                 //         break;
-        //                 //     case 5:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(-1f, -1f));
-        //                 //         break;
-        //                 //     case 6:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(0f, -1f));
-        //                 //         break;
-        //                 //     case 7:
-        //                 //         onTap?.Invoke(1, 0, new Vector2(1f, -1f));
-        //                 //         break;
-        //                 // }
-        //                 break;
-        //             // HOLD
-        //             case 1:
-        //                 // 
-        //                 break;
-        //         }
-        //         break;
-        //     // CANCEL
-        //     case 2:
-        //         // onTap?.Invoke(2, 0, Vector2.zero);
-        //         break;
-        // }
+        // allow instructions only
+        if (_isDisabled && typeButton != 3) return;
+        // 
         onTap?.Invoke(typeButton, typeInput, id);
     }
 }

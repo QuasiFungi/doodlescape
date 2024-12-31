@@ -204,5 +204,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: breakable_fortress_slab
-  _health: 5
+  _isPersistent: 1
+  _health: 3
+  _sfxHurt: {fileID: 8300000, guid: 0ba1e582712e4e80697ca77ab2841301, type: 3}
+  _sfxDead: {fileID: 8300000, guid: 9146a42ebcf346108855d95453fc5899, type: 3}
   _body: {fileID: 5578740829102205966}
+  _isRotate: 0

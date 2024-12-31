@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2003406534472648813}
   - component: {fileID: 1021332823145377499}
-  - component: {fileID: 841768992596625239}
   - component: {fileID: 4067292088042285188}
+  - component: {fileID: -3816727398822706981}
   m_Layer: 10
   m_Name: sensor_fortress_mycelium
   m_TagString: Untagged
@@ -86,7 +86,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &841768992596625239
+--- !u!114 &4067292088042285188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260299161636303510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15aeb7d8fc07de75a8d003573931680c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: sensor_fortress_mycelium
+  _isPersistent: 0
+  _radius: 0
+  _default: 1
+  _isRestricted: 1
+--- !u!58 &-3816727398822706981
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,16 +138,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.4
---- !u!114 &4067292088042285188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260299161636303510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15aeb7d8fc07de75a8d003573931680c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _id: sensor_fortress_mycelium

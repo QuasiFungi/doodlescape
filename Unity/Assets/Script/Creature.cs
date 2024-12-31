@@ -1,13 +1,19 @@
 using UnityEngine;
 public class Creature : Breakable
 {
+    [Header("Creature")]
     protected Item[] _inventory;
+    protected string[] _inventoryIDs;
     // ? global variable
     // [SerializeField] protected int _sizeInventory = 8;
-    protected void InventoryInitialize()
-    {
-        _inventory = new Item[8];
-    }
+    // protected void InventoryInitialize()
+    // protected override void Awake()
+    // {
+    //     base.Awake();
+    //     // 
+    //     _inventory = new Item[8];
+    //     // _inventoryIDs = new string[8];
+    // }
     // ? bypass ItemHas check
     public Item ItemGet(int index)
     {
@@ -19,17 +25,55 @@ public class Creature : Breakable
     {
         if (index < 0 || index >= 8) return;
         _inventory[index] = item;
+        _inventoryIDs[index] = item.IDUnique;
     }
-    public bool ItemHas(string id, bool checkExtra = true)
+    // public bool ItemHas(string id, bool checkExtra = false)
+    public bool ItemHas(string id)
     {
-        // foreach (Item item in _inventory) if (item != null && item.ID == id) return true;
-        // run full or half inventory check
-        for (int i = checkExtra ? 7 : 3; i > -1; i--)
-            // prevent item detect in extra slots unless has pouch, run check once on start
-            if (i == 7 && !ItemHas("item_pouch", false)) break;
-            // 
-            else if (_inventory[i] != null && _inventory[i].ID == id) return true;
+        // // foreach (Item item in _inventory) if (item != null && item.ID == id) return true;
+        // // run full or half inventory check
+        // for (int i = checkExtra ? 7 : 3; i > -1; i--)
+        //     // prevent item detect in extra slots unless has pouch, run check once on start
+        //     if (i == 7 && !ItemHas("item_pouch", false)) break;
+        //     // 
+        //     else if (_inventory[i] != null && _inventory[i].ID == id) return true;
+        // return false;
+        // 
+        // primary slots
+        int limit = 4;
+        // iterate
+        for (int i = 0; i < limit; i++)
+        {
+            // item held
+            if (_inventory[i] != null)
+            {
+                // item matched
+                if (_inventory[i].ID == id) return true;
+                // pouch held, check all slots
+                else if (_inventory[i].ID == "item_pouch") limit = 8;
+            }
+        }
+        // item not found
         return false;
+    }
+    public int ItemGet(string id)
+    {
+        // primary slots
+        int limit = 4;
+        // iterate
+        for (int i = 0; i < limit; i++)
+        {
+            // item held
+            if (_inventory[i] != null)
+            {
+                // item matched
+                if (_inventory[i].ID == id) return i;
+                // pouch held, check all slots
+                else if (_inventory[i].ID == "item_pouch") limit = 8;
+            }
+        }
+        // item not found
+        return -1;
     }
     // private bool 
     // // * testing
@@ -43,7 +87,8 @@ public class Creature : Breakable
         // fill items from slot marked 0 and onwards
         for (int i = 0; i < 8; i++)
             // prevent item pickup in extra slots unless has pouch, run check once on start
-            if (i == 4 && !ItemHas("item_pouch", false)) return false;
+            // if (i == 4 && !ItemHas("item_pouch", false)) return false;
+            if (i == 4 && !ItemHas("item_pouch")) return false;
             // found empty slot
             else if (_inventory[i] == null)
             {
@@ -51,9 +96,12 @@ public class Creature : Breakable
                 Teleprompter.Register(item.Description);
                 // store item reference
                 _inventory[i] = item;
+                _inventoryIDs[i] = item.IDUnique;
                 // hide physical item entity, not discard
                 // item.Hide();
                 item.ToggleActive(false);
+                // * testing sfx pickup
+                GameAudio.Instance.Register(3, GameAudio.AudioType.UI);
                 // success
                 return true;
             }
@@ -70,9 +118,11 @@ public class Creature : Breakable
                 // TestTeleprompt(_inventory[i].Name + " discarded");
                 // 
                 // ? never discard entities only disable/hide
-                _inventory[i].Discard();
+                // _inventory[i].Discard();
+                _inventory[i].ToggleActive(false);
                 // _inventory[i].Hide();
                 _inventory[i] = null;
+                _inventoryIDs[i] = "";
                 break;
             }
     }
@@ -85,6 +135,9 @@ public class Creature : Breakable
         // _inventory[index].Show(Position);
         _inventory[index].Show(position);
         _inventory[index] = null;
+        _inventoryIDs[index] = "";
+        // * testing sfx drop
+        GameAudio.Instance.Register(4, GameAudio.AudioType.UI);
     }
     // // used by crate ? filter based on type
     // public string[] GetItemIDs()
@@ -104,4 +157,65 @@ public class Creature : Breakable
     // {
     //     // 
     // }
+    // // * testing save/load
+    // protected override void DataLoad()
+    // {
+    //     Vector3 position, rotation;
+    //     // use defaults if no data found
+    //     if (!GameData.DataLoadCreature(IDUnique, out position, out rotation, out _healthInst))
+    //         // position rotation already assigned correctly
+    //         _healthInst = _health;
+    //     // apply loaded values
+    //     else
+    //     {
+    //         SetPosition(position);
+    //         SetRotation(rotation);
+    //     }
+    // }
+    // protected override void DataSave()
+    // {
+    //     GameData.DataSaveCreature(IDUnique, Position, Rotation, _healthInst);
+    // }
+    protected override void DataLoad()
+    {
+        // * testing save/load
+        Vector3 position, rotation;
+        bool isActive;
+        // use defaults if no data found
+        if (!GameData.DataLoadCreature(IDUnique, out position, out rotation, out isActive, out _lootID, out _healthInst, out _inventoryIDs))
+        {
+            // position rotation isActive already assigned correctly
+            _healthInst = _health;
+            _inventory = new Item[8];
+            _inventoryIDs = new string[8];
+        }
+        // apply loaded values
+        else
+        {
+            // * testing, do not use saved position/rotation for mobs
+            if (gameObject.tag == "player" || gameObject.tag == "boss")
+            {
+                SetPosition(position);
+                SetRotation(rotation);
+            }
+            // if holding an item
+            if (_lootID != "")
+                // try retrieving item from manager ? null on fail
+                _loot = ManagerItem.Instance.GetItemByIDUnique(_lootID);
+            // id to item
+            _inventory = new Item[8];
+            // iterate each inventory slot
+            for (int i = 0; i < 8; i++)
+                // those holding an item
+                if (_inventoryIDs[i] != "")
+                    // try retrieving item from manager ? null on fail
+                    _inventory[i] = ManagerItem.Instance.GetItemByIDUnique(_inventoryIDs[i]);
+        }
+        // apply dead state
+        ToggleActive(isActive && !IsDead);
+    }
+    protected override void DataSave()
+    {
+        GameData.DataSaveCreature(IDUnique, Position, Rotation, IsActive, _lootID, _healthInst, _inventoryIDs);
+    }
 }

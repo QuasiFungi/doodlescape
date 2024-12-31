@@ -57,7 +57,8 @@ public class BaseTransition : MonoBehaviour
     {
         _trigger = GetComponent<Collider2D>();
     }
-    private bool _state = true;
+    // private bool _state = true;
+    private bool _state = false;
     public void ToggleActive(bool state)
     {
         // _state = state;

@@ -2,19 +2,12 @@ using UnityEngine;
 using System.Collections;
 public class GameCamera : MonoBehaviour
 {
-    // void OnEnable()
-    // {
-    //     GameAction.onTransition += SetPosition;
-    // }
-    // void OnDisable()
-    // {
-    //     GameAction.onTransition -= SetPosition;
-    // }
     private float _step = 9f;
     public void SetPosition(Vector2 direction)
     {
         // transform.position = direction * _step;
         transform.position = new Vector2((float)direction.x * _step, (float)direction.y * _step);
+        // print("SetPosition: " + transform.position);
     }
     public BaseTransition[] _triggers;
     public void ToggleTriggers(bool state)
@@ -56,5 +49,34 @@ public class GameCamera : MonoBehaviour
         }
         // hide fog
         if (!state) _fog.gameObject.SetActive(false);
+    }
+    // // * testing save/load
+    // void Start()
+    // {
+    //     // print("camera " + GameData.Room);
+    //     transform.position = new Vector2(GameData.Room.x * 9f, GameData.Room.y * 9f);
+    // }
+    // * testing startup sequence
+    void OnEnable()
+    {
+        // GameAction.onTransition += SetPosition;
+        // 
+        GameMaster.onStartupCamera += Initialize;
+    }
+    void OnDisable()
+    {
+        // GameAction.onTransition -= SetPosition;
+        // 
+        GameMaster.onStartupCamera -= Initialize;
+    }
+    private void Initialize()
+    {
+        // * testing save/load
+        transform.position = new Vector2(GameData.Room.x * 9f, GameData.Room.y * 9f);
+        // print("Initialize: " + transform.position);
+        // hide fog
+        ToggleFog(false, GameData.Direction);
+        // enable room transition triggers
+        ToggleTriggers(true);
     }
 }

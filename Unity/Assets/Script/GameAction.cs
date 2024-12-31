@@ -15,6 +15,7 @@ public class GameAction
         DROP
         // , DASH
         // , BLOCK
+        , NOISE
     }
     private ActionType _type;
     private Vector3 _direction;
@@ -23,6 +24,7 @@ public class GameAction
     // ? store reference as creature instead of gameObject
     private GameObject _source;
     private int _typeButton;
+    private int _typeInput;
     private int _index;
     public GameAction()
     {
@@ -33,6 +35,7 @@ public class GameAction
         _index = index;
         _source = source;
         _typeButton = typeButton;
+        _typeInput = typeInput;
         switch (typeButton)
         {
             // ACTION
@@ -146,18 +149,20 @@ public class GameAction
                 creature.SetRotation(Direction_Int);
                 // logic offloaded because inventory info held by creature
                 if (!creature.ItemAdd(_target.GetComponent<Item>()))
-                // inform cant pickup item
-                    Teleprompter.Register("Inventory full");
-                // // 
-                // else Teleprompter.Register(creature.ItemGet(_index).Description);
+                {
+                    // inform cant pickup item
+                    Teleprompter.Register("Storage full");
+                    // * testing sfx teleprompter
+                    GameAudio.Instance.Register(6, GameAudio.AudioType.UI);
+                }
                 break;
             case ActionType.TRANSITION:
                 // 
                 onTransition?.Invoke();
+                // * testing sfx transition
+                GameAudio.Instance.Register(5, GameAudio.AudioType.UI);
                 break;
             case ActionType.USE:
-                // // * testing
-                // if (creature.ItemGet(_index)) Debug.Log("try use: " + creature.ItemGet(_index).ID);
                 Item item = creature.ItemGet(_index);
                 // parse by item category
                 switch (item.Type)
@@ -165,30 +170,54 @@ public class GameAction
                     case Item.ItemType.SUPPORT:
                         // show item info/usage
                         Teleprompter.Register(creature.ItemGet(_index).Description);
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                     case Item.ItemType.AOE:
-                        // ? teleprompt item info/usage
-                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
+                        // create local reference
+                        ItemEffect effect = item as ItemEffect;
+                        // use item
+                        effect.Spawn(creature);
+                        // fully consumed
+                        if (effect.Consume())
+                        {
+                            // discard
+                            creature.ItemRemove(item.ID);
+                            // * testing sfx discard
+                            if (item.SFXDiscard != null) GameAudio.Instance.Register(item.SFXDiscard, GameAudio.AudioType.UI);
+                        }
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                     case Item.ItemType.WEAPON:
-                        // ? teleprompt item info/usage
-                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
+                        // create local reference
+                        ItemWeapon weapon = item as ItemWeapon;
+                        // use item
+                        weapon.Effect(creature);
+                        // fully consumed
+                        if (weapon.Consume())
+                        {
+                            // discard
+                            creature.ItemRemove(item.ID);
+                            // * testing sfx discard
+                            if (item.SFXDiscard != null) GameAudio.Instance.Register(item.SFXDiscard, GameAudio.AudioType.UI);
+                        }
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                     case Item.ItemType.COLLECTABLE:
                         // ? teleprompt item info/usage
-                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
+                        Teleprompter.Register(creature.ItemGet(_index).Description);
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                     case Item.ItemType.UTILITY:
                         // ? teleprompt item info/usage
-                        Teleprompter.Register("try use: " + creature.ItemGet(_index).ID);
+                        Teleprompter.Register(creature.ItemGet(_index).Description);
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                     case Item.ItemType.RECOVERY:
-                        // 
-                        // creature.HealthModify((item as ItemHeal).Consume(), creature);
-                        // 
-                        // creature.HealthModify((item as ItemHeal).Health, creature);
-                        // (item as ItemHeal).Consume(););
-                        // 
                         // create local reference
                         ItemHeal heal = item as ItemHeal;
                         // apply health modifier
@@ -196,12 +225,13 @@ public class GameAction
                         // fully consumed
                         if (heal.Consume())
                         {
-                            // inform of discard
-                            // Teleprompter.Register(creature.ItemGet(_index).Name + " uses depleted; discarded");
-                            Teleprompter.Register(creature.ItemGet(_index).Consumed);
                             // discard
                             creature.ItemRemove(item.ID);
+                            // * testing sfx discard
+                            if (item.SFXDiscard != null) GameAudio.Instance.Register(item.SFXDiscard, GameAudio.AudioType.UI);
                         }
+                        // * testing sfx use
+                        if (item.SFXUse != null) GameAudio.Instance.Register(item.SFXUse, GameAudio.AudioType.UI);
                         break;
                 }
                 break;
@@ -213,7 +243,12 @@ public class GameAction
                     creature.ItemDrop(_index, _position);
                 // 
                 // else Debug.Log(_source.name + ":\tNo empty space to drop item in");
-                else Teleprompter.Register("No space to drop item");
+                else
+                {
+                    Teleprompter.Register("No space to drop item");
+                    // * testing sfx teleprompter
+                    GameAudio.Instance.Register(6, GameAudio.AudioType.UI);
+                }
                 break;
         }
     }
@@ -247,9 +282,21 @@ public class GameAction
     {
         get { return _typeButton; }
     }
+    public int TypeInput
+    {
+        get { return _typeInput; }
+    }
     public int Index
     {
         get { return _index; }
+    }
+    public Vector3 Position
+    {
+        get { return _position; }
+    }
+    public Vector3 Direction
+    {
+        get { return _direction; }
     }
     private Vector2Int Direction_Int
     {

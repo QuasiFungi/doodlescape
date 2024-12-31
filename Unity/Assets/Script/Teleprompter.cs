@@ -7,6 +7,8 @@ public class Teleprompter : MonoBehaviour
     private static Text[] _display = new Text[2];
     void Start()
     {
+        _time = 3;
+        _timer = 0;
         // get references
         _display[0] = transform.GetChild(0).GetComponent<Text>();
         _display[1] = transform.GetChild(1).GetComponent<Text>();
@@ -21,20 +23,28 @@ public class Teleprompter : MonoBehaviour
     // ? character limit, anti spam by filter on source+type
     public static void Register(string message)
     {
+        // // * testing sfx
+        // GameAudio.Instance.Register(2);
         // record received message
-        _messages.Add(message.ToUpper());
+        _messages.Add(message.Substring(0, Mathf.Min(19, message.Length)).ToUpper());
         // one new message
         if (_messages.Count == 1)
-        {
             // show
             SetDisplay(_messages[0], "");
-            // start ticking
-            _timer = _time;
-        }
         // one new one old
-        if (_messages.Count == 2)
+        else if (_messages.Count == 2)
             // just show and wait for natural tock
             SetDisplay(_messages[0], _messages[1]);
+        // message queue full
+        else if (_messages.Count > 2)
+        {
+            // discard oldest message
+            _messages.RemoveAt(0);
+            // push in new message
+            SetDisplay(_messages[0], _messages[1]);
+        }
+        // start ticking
+        _timer = _time;
     }
     void OnEnable()
     {
@@ -46,8 +56,8 @@ public class Teleprompter : MonoBehaviour
         // desync from clock
         GameClock.onTickUI -= Tick;
     }
-    private static int _time = 3;
-    private static int _timer = 0;
+    private static int _time;
+    private static int _timer;
     private static void Tick()
     {
         // tick

@@ -399,6 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 917379626097421397}
+  - component: {fileID: -7487287457152933897}
   m_Layer: 0
   m_Name: react_door_wide
   m_TagString: Untagged
@@ -425,6 +426,26 @@ Transform:
   - {fileID: 3662811111519166372}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7487287457152933897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4941973273174131191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5860241d2020f2fb0dbe4fe2c24c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: react_door_wide
+  _isPersistent: 1
+  _match: 
+  _oneWay: 1
+  _default: 1
+  _sources: []
+  _msgActivate: Something activated
+  _sequenceType: 1
 --- !u!1 &8738172563843321133
 GameObject:
   m_ObjectHideFlags: 0

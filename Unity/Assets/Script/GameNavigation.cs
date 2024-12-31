@@ -13,8 +13,8 @@ public class GameNavigation : MonoBehaviour
     {
         // 
         Collider2D hit = Physics2D.OverlapCircle(position, .1f, GameVariables.ScanLayerAction);
-        // allow actions if valid tile detected
-        if (hit != null)
+        // allow actions if valid tile detected that isn't trigger ? can pathfind over hidden creature
+        if (hit != null && !hit.isTrigger)
         {
             tile = hit.gameObject;
             return tile.gameObject.layer - 1;
@@ -26,8 +26,8 @@ public class GameNavigation : MonoBehaviour
     {
         // 
         Collider2D hit = Physics2D.OverlapCircle(position, .1f, GameVariables.ScanLayerAction);
-        // detected entity other than sensor
-        return hit != null && hit.gameObject.layer != GameVariables.LayerSensor;
+        // detected entity other than sensor that isn't also trigger
+        return hit != null && !hit.isTrigger && hit.gameObject.layer != GameVariables.LayerSensor;
     }
     #endregion
     Queue<PathResult> results = new Queue<PathResult>();
@@ -51,10 +51,72 @@ public class GameNavigation : MonoBehaviour
             }
         }
     }
+    // #region ActionFilter
+    // // entites to ignore actions from
+    // private List<FilterAction> _filter = new List<FilterAction>();
+    // private struct FilterAction
+    // {
+    //     public string id;
+    //     public GameAction.ActionType type;
+    //     public FilterAction(string id, GameAction.ActionType type)
+    //     {
+    //         this.id = id;
+    //         this.type = type;
+    //     }
+    // }
+    // private void FilterModify(string id, GameAction.ActionType type, bool state)
+    // {
+    //     if (state)
+    //     {
+    //         if (FilterContains(id, type)) return;
+    //         // 
+    //         _filter.Add(new FilterAction(id, type));
+    //     }
+    //     else FilterRemove(id, type);
+    // }
+    // private bool FilterContains(string id, GameAction.ActionType type)
+    // {
+    //     // match on entity ID and action type pair ? multiple action block possible
+    //     foreach (FilterAction filter in _filter) if (filter.id == id && filter.type == type) return true;
+    //     return false;
+    // }
+    // private void FilterRemove(string id, GameAction.ActionType type)
+    // {
+    //     // FilterAction temp;
+    //     foreach (FilterAction filter in _filter)
+    //     {
+    //         // temp = filter;
+    //         // break;
+    //         if (filter.id == id && filter.type == type)
+    //         {
+    //             _filter.Remove(filter);
+    //             break;
+    //         }
+    //     }
+    // }
+    // void OnEnable()
+    // {
+    //     HitboxIntercept.onIntercept += FilterModify;
+    // }
+    // void OnDisable()
+    // {
+    //     HitboxIntercept.onIntercept -= FilterModify;
+    // }
+    // #endregion
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
     public void PathCalculate(PathData request)
+    // public void PathCalculate(PathData request, string id)
     {
+        // // verify new action should be ignored
+        // if (FilterContains(id, GameAction.ActionType.WALK))
+        // {
+        //     // dummmy data
+        //     results.Enqueue(new PathResult(new Vector3[0], false, request.callback));
+        //     // abort
+        //     return;
+        // }
+        // 
         NativeList<int2> path = new NativeList<int2>(1, Allocator.TempJob);
         NativeArray<PathNode> pathNodeArray = GridToNative(new int2((int)request.target.x, (int)request.target.y));
         PathCalculateJob pathCalculateJob = new PathCalculateJob
@@ -68,7 +130,8 @@ public class GameNavigation : MonoBehaviour
         };
         JobHandle jobHandle = pathCalculateJob.Schedule();
         jobHandle.Complete();
-        Vector3[] waypoints = NativeToVector3(pathCalculateJob.path);
+        // Vector3[] waypoints = NativeToVector3(pathCalculateJob.path);
+        Vector3[] waypoints = NativeToVector3(pathCalculateJob.path.AsArray());
         // // * testing
         // print(waypoints.Length);
         path.Dispose();
@@ -319,6 +382,11 @@ public class GameNavigation : MonoBehaviour
         {
             costF = costG + costH;
         }
+    }
+    // * testing null error on reload
+    void OnDestroy()
+    {
+        Instance = null;
     }
 }
 public struct PathData

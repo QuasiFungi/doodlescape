@@ -8,6 +8,50 @@ ToDo
 ! - readme github guide for development
 - mob BT edge case testing
 
+241231
++ too many things to note... sorry
+
+241007
+~ save load system fully operational (yippee)
+
+241101
++ basic save load framework
+
+241028
+~ too many small fixes, lost track
+
+241027
+~ cursedChanter body rotate with observe
+
+241026
+~ improved sensor vision detection for partially hidden mobs
+~ keyboard inputs added
+~ spikeSnail pathfinding waypoint no longer skipped
+~ layout rooms final 17,18
+* layout rooms draft 23,24
+
+241025
+~ layout rooms final 6-8,16,19
+* layout rooms draft 20,21,22
+
+241024
+~ layout rooms final 16,19
+
+241023
+- spikeSnail BT Wander, one tick delay on room enter
+- mob vision cone, glitch on room enter
+~ mob BT, scanVision scanReset behaviours
+
+241022
+* layout room draft 10-15
+
+241021
+* layout room draft 9
+
+241019
+~ layout rooms final 1-5
+* layout rooms draft 6-8
+
 240815
 + entity loot, drop on death/etc
 ~ improved chunk loading, tied to room system

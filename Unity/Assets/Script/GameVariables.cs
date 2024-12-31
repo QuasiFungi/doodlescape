@@ -9,27 +9,56 @@ public class GameVariables
     // {
     //     return target.layer == LayerItem;
     // }
+    // only one use case
+    public static bool IsMob(GameObject target)
+    {
+        return target.layer == LayerCreature && target.tag != TagPlayer;
+    }
     public static Vector3 PositionDamage(Vector2 position)
     {
         // ? hard coded
         return new Vector3(position.x, position.y, 6f);
     }
+    // * testing trail/vfx
+    public static Vector3 PositionVFX(Vector2 position)
+    {
+        // ? hard coded
+        return new Vector3(position.x, position.y, 1f);
+    }
     private static string TagPlayer
     {
         get { return "player"; }
     }
-    public static int Depth
+    // // ? make public const
+    // public static int Depth
+    // {
+    //     get { return 2; }
+    // }
+    public const float ROOM_SIZE = 9f;
+    public static Color ColorDefault
     {
-        get { return 2; }
+        get { return new Color(1f, 1f, 1f, 1f); }
     }
-    // public static Color ColorDecal
+    public static Color ColorDecal
+    {
+        get { return new Color(.25f, .25f, .25f, 1f); }
+    }
+    // public static Color ColorTransparent
     // {
-    //     get { return new Color(.25f, .25f, .25f, 1f); }
+    //     get { return new Color(1f, 1f, 1f, 0f); }
     // }
-    // public static Color ColorInteract
-    // {
-    //     get { return new Color(1f, 1f, 0f, 1f); }
-    // }
+    public static Color ColorInteract
+    {
+        get { return new Color(1f, 1f, 0f, 1f); }
+    }
+    public static Color ColorDamage
+    {
+        get { return new Color(1f, 0f, 0f, 1f); }
+    }
+    public static Color ColorSensor
+    {
+        get { return new Color(1f, 0f, 1f, 1f); }
+    }
     #region Layer
     public static int LayerChunk
     {
@@ -98,6 +127,11 @@ public class GameVariables
     public static LayerMask ScanLayerTarget
     {
         get { return LayerMask.GetMask("creature") | LayerMask.GetMask("item"); }
+    }
+    // ? special case for flyTrap
+    public static LayerMask ScanLayerTrigger
+    {
+        get { return LayerMask.GetMask("breakable") |LayerMask.GetMask("creature") | LayerMask.GetMask("item"); }
     }
     public static LayerMask ScanLayerObject
     {

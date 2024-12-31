@@ -6,28 +6,42 @@ public class UIAction : MonoBehaviour
     public Sprite spriteDefault;
     public Sprite spriteDisable;
     public Sprite spriteWalk;
+    public Sprite spriteWalkA;
     public Sprite spriteAttack;
+    public Sprite spriteAttackA;
     public Sprite spritePickup;
+    public Sprite spritePickupA;
     public Sprite spriteInteract;
+    public Sprite spriteInteractA;
     public Sprite spriteTransition;
+    public Sprite spriteTransitionA;
     // public Sprite spriteSelected;
     // private Image[] markers;
-    private Image[] actions;
+    private Image[,] actions;
     public Creature source;
     private bool flagExtended;
     void Awake()
     {
-        actions = new Image[8];
+        // ? assign sprite through baseButton reference instead
+        actions = new Image[8,2];
         // markers = new Image[8];
         for (int i = 0; i < 9; i++)
         {
             // print (transform.GetChild(i).gameObject.name);
-            if (i < 4) actions[i] = transform.GetChild(i).GetChild(0).GetComponent<Image>();
+            if (i < 4)
+            {
+                actions[i,0] = transform.GetChild(i).GetChild(1).GetComponent<Image>();
+                actions[i,1] = transform.GetChild(i).GetChild(2).GetComponent<Image>();
+            }
             // {
             //     // markers[i] = transform.GetChild(i).GetComponent<Image>();
             //     actions[i] = markers[i].transform.GetChild(0).GetComponent<Image>();
             // }
-            else if (i > 4) actions[i - 1] = transform.GetChild(i).GetChild(0).GetComponent<Image>();
+            else if (i > 4)
+            {
+                actions[i - 1,0] = transform.GetChild(i).GetChild(1).GetComponent<Image>();
+                actions[i - 1,1] = transform.GetChild(i).GetChild(2).GetComponent<Image>();
+            }
             // {
             //     // markers[i - 1] = transform.GetChild(i).GetComponent<Image>();
             //     actions[i - 1] = markers[i - 1].transform.GetChild(0).GetComponent<Image>();
@@ -42,14 +56,17 @@ public class UIAction : MonoBehaviour
         // GameClock.onTickEarly += MarkerClear;
         GameClock.onTickUI += SpriteUpdate;
         BaseTransition.onTrigger += OverrideAction;
+        // * testing save/load
+        GameMaster.onStartupInput += SpriteUpdate;
     }
     void OnDisable()
     {
         // Player.onAction -= MarkerUpdate;
         // GameClock.onTickEarly -= MarkerClear;
         GameClock.onTickUI -= SpriteUpdate;
-        BaseTransition.onTrigger += OverrideAction;
-        // GameM
+        BaseTransition.onTrigger -= OverrideAction;
+        // * testing save/load
+        GameMaster.onStartupInput -= SpriteUpdate;
     }
     // private float colorA;
     // void Update()
@@ -67,7 +84,7 @@ public class UIAction : MonoBehaviour
     // ? use tick to update sprites
     private void SpriteUpdate()
     {
-        // print("updating");
+        // print("updating sprite at " + Time.time);
         flagExtended = source.ItemHas("item_feather");
         int layer = -1;
         GameObject temp = null;
@@ -76,7 +93,11 @@ public class UIAction : MonoBehaviour
             // // * testing brighten icons
             // if (actions[i]) actions[i].color = new Color(1f, 1f, 1f, 1f);
             // 
-            if (!flagExtended && (i == 0 || i == 2 || i == 5 || i == 7)) actions[i].sprite = spriteDisable;
+            if (!flagExtended && (i == 0 || i == 2 || i == 5 || i == 7))
+            {
+                actions[i,0].sprite = spriteDisable;
+                actions[i,1].sprite = spriteDefault;
+            }
             // if (!flagExtended && (i == 0 || i == 2 || i == 5 || i == 7)) actions[i].sprite = null;
             else
             {
@@ -117,19 +138,47 @@ public class UIAction : MonoBehaviour
                         break;
                 }
                 // Transition
-                if (layer == -2) actions[i].sprite = spriteTransition;
+                if (layer == -2)
+                {
+                    actions[i,0].sprite = spriteTransitionA;
+                    actions[i,1].sprite = spriteTransition;
+                }
                 // Breakable
-                else if (layer == 5) actions[i].sprite = spriteAttack;
+                else if (layer == 5)
+                {
+                    actions[i,0].sprite = spriteAttackA;
+                    actions[i,1].sprite = spriteAttack;
+                }
                 // Interact
-                else if (layer == 6) actions[i].sprite = spriteInteract;
+                else if (layer == 6)
+                {
+                    actions[i,0].sprite = spriteInteractA;
+                    actions[i,1].sprite = spriteInteract;
+                }
                 // Creature
-                else if (layer == 7) actions[i].sprite = spriteAttack;
+                else if (layer == 7)
+                {
+                    actions[i,0].sprite = spriteAttackA;
+                    actions[i,1].sprite = spriteAttack;
+                }
                 // Item
-                else if (layer == 8) actions[i].sprite = spritePickup;
+                else if (layer == 8)
+                {
+                    actions[i,0].sprite = spritePickupA;
+                    actions[i,1].sprite = spritePickup;
+                }
                 // Empty
-                else if (!temp) actions[i].sprite = spriteWalk;
+                else if (!temp)
+                {
+                    actions[i,0].sprite = spriteWalkA;
+                    actions[i,1].sprite = spriteWalk;
+                }
                 // ?
-                else actions[i].sprite = spriteDefault;
+                else
+                {
+                    actions[i,0].sprite = spriteDefault;
+                    actions[i,1].sprite = spriteDefault;
+                }
                 // else actions[i].sprite = null;
             }
         }

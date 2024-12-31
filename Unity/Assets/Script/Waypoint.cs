@@ -4,6 +4,10 @@ public class Waypoint : MonoBehaviour
 {
     [SerializeField] protected float _radius = .5f;
     [Tooltip("Directional links")] [SerializeField] protected List<Waypoint> _neighbours = new List<Waypoint>();
+    void Awake()
+    {
+        transform.localPosition = new Vector3(Mathf.Round(transform.localPosition.x), Mathf.Round(transform.localPosition.y), Mathf.Round(transform.localPosition.z));
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(1f, 1f, 1f, 1f);

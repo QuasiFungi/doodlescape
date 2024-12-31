@@ -45,11 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: 
-  _vfxPooled: []
-  _attackPooled: []
-  _damagePooled: []
-  _sfxPooled: []
-  _isPooled: 1
+  _isPersistent: 0
   _pattern:
   - '1,1,1
 

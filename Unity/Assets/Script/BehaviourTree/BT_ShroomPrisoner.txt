@@ -1,37 +1,70 @@
 tree "Alive"
     fallback
+        tree "Bell"
         tree "Flee"
         tree "Attack"
         tree "Wander"
 
+tree "Bell"
+    sequence
+        IsFlag 0
+        // spore ? flee
+        SetSpeedMove 0.0
+        SetVisions 0
+        SetSprite 1
+        DoAttack 0 0 0 0
+        DoSFX 0
+        UnsetAlert
+        Wait 2
+        SetVisions 1
+        SetSprite 0
+        UnsetFlag 0
+
 tree "Flee"
     fallback
+        // player too close, run away blindly
         sequence
-            not IsFlag 0
+            // not already fleeing
+            not IsFlag 1
             SensorAny
             fallback
                 AnchorToTrigger
                 AnchorToVision
+            IsAnchorCreature
             EntityAtAnchor 1.5
-            SetFlag 0 1
+            mute
+                // find safe spot far away
+                sequence
+                    // go crazy
+                    SetFlag 1
+                    // face player
+                    TrackAnchor
+                    // run in "opposite" direction
+                    fallback
+                        // down
+                        AnchorToDirection 2 5.0 2.0
+                        // left
+                        AnchorToDirection 1 5.0 2.0
+                        // right
+                        AnchorToDirection 3 5.0 2.0
+                        // ? cornered
+                    // start moving
+                    EntityToAnchor
+        // calm down when far away
+        sequence
+            IsFlag 1
+            // go stupid
+            SetVisions 0
+            SetSprite 1
             SetSpeedMove 1.0
             mute
                 sequence
-                    TrackAnchor
-                    AnchorToDirection 2 5.0 3.0
-                    // AnchorToFlee 5.0 3.0
-        sequence
-            IsFlag 0
-            SetVisions 0
-            SetSprite 1
-            EntityToAnchor
-            mute
-                sequence
                     EntityAtAnchor 1.0
-                    SetFlag 0 0
+                    UnsetFlag 1
                     UnsetAlert
                     SetVisions 1
                     SetSprite 0
+            EntityToAnchor
 
 tree "Attack"
     sequence
@@ -43,7 +76,8 @@ tree "Attack"
                 SetSpeedMove 0.0
                 SetVisions 0
                 SetSprite 1
-                DoAttack 0 0 0
+                DoAttack 0 0 0 0
+                DoSFX 0
                 UnsetAlert
                 Wait 2
                 SetVisions 1
@@ -52,12 +86,12 @@ tree "Attack"
 tree "Wander"
     sequence
         SetSpeedMove 1.0
-        EntityToAnchor
-        IsBored
         mute
             sequence
+                IsBored
                 fallback
                     IsAnchorWaypoint
                     AnchorToWaypoint 0
-                EntityAtAnchor 1.0
-                AnchorToWaypointOffset
+                EntityAtAnchor 0.0
+                AnchorToWaypoint 1
+        EntityToAnchor

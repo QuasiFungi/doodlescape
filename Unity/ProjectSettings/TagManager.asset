@@ -6,6 +6,7 @@ TagManager:
   tags:
   - player
   - ignore
+  - item
   layers:
   - Default
   - TransparentFX

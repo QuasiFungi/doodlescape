@@ -2,6 +2,7 @@ using UnityEngine;
 // used by spikeSnail
 public class HitboxPattern : BaseHitbox
 {
+    [Header("Pattern")]
     // assumes square grid of odd size ? case for rectangle, sparce matrix
     [Tooltip("Pattern sequence for attack")] [TextAreaAttribute] [SerializeField] string[] _pattern;
     // file format:
@@ -54,12 +55,16 @@ public class HitboxPattern : BaseHitbox
     //         for (int x = _sequence.GetLength(0) - 1; x > -1; x--)
     //             if (_sequence[x, y, _testPattern]) Gizmos.DrawSphere(transform.position + new Vector3(x - offset, y - offset), .5f);
     // }
-    void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+        // 
         GameClock.onTick += Iterate;
     }
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+        // 
         GameClock.onTick -= Iterate;
     }
     private int _index;
@@ -93,7 +98,7 @@ public class HitboxPattern : BaseHitbox
                     // attack = Instantiate(_attack, transform.position + offset, Quaternion.LookRotation(Vector3.up, offset), transform);
                     if (_testRotation) attack.transform.eulerAngles = new Vector3(0f, 0f, Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg - 90f);
                     // 
-                    attack.GetComponent<BaseHitbox>().Initialize(_source, _target);
+                    attack.GetComponent<BaseHitbox>().Initialize(_source, _target, _domain);
                     // // ? why damage disabled by default, not use toggle type attacks..?
                     // attack.SetActive(true);
                 }

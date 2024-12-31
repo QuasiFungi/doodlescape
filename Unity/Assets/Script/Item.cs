@@ -12,11 +12,24 @@ public class Item : Entity
         UTILITY,
         RECOVERY
     }
+    [Header("Item")]
     [SerializeField] private ItemType _type;
     // [SerializeField] private string _name = "Unnamed";
     // * testing ? character limit, separate consume discard messages, include name in prompt
     [Tooltip("shown when item pickup or use unusable")] [SerializeField] private string _description = "Undefined";
-    [Tooltip("shown when discard (not drop) item")] [SerializeField] private string _consumed = "Undefined";
+    [Tooltip("shown when discard (not drop) item")] [SerializeField] protected string _consumed = "Undefined";
+    private Sprite _iconA;
+    [Tooltip("background variant of item icon")] [SerializeField] private Sprite _iconB;
+    public AudioClip _sfxUse, _sfxDiscard;
+    protected override void Awake()
+    {
+        base.Awake();
+        // 
+        if (_description.Length > 19) Debug.LogWarning(IDUnique + ": Descriptor message too long! Currently " + _description.Length + " characters");
+        if (_consumed.Length > 19) Debug.LogWarning(IDUnique + ": Consumption message too long! Currently " + _consumed.Length + " characters");
+        // 
+        _iconA = transform.GetComponent<SpriteRenderer>().sprite;
+    }
     // * testing, used by player to drop item
     public void Show(Vector2 position)
     {
@@ -25,11 +38,18 @@ public class Item : Entity
         // 
         // Show();
         ToggleActive(true);
+        // // * testing save/load
+        // DataSave();
     }
-    public Sprite Icon
+    public Sprite IconA
     {
         // ? inefficient
-        get { return transform.GetComponent<SpriteRenderer>().sprite; }
+        get { return _iconA; }
+    }
+    public Sprite IconB
+    {
+        // ? inefficient
+        get { return _iconB; }
     }
     public ItemType Type
     {
@@ -46,5 +66,13 @@ public class Item : Entity
     public string Consumed
     {
         get { return _consumed; }
+    }
+    public AudioClip SFXUse
+    {
+        get { return _sfxUse; }
+    }
+    public AudioClip SFXDiscard
+    {
+        get { return _sfxDiscard; }
     }
 }

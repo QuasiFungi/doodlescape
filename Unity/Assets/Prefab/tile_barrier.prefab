@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5245121727172949890}
   - component: {fileID: 4498594343828303616}
   - component: {fileID: 537361944290582300}
+  - component: {fileID: -6800435135272747708}
   m_Layer: 0
   m_Name: tile_barrier
   m_TagString: Untagged
@@ -143,8 +144,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2cf0d1ea23eec69bafe0dbbaaeb579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroy: 0
+  _discard: 0
+  _fade: 0
+  _speed: 1
   _sprites:
   - {fileID: 21300000, guid: 3bdb4cbc78f06d0498b51fa7739ef18e, type: 3}
   - {fileID: 21300000, guid: 2a8f8d609c56286f3814b560ea64a111, type: 3}
   - {fileID: 21300000, guid: 7c1b6c0db3a2f8530962009e8622cea2, type: 3}
   - {fileID: 21300000, guid: b76e14fca53d3d386935d0b6d33c9b02, type: 3}
+--- !u!114 &-6800435135272747708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766897079406281250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7178194a53755c2bbf18d6b1528481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 
+  _isPersistent: 0

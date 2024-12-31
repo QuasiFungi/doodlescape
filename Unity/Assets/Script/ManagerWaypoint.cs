@@ -29,4 +29,9 @@ public class ManagerWaypoint : MonoBehaviour
         }
         return temp;
     }
+    // * testing null error on reload
+    void OnDestroy()
+    {
+        Instance = null;
+    }
 }

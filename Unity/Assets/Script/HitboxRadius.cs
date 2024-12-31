@@ -2,10 +2,13 @@ using UnityEngine;
 // charm, bell
 public class HitboxRadius : BaseHitbox
 {
+    [Header("Radius")]
     [Range(0, 5)] [SerializeField] private int _radius;
     [SerializeField] private GameObject _effect;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+        // 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius + .5f, GameVariables.ScanLayerCreature);
         // 
         foreach (Collider2D target in colliders)
@@ -17,7 +20,7 @@ public class HitboxRadius : BaseHitbox
             // 
             GameObject temp = Instantiate(_effect, position, transform.rotation);
             // 
-            temp.GetComponent<BaseHitbox>().Initialize(_source, position);
+            temp.GetComponent<BaseHitbox>().Initialize(_source, position, _domain);
             // 
             temp.SetActive(true);
         }
@@ -25,13 +28,17 @@ public class HitboxRadius : BaseHitbox
         // Discard();
     }
     // scale visiblity with tick duration ? overkill
-    void OnEnable()
+    protected override void OnEnable()
     {
-        GameClock.onTick += Tick;
+        base.OnEnable();
+        // 
+        GameClock.onTickUIEarly += Tick;
     }
-    void OnDisable()
+    protected override void OnDisable()
     {
-        GameClock.onTick -= Tick;
+        base.OnDisable();
+        // 
+        GameClock.onTickUIEarly -= Tick;
     }
     // ? hard coded
     // private int _timer = 1;
