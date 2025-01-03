@@ -1,0 +1,230 @@
+tree "Alive"
+    fallback
+        // tree "Frenzy"
+        tree "Flee"
+        tree "Bell"
+        tree "Attack"
+        tree "Wander"
+
+tree "Frenzy"
+    sequence
+        // enraged
+        IsTimer 0
+        // done fleeing
+        UnsetFlag 1
+        // get angry again
+        mute
+            sequence
+                // bell rang while frenzied
+                IsFlag 0
+                SetTimer 0 6
+                UnsetFlag 0
+        // stand in place
+        SetSpeedMove 0.0
+        // ? charge blindly
+        DoVFX 3 3
+        DoSFX 1
+        Wait 1
+        random
+            // forward
+            DoTranslate 0 4.0
+            // forward left
+            DoTranslate 1 4.0
+            // left
+            DoTranslate 2 4.0
+            // back left
+            DoTranslate 3 4.0
+            // back right
+            DoTranslate 5 4.0
+            // right
+            DoTranslate 6 4.0
+            // forward right
+            DoTranslate 7 4.0
+        DoAttack 0 0 1 0
+        DoSFX 2
+
+tree "Flee"
+    fallback
+        // pick a direction
+        sequence
+            IsFlag 1
+            mute
+                // find safe spot far away
+                sequence
+                    UnsetFlag 1
+                    // go crazy
+                    SetFlag 2
+                    // go stupid
+                    SetVisions 0
+                    SetSprite 1
+                    // face player
+                    TrackAnchor
+                    // run in "opposite" direction
+                    fallback
+                        // down
+                        AnchorToDirection 2 6.0 3.0
+                        // left
+                        AnchorToDirection 1 6.0 3.0
+                        // right
+                        AnchorToDirection 3 6.0 3.0
+                        // cornered
+                        // SetTimer 0 6
+                    // start moving
+                    EntityToAnchor
+        // run away blindly
+        sequence
+            IsFlag 2
+            SetSpeedMove 1.0
+            mute
+                // calm down when far away
+                sequence
+                    EntityAtAnchor 1.0
+                    UnsetFlag 2
+                    UnsetAlert
+                    SetVisions 1
+                    SetSprite 0
+            EntityToAnchor
+
+tree "Bell"
+    sequence
+        IsFlag 0
+        // pacify
+        SetSprite 0
+        SetVisions 0
+        // ? give player time to process/notice difference in reaction
+        Wait 1
+        // run away
+        SetFlag 1
+        // * testing cornered
+        // SetTimer 0 6
+        UnsetFlag 0
+
+tree "Attack"
+    sequence
+        SetVisions 1
+        SetSprite 0
+        SensorAny
+        // extra vigilant when alerted
+        SetTriggers 1
+        // if spotted hostile
+        fallback
+            AnchorToTrigger
+            AnchorToVision
+        fallback
+            tree "Stomp"
+            tree "Charge"
+            tree "Axe"
+
+tree "Stomp"
+    sequence
+        EntityAtAnchor 1.5
+        IsAnchorCreature
+        // stand in place
+        SetSpeedMove 0.0
+        DoVFX 4 0
+        DoSFX 3
+        Wait 1
+        DoAttack 1 1 0 1
+        DoSFX 4
+        // vulnerable while stomp in effect
+        Wait 2
+
+tree "Charge"
+    sequence
+        EntityAtAnchor 4.0
+        IsAnchorCreature
+        not IsAnchorOccluded 0.2
+        // stand in place
+        SetSpeedMove 0.0
+        fallback
+            // forward
+            sequence
+                IsDirection 0
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 0 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // forward left
+            sequence
+                IsDirection 1
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 1 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // left
+            sequence
+                IsDirection 2
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 2 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // back left
+            sequence
+                IsDirection 3
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 3 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // back right
+            sequence
+                IsDirection 5
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 5 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // right
+            sequence
+                IsDirection 6
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 6 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+            // forward right
+            sequence
+                IsDirection 7
+                DoVFX 3 3
+                DoSFX 1
+                Wait 1
+                DoTranslate 7 4.0
+                DoAttack 0 0 1 0
+                DoSFX 2
+
+tree "Axe"
+    sequence
+        TrackAnchor
+        IsAnchorCreature
+        not IsAnchorOccluded 0.2
+        // stand in place
+        SetSpeedMove 0.0
+        SpawnTrackAnchor 2
+        SetSprite 1
+        Wait 1
+        DoAttack 2 2 0 0
+        DoSFX 0
+
+tree "Wander"
+    sequence
+        SetSpeedMove 1.0
+        mute
+            sequence
+                IsBored
+                // no longer on edge
+                SetTriggers 0
+                fallback
+                    IsAnchorWaypoint
+                    AnchorToWaypoint 0
+                EntityAtAnchor 0.0
+                AnchorToWaypoint 1
+        EntityToAnchor

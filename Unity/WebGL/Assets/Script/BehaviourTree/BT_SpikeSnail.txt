@@ -1,0 +1,69 @@
+tree "Alive"
+    fallback
+        tree "Bell"
+        tree "Hide"
+        tree "Peek"
+        tree "Wander"
+
+tree "Bell"
+    sequence
+        IsFlag 0
+        // spike
+        SetTriggers 1
+        SetVisions 0
+        SetSprite 2
+        DoAttack 0 0 1 0
+        DoSFX 0
+        // SetTimer 1 0
+        UnsetFlag 0
+
+tree "Hide"
+    sequence
+        mute
+            sequence
+                SensorAny
+                SetSpeedMove 0.0
+                IsAware
+                IsAlert
+                SetFlag 1
+                SetTriggers 1
+                SetVisions 0
+                SetSprite 2
+        IsFlag 1
+        mute
+            tree "Attack"
+
+tree "Attack"
+    sequence
+        UnsetFlag 1
+        AnchorToTrigger
+        IsAnchorCreature
+        Wait 1
+        DoAttack 0 0 1 0
+        DoSFX 0
+
+tree "Peek"
+    sequence
+        not IsBored
+        SetTriggers 0
+        SetVisions 1
+        SetSprite 1
+
+tree "Wander"
+    sequence
+        // not IsAware
+        UnsetAlert
+        SetTriggers 0
+        SetVisions 1
+        SetSprite 0
+        SetSpeedMove 1.0
+        // * skipping waypoint tile ERROR
+        mute
+            sequence
+                fallback
+                    IsAnchorWaypoint
+                    AnchorToWaypoint 0
+                EntityAtAnchor 0.0
+                AnchorToWaypoint 1
+        // ? freezes when target tile blocked
+        EntityToAnchor

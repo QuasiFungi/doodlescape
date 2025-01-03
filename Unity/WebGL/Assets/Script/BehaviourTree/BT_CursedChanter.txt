@@ -1,0 +1,73 @@
+tree "Alive"
+    fallback
+        tree "Bell"
+        tree "Attack"
+        tree "Investigate"
+        tree "Return"
+        tree "Observe"
+
+tree "Bell"
+    sequence
+        IsFlag 0
+        // spell
+        SetSpeedMove 0.0
+        not IsTimer 0
+        // TrackAnchor
+        DoAttack 0 0 0 0
+        DoSFX 0
+        SetTimer 0 6
+        UnsetFlag 0
+
+tree "Attack"
+    sequence
+        // always sees o_o
+        SetVisions 1
+        // if you see hostile
+        AnchorToVision
+        IsAnchorCreature
+        SetSprite 1
+        // * testing
+        ScanReset
+        // try to attack it
+        fallback
+            // melee
+            sequence
+                EntityAtAnchor 1.0
+                SetSpeedMove 0.0
+                TrackAnchor
+                DoAttack 1 1 0 0
+                DoSFX 1
+                SetSprite 0
+                Wait 1
+                SetSprite 1
+            // ranged
+            sequence
+                EntityAtAnchor 6.0
+                SetSpeedMove 0.0
+                not IsTimer 0
+                // TrackAnchor
+                DoAttack 0 0 0 0
+                DoSFX 0
+                SetTimer 0 6
+
+tree "Investigate"
+    sequence
+        // otherwise move towards it
+        SensorAny
+        SetSpeedMove 1.0
+        EntityToAnchor
+
+tree "Return"
+    sequence
+        // when bored
+        SetSprite 0
+        IsBored
+        mute
+            sequence
+                // move back to spawn
+                AnchorToWaypoint 0
+                SetSpeedMove 1.0
+                EntityToAnchor
+                EntityAtAnchor 1.0
+                // and look around
+                tree "Observe"

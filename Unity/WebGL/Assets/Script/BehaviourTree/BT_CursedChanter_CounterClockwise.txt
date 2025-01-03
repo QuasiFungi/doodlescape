@@ -1,0 +1,6 @@
+tree "Observe"
+    sequence
+        SetSpeedMove 0.0
+        // ScanVision 90.0 4 1
+        not IsTimer 0
+        ScanVision 1 2

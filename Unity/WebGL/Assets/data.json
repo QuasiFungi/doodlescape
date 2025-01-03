@@ -1,0 +1,6893 @@
+0#-1#0#-1#164#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -44.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -18.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -8.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -8.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(14.50, -12.50, 3.00)",
+    "Position": {
+        "x": 14.5,
+        "y": -12.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -49.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -49.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -22.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -32.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-19.50, -37.50, 3.00)",
+    "Position": {
+        "x": -19.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -29.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -29.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -42.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -43.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(12.50, -11.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -32.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(13.50, -18.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(17.50, -21.50, 3.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(-9.50, -8.50, 2.00)",
+    "Position": {
+        "x": -9.5,
+        "y": -8.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -26.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(5.50, -35.50, 2.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -35.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 269.99993896484377
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -46.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(-1.50, -14.50, 2.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -14.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "item_meat(-1.50, -14.50, 4.00)",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -41.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(6.50, -24.50, 2.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -24.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -46.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -25.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -46.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -3.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-5.50, -33.50, 3.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -33.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, -3.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-11.50, -34.50, 3.00)",
+    "Position": {
+        "x": -11.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(-13.50, -12.50, 2.00)",
+    "Position": {
+        "x": -13.5,
+        "y": -12.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -46.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(12.50, -21.50, 2.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -21.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -41.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -47.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -47.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -16.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_shroomPrisoner(-6.50, -25.50, 2.00)",
+    "Position": {
+        "x": -6.5,
+        "y": -25.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -35.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-0.50, -46.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -20.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -43.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-21.50, -21.50, 3.00)",
+    "Position": {
+        "x": -21.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -29.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -29.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(-8.50, -21.50, 2.00)",
+    "Position": {
+        "x": -8.5,
+        "y": -21.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-7.50, -32.50, 3.00)",
+    "Position": {
+        "x": -7.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(18.50, -6.50, 3.00)",
+    "Position": {
+        "x": 18.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -2.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -2.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(1.50, -43.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -18.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -5.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -5.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -19.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-21.50, -31.50, 3.00)",
+    "Position": {
+        "x": -21.5,
+        "y": -31.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 0,
+    "_id": "item_key(-9.50, -27.50, 4.00)",
+    "Position": {
+        "x": -9.5,
+        "y": -27.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -32.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -27.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -41.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(11.50, -9.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -9.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -48.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -15.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(13.50, -15.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -45.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -14.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -48.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-16.50, -24.50, 3.00)",
+    "Position": {
+        "x": -16.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -30.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -30.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -37.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -20.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -48.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -11.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(14.50, -21.50, 3.00)",
+    "Position": {
+        "x": 14.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -41.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -24.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(-5.50, -37.50, 2.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -37.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 0,
+    "_id": "item_gem(-3.50, -0.50, 4.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -0.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": false,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -22.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 3,
+    "_id": "interact_door(0.00, -4.50, 5.00)",
+    "Position": {
+        "x": 0.0,
+        "y": -4.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": false,
+    "LootID": "",
+    "State": true,
+    "Locked": false
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -21.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -19.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -36.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -36.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(13.50, -19.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -27.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(13.50, -11.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-18.50, -30.50, 3.00)",
+    "Position": {
+        "x": -18.5,
+        "y": -30.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -48.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, -7.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -7.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-3.50, -43.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -25.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -49.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -49.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -15.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -36.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -36.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -25.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -17.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -46.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(9.50, -48.50, 2.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -48.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-21.50, -36.50, 3.00)",
+    "Position": {
+        "x": -21.5,
+        "y": -36.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -11.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(2.50, -47.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -47.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -16.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -26.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(2.50, -10.50, 2.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -10.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-3.50, -41.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(21.50, -12.50, 3.00)",
+    "Position": {
+        "x": 21.5,
+        "y": -12.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(6.50, -11.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, 0.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": 0.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -15.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -6.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -23.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -23.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(-19.50, -19.50, 2.00)",
+    "Position": {
+        "x": -19.5,
+        "y": -19.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.00009155273438
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(-12.50, -39.50, 5.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -39.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -40.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -40.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-0.50, -44.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -20.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -44.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -18.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -12.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -12.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(5.50, -15.50, 5.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -15.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -42.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -17.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 0,
+    "_id": "item_pouch(-21.50, -45.50, 4.00)",
+    "Position": {
+        "x": -21.5,
+        "y": -45.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(11.50, -42.50, 2.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -42.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(1.50, -48.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -14.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -19.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -2.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -2.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "item_coin(0.50, -2.50, 4.00)",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(11.50, -7.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -7.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(2.50, -45.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -46.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -27.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-4.50, -37.50, 3.00)",
+    "Position": {
+        "x": -4.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(9.50, -12.50, 2.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -12.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.00003814697266
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(-8.50, -33.50, 2.00)",
+    "Position": {
+        "x": -8.5,
+        "y": -33.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -26.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(7.50, -44.50, 2.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -44.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(3.50, -49.50, 2.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -49.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 3,
+    "_id": "interact_pedistal(12.00, -84.00, 5.00)",
+    "Position": {
+        "x": 12.0,
+        "y": -84.0,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": true
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-18.50, -24.50, 3.00)",
+    "Position": {
+        "x": -18.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-12.50, -33.50, 3.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -33.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -26.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -45.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 0,
+    "_id": "item_feather(6.50, -12.50, 4.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -12.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -32.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(13.50, -39.50, 2.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -39.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_shroomPrisoner(1.50, -28.50, 2.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -28.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 0,
+    "_id": "item_bell(3.50, -2.50, 4.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -2.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": false,
+    "LootID": ""
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(19.50, -17.50, 2.00)",
+    "Position": {
+        "x": 19.5,
+        "y": -17.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.00009155273438
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(7.50, -12.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -12.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(-17.50, -37.50, 2.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -37.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 89.99998474121094
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -45.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(4.50, -39.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-15.50, -17.50, 3.00)",
+    "Position": {
+        "x": -15.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_shroomPrisoner(-16.50, -46.50, 2.00)",
+    "Position": {
+        "x": -16.5,
+        "y": -46.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -43.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(4.50, -38.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -47.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -47.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -29.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -29.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -35.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -6.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -48.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-8.50, -37.50, 3.00)",
+    "Position": {
+        "x": -8.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-12.50, -37.50, 3.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -16.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -16.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, 2.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": 2.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-15.50, -23.50, 3.00)",
+    "Position": {
+        "x": -15.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -48.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(8.50, -41.50, 2.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -41.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -29.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -29.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -3.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 3,
+    "_id": "interact_pedistal(-12.00, -84.00, 5.00)",
+    "Position": {
+        "x": -12.0,
+        "y": -84.0,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": true
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(10.50, -29.50, 2.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -29.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, -19.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, 1.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": 1.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -27.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(1.50, -45.50, 2.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -45.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -44.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -42.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -20.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -49.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -49.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -43.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 3,
+    "_id": "interact_pedistal(12.00, -60.00, 5.00)",
+    "Position": {
+        "x": 12.0,
+        "y": -60.0,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": true
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -48.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(1.50, -46.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -22.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -41.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -42.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -7.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -7.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -18.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-13.50, -39.50, 3.00)",
+    "Position": {
+        "x": -13.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -48.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -3.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, -6.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-5.50, -34.50, 3.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(2.50, -46.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(5.50, -20.50, 5.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -20.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(-5.50, -39.50, 5.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -39.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(-2.50, -46.50, 2.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -46.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(13.50, -17.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(-5.50, -32.50, 5.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -32.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(20.50, -14.50, 3.00)",
+    "Position": {
+        "x": 20.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-9.50, -38.50, 3.00)",
+    "Position": {
+        "x": -9.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(-17.50, -26.50, 2.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -26.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 270.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 0,
+    "_id": "item_tablet(-0.50, -72.50, 4.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -72.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -21.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(20.50, -5.50, 3.00)",
+    "Position": {
+        "x": 20.5,
+        "y": -5.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-9.50, -33.50, 3.00)",
+    "Position": {
+        "x": -9.5,
+        "y": -33.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_cursedChanter(15.50, -8.50, 2.00)",
+    "Position": {
+        "x": 15.5,
+        "y": -8.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-13.50, -34.50, 3.00)",
+    "Position": {
+        "x": -13.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -26.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(11.50, -25.50, 2.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -25.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(1.50, -41.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(17.50, -9.50, 3.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -9.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(10.50, -6.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(20.50, -18.50, 3.00)",
+    "Position": {
+        "x": 20.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-11.50, -33.50, 3.00)",
+    "Position": {
+        "x": -11.5,
+        "y": -33.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-16.50, -38.50, 3.00)",
+    "Position": {
+        "x": -16.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -13.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -13.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -24.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -16.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -43.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -14.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-19.50, -35.50, 3.00)",
+    "Position": {
+        "x": -19.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -14.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-6.50, -35.50, 3.00)",
+    "Position": {
+        "x": -6.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -37.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -28.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(2.50, -44.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -31.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -31.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -13.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -13.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -39.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -24.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 5,
+    "_id": "react_door_wide(-9.00, -40.50, 8.00)",
+    "Position": {
+        "x": -9.0,
+        "y": -40.5,
+        "z": 8.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": true,
+    "Signal": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "Cache": [
+        {
+            "ID": -1,
+            "Value": false
+        },
+        {
+            "ID": -1,
+            "Value": false
+        },
+        {
+            "ID": -1,
+            "Value": false
+        },
+        {
+            "ID": -1,
+            "Value": false
+        }
+    ],
+    "Next": 0
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(21.50, -35.50, 2.00)",
+    "Position": {
+        "x": 21.5,
+        "y": -35.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-17.50, -35.50, 3.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -19.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-3.50, -49.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -49.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -5.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -5.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-4.50, -19.50, 3.00)",
+    "Position": {
+        "x": -4.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(17.50, -10.50, 3.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -10.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(9.50, -22.50, 2.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -22.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -23.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -33.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -33.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -45.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(5.50, -47.50, 2.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -47.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-6.50, -34.50, 3.00)",
+    "Position": {
+        "x": -6.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 3,
+    "_id": "interact_pedistal(-12.00, -60.00, 5.00)",
+    "Position": {
+        "x": -12.0,
+        "y": -60.0,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 270.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": true
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(20.50, -21.50, 3.00)",
+    "Position": {
+        "x": 20.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(8.50, -27.50, 2.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -27.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(20.50, -8.50, 3.00)",
+    "Position": {
+        "x": 20.5,
+        "y": -8.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-15.50, -14.50, 3.00)",
+    "Position": {
+        "x": -15.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, -35.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -10.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -10.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -17.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(7.50, -9.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -9.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_shroomPrisoner(-11.50, -42.50, 2.00)",
+    "Position": {
+        "x": -11.5,
+        "y": -42.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.00003051757813
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -41.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 0,
+    "_id": "item_tablet(-0.50, -71.50, 4.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -71.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-12.50, -36.50, 3.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -36.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(17.50, -18.50, 3.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -18.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -17.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(7.50, -20.50, 2.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -20.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 0,
+    "_id": "item_coin(0.50, -2.50, 4.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -2.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": false,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -38.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -14.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -15.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -42.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -47.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -47.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -15.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(14.50, -31.50, 2.00)",
+    "Position": {
+        "x": 14.5,
+        "y": -31.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 269.99993896484377
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -26.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -26.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(-2.50, -9.50, 2.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -9.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-0.50, -42.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-5.50, -35.50, 3.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -35.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -46.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-21.50, -25.50, 3.00)",
+    "Position": {
+        "x": -21.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -16.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "player(1.50, -0.50, 2.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -4.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 6,
+    "Inventory": [
+        "item_gem(-3.50, -0.50, 4.00)",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -27.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -39.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -42.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -23.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -43.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-4.50, -34.50, 3.00)",
+    "Position": {
+        "x": -4.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(21.50, -23.50, 2.00)",
+    "Position": {
+        "x": 21.5,
+        "y": -23.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.00001525878907
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 0,
+    "_id": "item_tablet(0.50, -71.50, 4.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -71.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, 0.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": 0.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -25.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(0.50, -19.50, 2.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -19.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(10.50, -14.50, 2.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -14.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(12.50, -45.50, 2.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -45.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -30.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -30.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(13.50, -16.50, 2.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -16.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -23.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -45.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -42.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(-0.50, -49.50, 2.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -49.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -7.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -7.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, 2.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": 2.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -41.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(4.50, -28.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -22.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-7.50, -34.50, 3.00)",
+    "Position": {
+        "x": -7.5,
+        "y": -34.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(-2.50, -33.50, 2.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -33.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 270.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -9.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -9.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 0,
+    "_id": "item_tablet(0.50, -72.50, 4.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -72.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": ""
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, -32.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -30.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -30.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -19.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -22.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(9.50, -9.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -9.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(-20.50, -6.50, 2.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -6.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 180.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(5.50, -6.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-18.50, -29.50, 3.00)",
+    "Position": {
+        "x": -18.5,
+        "y": -29.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(6.50, -29.50, 2.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -29.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(17.50, -16.50, 3.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-16.50, -19.50, 3.00)",
+    "Position": {
+        "x": -16.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-1.50, -20.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(11.50, -21.50, 3.00)",
+    "Position": {
+        "x": 11.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -28.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(4.50, -37.50, 3.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -2.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -2.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -22.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -22.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -45.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -14.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-17.50, -20.50, 3.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -42.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -38.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -45.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 3,
+    "_id": "interact_chest(3.50, -2.50, 5.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -2.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 270.0
+    },
+    "IsActive": true,
+    "LootID": "item_bell(3.50, -2.50, 4.00)",
+    "State": false,
+    "Locked": true
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(2.50, 3.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": 3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -16.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -19.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -46.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(-1.50, -42.50, 2.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -42.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -45.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(13.50, -21.50, 3.00)",
+    "Position": {
+        "x": 13.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(4.50, -43.50, 2.00)",
+    "Position": {
+        "x": 4.5,
+        "y": -43.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 5,
+    "_id": "react_door_wide(0.00, -22.50, 8.00)",
+    "Position": {
+        "x": 0.0,
+        "y": -22.5,
+        "z": 8.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": true,
+    "Signal": [
+        false,
+        false
+    ],
+    "Cache": [
+        {
+            "ID": -1,
+            "Value": false
+        },
+        {
+            "ID": -1,
+            "Value": false
+        }
+    ],
+    "Next": 0
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(1.50, -49.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -49.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -28.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -17.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -48.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -28.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-1.50, -46.50, 3.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -46.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -30.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -30.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(12.50, -16.50, 3.00)",
+    "Position": {
+        "x": 12.5,
+        "y": -16.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -24.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 3,
+    "_id": "interact_fortress_switch(-12.50, -32.50, 5.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -32.5,
+        "z": 5.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "State": false,
+    "Locked": false
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -39.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-0.50, -11.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(2.50, -42.50, 3.00)",
+    "Position": {
+        "x": 2.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(0.50, 1.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": 1.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(10.50, -18.50, 2.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -18.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_seedFlower(-5.50, -13.50, 2.00)",
+    "Position": {
+        "x": -5.5,
+        "y": -13.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -44.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -44.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -41.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -14.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -14.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -38.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -19.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -19.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-0.50, -48.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -48.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-3.50, -42.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -42.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -28.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -28.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-2.50, -43.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-17.50, -17.50, 3.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -17.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-8.50, -32.50, 3.00)",
+    "Position": {
+        "x": -8.5,
+        "y": -32.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -20.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(5.50, -24.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(9.50, -24.50, 3.00)",
+    "Position": {
+        "x": 9.5,
+        "y": -24.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-7.50, -38.50, 3.00)",
+    "Position": {
+        "x": -7.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_flyTrap(5.50, -17.50, 2.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -17.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -37.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -37.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -5.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -5.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(5.50, -11.50, 3.00)",
+    "Position": {
+        "x": 5.5,
+        "y": -11.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-3.50, -15.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -15.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(3.50, -20.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-3.50, -47.50, 3.00)",
+    "Position": {
+        "x": -3.5,
+        "y": -47.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 2,
+    "_id": "mob_fortress_spikeSnail(1.50, -38.50, 2.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -38.5,
+        "z": 2.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 90.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2,
+    "Inventory": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ]
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -43.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(6.50, -25.50, 3.00)",
+    "Position": {
+        "x": 6.5,
+        "y": -25.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -45.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -45.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -23.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -23.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(-0.50, -41.50, 3.00)",
+    "Position": {
+        "x": -0.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(7.50, -21.50, 3.00)",
+    "Position": {
+        "x": 7.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(15.50, -6.50, 3.00)",
+    "Position": {
+        "x": 15.5,
+        "y": -6.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -41.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-20.50, -27.50, 3.00)",
+    "Position": {
+        "x": -20.5,
+        "y": -27.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(8.50, -20.50, 3.00)",
+    "Position": {
+        "x": 8.5,
+        "y": -20.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-2.50, -3.50, 3.00)",
+    "Position": {
+        "x": -2.5,
+        "y": -3.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(10.50, -21.50, 3.00)",
+    "Position": {
+        "x": 10.5,
+        "y": -21.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(-12.50, -38.50, 3.00)",
+    "Position": {
+        "x": -12.5,
+        "y": -38.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_crate(-17.50, -39.50, 3.00)",
+    "Position": {
+        "x": -17.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 2
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_rubble(1.50, -39.50, 3.00)",
+    "Position": {
+        "x": 1.5,
+        "y": -39.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 1
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(3.50, -43.50, 3.00)",
+    "Position": {
+        "x": 3.5,
+        "y": -43.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 1,
+    "_id": "breakable_fortress_slab(0.50, -41.50, 3.00)",
+    "Position": {
+        "x": 0.5,
+        "y": -41.5,
+        "z": 3.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Health": 3
+}#{
+    "_type": 6,
+    "_id": "item_meat(-1.50, -14.50, 4.00)",
+    "Position": {
+        "x": -1.5,
+        "y": -14.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": false,
+    "LootID": "",
+    "Count": 2
+}#{
+    "_type": 6,
+    "_id": "item_flask(17.50, -36.50, 4.00)",
+    "Position": {
+        "x": 17.5,
+        "y": -36.5,
+        "z": 4.0
+    },
+    "Rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "IsActive": true,
+    "LootID": "",
+    "Count": 2
+}

@@ -1,0 +1,33 @@
+tree "Alive"
+    fallback
+        tree "Bell"
+        tree "Attack"
+        tree "Idle"
+
+tree "Bell"
+    sequence
+        IsFlag 0
+        // shoot
+        SetSprite 0
+        DoAttack 0 0 0 0
+        DoSFX 0
+        SetSprite 2
+        Wait 1
+        UnsetFlag 0
+
+tree "Attack"
+    sequence
+        SetSprite 0
+        AnchorToTrigger
+        TrackAnchor
+        SpawnTrackAnchor 0
+        SetTimer 0 1
+        DoAttack 0 0 0 0
+        DoSFX 0
+        SetSprite 2
+        Wait 1
+
+tree "Idle"
+    sequence
+        Not IsTimer 0
+        SetSprite 1

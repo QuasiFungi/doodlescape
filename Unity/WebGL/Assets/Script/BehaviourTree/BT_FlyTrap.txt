@@ -1,0 +1,39 @@
+tree "Alive"
+    fallback
+        tree "Bell"
+        tree "Attack"
+        tree "Hide"
+
+tree "Bell"
+    sequence
+        IsFlag 0
+        // bite
+        SetSprite 1
+        SetColor 0
+        SetColliders 1
+        DoAttack 0 0 1 0
+        DoSFX 0
+        // Wait 1
+        SetTimer 0 2
+        UnsetAlert
+        UnsetFlag 0
+
+tree "Attack"
+    sequence
+        IsAlert
+        not IsTimer 0
+        Wait 1
+        SetSprite 1
+        SetColor 0
+        SetColliders 1
+        DoAttack 0 0 1 0
+        DoSFX 0
+        SetTimer 0 2
+        UnsetAlert
+
+tree "Hide"
+    sequence
+        // UnsetAlert
+        SetSprite 0
+        SetColor 1
+        SetColliders 0

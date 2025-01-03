@@ -1,0 +1,13 @@
+tree "Root"
+    fallback
+        tree "Dead"
+        tree "Alive"
+
+tree "Dead"
+    sequence
+        not IsAlive
+        SetSpeedMove 0.0
+        SetSpeedTurn 0.0
+        Wait 1
+        SetSprite 0
+        SetColliders 0
